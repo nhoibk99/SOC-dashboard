@@ -1,0 +1,79 @@
+.grid-layout {
+  .react-grid-item {
+    // background-color: red;
+    box-shadow: 0px 0px 10px #6b9fda;
+    background: linear-gradient(to right, #53a3ce 2px, transparent 2px) 0 0,
+      linear-gradient(to right, #53a3ce 2px, transparent 2px) 0 100%,
+      linear-gradient(to left, #53a3ce 2px, transparent 2px) 100% 0,
+      linear-gradient(to left, #53a3ce 2px, transparent 2px) 100% 100%,
+      linear-gradient(to bottom, #53a3ce 2px, transparent 2px) 0 0,
+      linear-gradient(to bottom, #53a3ce 2px, transparent 2px) 100% 0,
+      linear-gradient(to top, #53a3ce 2px, transparent 2px) 0 100%,
+      linear-gradient(to top, #53a3ce 2px, transparent 2px) 100% 100%;
+
+    background-repeat: no-repeat;
+    background-size: 10px 10px;
+    cursor: pointer;
+  }
+  .name {
+    color: #b2b2b2;
+  }
+  .time {
+    color: #53a3ce;
+    font-weight: bold;
+  }
+  .grid-item {
+    padding: 10px;
+    color: #b2b2b2;
+  }
+  .grid-item-data{
+    display: flex;
+    width: 100%;
+  }
+  .item-data{
+    text-align: center;
+    width: 100%;
+    font-size: 17px;
+    
+  }
+  .row-grid{
+    width: 100%;
+  }
+  .grid-item-name{
+    text-align: left;
+    font-size: 20px;
+    font-weight: bold;
+    color:rgba(255, 255, 255, 0.685);
+    margin-bottom: 6px;
+   
+  }
+ 
+  .item-value{
+    color: white;
+  
+  }
+
+  .item-critical-label
+  { color: #e00909;
+
+  }
+  .item-high-label
+  { color: #e07109;
+
+  }
+  .item-medium-label
+  { color: #e0b809;
+
+  }
+  .item-low-label
+  { color: #4de009;
+
+  }
+  .label_layer{
+    text-align: right;
+    font-size: 20px;
+    font-weight: bold;
+   color:rgba(255, 255, 255, 0.685);
+    
+  }
+}

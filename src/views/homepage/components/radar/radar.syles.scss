@@ -1,0 +1,120 @@
+.radar-circle {
+  position: relative;
+  border-radius: 50%;
+  overflow: hidden;
+  .cir {
+    box-sizing: border-box;
+    border-radius: 50%;
+    position: relative;
+    top: 5%;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+  }
+  .circle-text {
+    margin-top:0.7rem;// margin-top: 1.3rem;
+    font-size: 17px;
+    // font-weight: bold;
+  }
+  .cir-box {
+    position: relative;
+  }
+  .circle1 {
+    width: 100%;
+    height: 100%;
+    border: 3px solid #329619;
+  }
+  .circle2 {
+    width: 75%;
+    height: 75%;
+    border: 3px solid #329619;
+  }
+  .circle3 {
+    width: 50%;
+    height: 50%;
+    border: 3px solid #329619;
+  }
+  .circle4 {
+    border: 3px solid #329619;
+    width: 25%;
+    height: 25%;
+    .center {
+      margin-top: 5px;
+    }
+  }
+  .sector {
+    position: absolute;
+    transform-origin: 100% 100%;
+    background: linear-gradient(185deg, #329619, transparent);
+    width: 5000px;
+    height: 5000px;
+    left: 50%;
+    top: 50%;
+    border: 1px solid #999;
+    margin-top: -5000px;
+    margin-left: -5000px;
+    transform: rotate(90deg) skew(60deg);
+  }
+  @keyframes clockwise {
+    from {
+      transform: rotate(0deg);
+    }
+
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .radar,
+  .blip {
+    animation-duration: 6s;
+    animation-iteration-count: infinite;
+  }
+
+  .radar {
+    width: 100%;
+    min-height: 100%;
+    animation-name: clockwise;
+    animation-timing-function: linear;
+    transform-origin: right bottom;
+    background: linear-gradient(46deg, transparent 50%, #49cf49), transparent;
+    position: absolute;
+    top: -50%;
+    left: -50%;
+  }
+  .line-x {
+    width: 100%;
+    height: 1px;
+    background-color: #329619;
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 0;
+  }
+  .line-y {
+    width: 1px;
+    height: 100%;
+    background-color: #329619;
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 50%;
+  }
+  .dot-radar {
+    position: absolute;
+    z-index: 3;
+    width: 10px;
+    height: 10px;
+    background-color: blue;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  .circle-text {
+    color: white;
+  }
+  margin: auto;
+
+}
