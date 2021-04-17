@@ -32,7 +32,6 @@ class Header extends React.Component{
         that.setState({ 
           data :dataFetch,
         }); 
-        // console.log("data", that.state.data);
       })
       .catch(function(error) {
         that.setState({ apiInfo:error });
@@ -43,20 +42,6 @@ class Header extends React.Component{
     this.setState({
       dropdownOpen: !this.state.dropdownOpen,
     });
-  }
-  MouseOver = (event) => {
-    event.target.style.animationPlayState="paused";
-    // console.log( event.target.style);
-  }
-  MouseOut= (event) => {
-    event.target.style.animation = 'marquee 25s linear running infinite';
-    // console.log( event.target.style.animation);
-  }
-  MouseClick = () => {
-    let url = '';
-    window.location.replace(url);
-    console.log("hi Liem", url);
-    // console.log( event.target.style.animation);
   }
   render(){
     return (
@@ -77,23 +62,12 @@ class Header extends React.Component{
               </DropdownMenu>
             </Dropdown>
           </div>
-          <div className="col-sm-9" >
-            <div className="marquee"  >
-              <div className="track" >
-                {
-                  // console.log(this.state.data)
-                  // this.state.data.map((item, index) => (
-                  //   <div className="content" onMouseOver={this.MouseOver} onMouseOut={this.MouseOut} onClick={this.MouseClick}>
-                  //   Gigaset Android smartphones infected with malicious system update app
-                  //   Phát hiện mã độc hại Android ẩn trong ứng dụng Netflix giả mạo và lây lan qua WhatsApp
-                  //   </div>
-                  // );
-                }
-                <div className="content" onMouseOver={this.MouseOver} onMouseOut={this.MouseOut} onClick={this.MouseClick}>
-                  Gigaset Android smartphones infected with malicious system update app
-                  Phát hiện mã độc hại Android ẩn trong ứng dụng Netflix giả mạo và lây lan qua WhatsApp
-                </div>
-              </div>
+          <div className="col-sm-9" style={{overflow:'hidden'}}>
+            <div className="marquee">
+              {this.state.data.map((item, index) =>{
+                return <div className="noti" key={index}><a href={item._source.url}>{item._source.title}</a></div>  
+              })
+              }
             </div>
           </div>
           <div className="col-sm-2">
