@@ -1,4 +1,5 @@
 import React from 'react';
+// import GridLayout from 'react-grid-layout';
 import {Col, Row} from 'antd';
 import './list-grid.styles.scss';
 
@@ -41,7 +42,7 @@ class Grid extends React.Component {
           return response.json();
       })
       .then(function(jsonData) {
-        jsonData.hits.hits.map(item =>
+        jsonData.hits.hits.slice(0, 1).map(item =>
           {
             that.setState({ 
               threat_vulnerability_data:

@@ -3,7 +3,7 @@ import GridLayout from 'react-grid-layout';
 import { Row, Col } from 'antd';
 import './gird.styles.scss';
 
-let url = 'http://elastic.vninfosec.net/threat-hunting-statistics/_search?pretty=true&q=%2Bcustomer%3A%28%22khach+hang+a%22%29%2Bdisplay_classification%3A%28%22four+layers%22%29%2Btime%3A%28%22last+day%22%29';
+let url = 'http://elastic.vninfosec.net/threat-hunting-statistics/_search?pretty=true&q=%2Bcustomer%3A%28%22khach+hang+a%22%29%2Bdisplay_classification%3A%28%22four+layers%22%29%2Btime%3A%28%22last+day%22%29&filter_path=-hits.hits._source.**.details.**.information';
 // let base64= require('base-64');
 // let username='admin';
 // let password='!@#VNinfosec@123';
@@ -40,7 +40,7 @@ class Grid extends React.Component {
           return response.json();
       })
       .then(function(jsonData) {
-        jsonData.hits.hits.map(item =>
+        jsonData.hits.hits.slice(0, 1).map(item =>
           {
             that.setState({ 
               networklayer_data:
