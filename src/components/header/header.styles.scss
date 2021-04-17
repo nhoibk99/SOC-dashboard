@@ -1,35 +1,29 @@
-.marquee {
-  width: 100%;
-  margin: 0 auto;
-  overflow: hidden;
-  box-sizing: border-box;
-  position: relative;
-  height: 30px;
+.marquee{
+  display: inline-flex;
+  position:relative;
+  animation:scroll 25s linear infinite;
+  padding:3px;
 }
 
-.track {
-  position: absolute;
-  white-space: nowrap;
-  will-change: transform;
-  // animation: marquee 25s;
-}
-.track .content{
-  animation: marquee 25s linear running infinite;
+.marquee:hover {
+    animation-play-state: paused
 }
 
-@keyframes marquee {
+.noti {
+  width: max-content;
+  margin: 0 100px;
+  float:left;
+}
+
+/* Make it move */
+@keyframes scroll{
   from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-99%);
-  }
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-99%);
+    }
 }
-
-// .marquee span:hover {
-//   animation-play-state: paused;
-// }
-
 .header {
   color: #b2b2b2;
   padding: 0px 20px;
