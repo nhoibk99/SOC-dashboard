@@ -1,3 +1,4 @@
+// có thể bỏ hết file này
 import {useCallback, useState} from 'react';
 
 const useClientRect = () => {

@@ -1,16 +1,15 @@
 import React from 'react';
-import GridLayout from 'react-grid-layout';
 import {Col, Row} from 'antd';
 import './list-grid.styles.scss';
 
 let url = 'http://elastic.vninfosec.net/threat-hunting-statistics/_search?pretty=true&q=%2Bcustomer%3A%28%22khach+hang+a%22%29%2Bdisplay_classification%3A%28%22impact+level%22%29%2Btime%3A%28%22last+day%22%29';
-let base64= require('base-64');
-let username='admin';
-let password='!@#VNinfosec@123';
-let headers_get = new Headers({
-  'Authorization': 'Basic '+ base64.encode(username+":"+password), 
-  'Content-Type': 'application/x-www-form-urlencoded'
-});
+// let base64= require('base-64');
+// let username='admin';
+// let password='!@#VNinfosec@123';
+// let headers_get = new Headers({
+//   'Authorization': 'Basic '+ base64.encode(username+":"+password), 
+//   'Content-Type': 'application/x-www-form-urlencoded'
+// });
 //headers_get.set('Authorization','Basic ' + base64.encode(username+":"+password));
 
 class Grid extends React.Component {

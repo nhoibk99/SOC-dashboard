@@ -6,7 +6,7 @@ function getTopLeft(x, y, r) {
   let left = r;
   if (x < 0) {
     left = r + r * x;
-    console.log(left);
+    // console.log(left);
   } else {
     left = r + r * x;
   }
