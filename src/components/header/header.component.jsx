@@ -3,7 +3,7 @@ import Clock from 'react-live-clock';
 import {Dropdown, DropdownToggle, DropdownMenu, DropdownItem} from 'reactstrap';
 import logoImage from '../../assets/images/logo.png';
 import './header.styles.scss';
-let url = 'http://elastic.vninfosec.net/threat-hunting-statistics/_search?pretty=true&q=%2Bcustomer%3A%28%22khach+hang+a%22%29%2Bdisplay_classification%3A%28%22cybersecurity+news%22%29';
+let api = 'http://elastic.vninfosec.net/threat-hunting-statistics/_search?pretty=true&q=%2Bcustomer%3A%28%22khach+hang+a%22%29%2Bdisplay_classification%3A%28%22cybersecurity+news%22%29';
 class Header extends React.Component{
   constructor(){
     super();
@@ -23,7 +23,7 @@ class Header extends React.Component{
 
   tick = () => {
     const that = this;
-    fetch(url)
+    fetch(api)
       .then(function(response) {
           return response.json();
       })
@@ -51,21 +51,21 @@ class Header extends React.Component{
             <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
               <DropdownToggle caret>Menu</DropdownToggle>
               <DropdownMenu>
-                <DropdownItem header>Header</DropdownItem>
-                <DropdownItem>Some Action</DropdownItem>
-                <DropdownItem text>Dropdown Item Text</DropdownItem>
+                <DropdownItem href="">HomePage</DropdownItem>
+                <DropdownItem href="/alert"  target="_blank" rel="noopener noreferrer">Alert Managerment</DropdownItem>
+                {/* <DropdownItem text>Dropdown Item Text</DropdownItem>
                 <DropdownItem disabled>Action (disabled)</DropdownItem>
                 <DropdownItem divider />
                 <DropdownItem>Foo Action</DropdownItem>
                 <DropdownItem>Bar Action</DropdownItem>
-                <DropdownItem>Quo Action</DropdownItem>
+                <DropdownItem>Quo Action</DropdownItem> */}
               </DropdownMenu>
             </Dropdown>
           </div>
           <div className="col-sm-9" style={{overflow:'hidden'}}>
             <div className="marquee">
               {this.state.data.map((item, index) =>{
-                return <div className="noti" key={index}><a href={item._source.url}>{item._source.title}</a></div>  
+                return <div style={{display: "table-cell"}} className="noti" key={index}><a href={item._source.url}  target="_blank">{item._source.title}</a></div>  
               })
               }
             </div>

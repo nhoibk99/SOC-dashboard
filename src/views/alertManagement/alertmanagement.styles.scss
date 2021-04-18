@@ -1,0 +1,34 @@
+@import '~antd/dist/antd.css';
+*{
+    box-sizing: border-box;
+}
+table {
+    margin: 10px auto;
+    padding: 10px 20px;
+    color: aliceblue;
+    text-align: center;
+    width: 100%;
+    border: 1px solid white;
+}
+th, td {
+    height: 20px;
+    border: 1px solid white;
+}
+button {
+    color: black;
+}
+select{
+    margin-right: 50px;
+    color: black;
+
+}
+label{
+    color: aliceblue;
+    margin: 10px 20px 10px 10px;
+}
+.pagination{
+    float: right;
+}
+.ant-pagination-total-text{
+  color: aliceblue;
+}

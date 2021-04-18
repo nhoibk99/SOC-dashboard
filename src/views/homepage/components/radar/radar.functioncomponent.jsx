@@ -20,6 +20,7 @@ let R=0.97;
 let centerX = -0.02;
 let centerY = 0.02;
 let url='http://elastic.vninfosec.net/threat-hunting-statistics/_search?pretty=true&q=%2Bcustomer%3A%28%22khach+hang+a%22%29%2Bdisplay_classification%3A%28%22four+layers%22%29%2Btime%3A%28%22last+day%22%29&filter_path=hits.hits._source.**.details.**.information';
+
 const Radar = () => {
   const init_radardata =[ ];
  

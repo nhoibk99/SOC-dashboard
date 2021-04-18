@@ -13,16 +13,17 @@
   width: max-content;
   margin: 0 100px;
   float:left;
+  text-shadow:0px 0px 15px  #d5da92;
 }
 
 /* Make it move */
 @keyframes scroll{
   from {
-      transform: translateX(0);
-    }
-    to {
-      transform: translateX(-99%);
-    }
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-99%);
+  }
 }
 .header {
   color: #b2b2b2;
