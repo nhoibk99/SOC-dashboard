@@ -15,7 +15,7 @@ class AlertManagement extends React.Component{
             dataSearch: [],
             isSearch: false,
             currentPage: 1,
-            pageSize: 5,
+            pageSize: 10,
         }
     }  
     componentDidMount() {
@@ -28,6 +28,7 @@ class AlertManagement extends React.Component{
     }
 
     getData = () => {
+       
         const that = this;
         fetch(api)
             .then(function(response) {
@@ -51,33 +52,41 @@ class AlertManagement extends React.Component{
             });
     }
 
-    onChange = page => {
+    onChange = (page, pageSize) => {
         this.setState({
             currentPage: page,
+            pageSize: pageSize,
         });
         // console.log(this.state.current)
-
     };
     onSearchChange = (term, hits) =>{
         // console.log("term", term);
         // console.log("hits",  hits);
         term == '' ? 
         this.setState({
+            currentPage: 1,
             isSearch: false
         }):
         this.setState({
+            currentPage: 1,
             isSearch: true,
             dataSearch: hits,
         })
     }
     
     render(){
+        const {data, dataSearch, currentPage, pageSize} = this.state;
+        const indexOfLast = currentPage * pageSize;
+        const indexOfFist = indexOfLast - pageSize;
+        console.log('log',indexOfFist, indexOfLast);
+        let list = [];
+        let totalRow = 0;
+        this.state.isSearch ? list = dataSearch.slice(indexOfFist, indexOfLast) : list = data.slice(indexOfFist, indexOfLast);
+        this.state.isSearch ? totalRow = dataSearch.length : totalRow = data.length;
+        console.log('log2', list);
+
         return(
-            <div className="alertManagement" style={{minHeight: '100vh', background: `url(${BgImage}) 100% `}} >
-                {/* <div className='search'>
-                    <input type="text" placeholder='nhập tìm kiếm' style={{width: '90%'}}/>
-                    <button style={{width: '10%'}}>Search</button>
-                </div> */}
+            <div className="alertManagement" style={{minHeight: '100vh', maxHeight: 'fix-content', background: `url(${BgImage}) 100% `}} >
                 <SearchBar 
                     onSearchTextChange={ (term,hits) => {this.onSearchChange(term,hits)}}
                     onSearchButtonClick={this.onSearchClick}
@@ -126,27 +135,19 @@ class AlertManagement extends React.Component{
                             <th style={{width:'5%'}}>#</th>
                             <th style={{width:'20%'}}>Customer</th>
                             <th style={{width:'30%'}}>Kill_chain</th>
-                            {/* <th style={{width:'20%'}}>Severity</th> */}
+                            <th style={{width:'20%'}}>Severity</th>
                             <th style={{width:'auto'}}>Message</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {this.state.isSearch?
-                            this.state.dataSearch.map((item, index) =>{
-                                return <tr key={index}>
-                                    <td>{index}</td>
+                        {
+                           console.log(list)}{
+                        list.map((item, index) =>{
+                                return <tr key={index+1}>
+                                    <td>{index+1+indexOfFist}</td>
                                     <td>{item.customer}</td>
                                     <td>{item.kill_chain}</td>
-                                    {/* <td>{item.severity}</td> */}
-                                    <td>{item.message}</td>
-                                </tr>
-                            })
-                            :this.state.data.map((item, index) =>{
-                                return <tr key={index}>
-                                    <td>{index}</td>
-                                    <td>{item.customer}</td>
-                                    <td>{item.kill_chain}</td>
-                                    {/* <td>{item.severity}</td> */}
+                                    <td>{item.severity}</td>
                                     <td>{item.message}</td>
                                 </tr>
                             })
@@ -154,20 +155,16 @@ class AlertManagement extends React.Component{
                     </tbody>
                 </table>
                 <div className='pagination'>
-                    {
-                        console.log("lenght", this.state.data.length)
-                    }
-                    <Pagination
-                        total={ this.state.data.length}
+                    <Pagination 
+                        total={totalRow}
                         showTotal={total => `Total ${total} items`}
                         showTotal={(total, range) => `${range[0]}-${range[1]} of ${total} items`}
-                        pageSizeOptions={["5", "10", "20"]} 
+                        pageSizeOptions={["10", "20", "50"]} 
                         defaultPageSize={this.state.pageSize}
                         current={this.state.currentPage}
                         onChange={this.onChange}
                     />
                 </div>
-                {/* {console.log(this.state.currentPage)} */}
             </div>
         )
     }
