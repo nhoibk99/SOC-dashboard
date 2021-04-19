@@ -15,7 +15,7 @@ class AlertManagement extends React.Component{
             dataSearch: [],
             isSearch: false,
             currentPage: 1,
-            pageSize: 23,
+            pageSize: 20,
         }
     }  
     componentDidMount() {
@@ -86,7 +86,7 @@ class AlertManagement extends React.Component{
         console.log('log2', list);
 
         return(
-            <div className="alertManagement" style={{minHeight: '100vh', maxHeight: 'fix-content', background: `url(${BgImage}) 100% `}} >
+            <div className="alertManagement">
                 <SearchBar 
                     onSearchTextChange={ (term,hits) => {this.onSearchChange(term,hits)}}
                     onSearchButtonClick={this.onSearchClick}
@@ -95,47 +95,65 @@ class AlertManagement extends React.Component{
                     style={{with:'60%'}}
                 />
                 <div className='filter'>
-                    <label htmlFor="killChain">Kill chain</label>
-                    <select defaultValue="all">
-                        <option value="all">All</option>
-                        <option value="Exploitation">Exploitation</option>
-                        <option value="LateralMovement">LateralMovement</option>
-                        <option value="Delivery">Delivery</option>
-                        <option value="Reconnaissance">Reconnaissance</option>
-                        <option value="Exfiltration">Exfiltration</option>
-                        <option value="Weaponization">Weaponization</option>
-                        <option value="Installation">Installation</option>
-                        <option value="Command and Control">Command and Control</option>
-                    </select>
-                    <label htmlFor="killChain">Layer</label>
-                    <select defaultValue="grapefruit">
-                        <option value="grapefruit">NetWork</option>
-                        <option value="lime">Application</option>
-                        <option value="coconut">Coconut</option>
-                        <option value="mango">Mango</option>
-                    </select>
-                    <label htmlFor="killChain">Impact level</label>
-                    <select  defaultValue="grapefruit">
-                        <option value="grapefruit">Attack web</option>
-                        <option value="lime">Lime</option>
-                        <option value="coconut">Coconut</option>
-                        <option value="mango">Mango</option>
-                    </select>
-                    <label htmlFor="killChain">Severity</label> 
-                    <select defaultValue="H">
-                        <option value="H">H</option>
-                        <option value="L">L</option>
-                        <option value="M">M</option>
-                    </select><br/>
-                    <div className="duration">
-                        <label htmlFor="src">Source</label>
-                        <input type="text"/>
-                        <label htmlFor="des">Destination</label>
-                        <input type="text"/>
-                        <label htmlFor="timeFrom">Time from</label>
-                        <input type="text"/>
-                        <label htmlFor="timeTo">to</label>
-                        <input type="text"/>
+                    <div className="row">
+                        <div className='col-3'>
+                            <label htmlFor="killChain">Kill chain</label>
+                            <select defaultValue="all">
+                                <option value="all">All</option>
+                                <option value="Exploitation">Exploitation</option>
+                                <option value="LateralMovement">LateralMovement</option>
+                                <option value="Delivery">Delivery</option>
+                                <option value="Reconnaissance">Reconnaissance</option>
+                                <option value="Exfiltration">Exfiltration</option>
+                                <option value="Weaponization">Weaponization</option>
+                                <option value="Installation">Installation</option>
+                                <option value="Command and Control">Command and Control</option>
+                            </select>
+                        </div>
+                        <div className='col-3'>
+                            <label htmlFor="killChain">Layer</label>
+                            <select defaultValue="grapefruit">
+                                <option value="grapefruit">NetWork</option>
+                                <option value="lime">Application</option>
+                                <option value="coconut">Coconut</option>
+                                <option value="mango">Mango</option>
+                            </select>
+                        </div>
+                        <div className='col-3'>
+                            <label htmlFor="killChain">Impact level</label>
+                            <select  defaultValue="grapefruit">
+                                <option value="grapefruit">Attack web</option>
+                                <option value="lime">Lime</option>
+                                <option value="coconut">Coconut</option>
+                                <option value="mango">Mango</option>
+                            </select>
+                        </div>
+                        <div className='col-3'>
+                            <label htmlFor="killChain">Severity</label> 
+                            <select defaultValue="H">
+                                <option value="H">H</option>
+                                <option value="L">L</option>
+                                <option value="M">M</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className='col-3'>
+                            <label htmlFor="src">Source: </label>
+                            <input type="text"/>
+                        </div>
+                        <div className='col-3'>
+                            <label htmlFor="des">Destination: </label>
+                            <input type="text"/>
+                        </div>
+                        <div className='col-3'>
+                            <label htmlFor="timeFrom">Time from: </label>
+                            <input type="text"/>
+                        </div>
+                        <div className='col-3'>
+                            <label htmlFor="timeTo">to: </label>
+                            <input type="text"/>
+                        </div>
                     </div>
                 </div>
                 <table>
@@ -167,7 +185,7 @@ class AlertManagement extends React.Component{
                         }
                     </tbody>
                 </table>
-                <div className='pagination'>
+                <div className='pagination'>    
                     <Pagination 
                         total={totalRow}
                         showTotal={total => `Total ${total} items`}

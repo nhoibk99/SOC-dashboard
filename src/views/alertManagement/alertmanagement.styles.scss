@@ -2,12 +2,16 @@
 *{
     box-sizing: border-box;
 }
+.alertManagement{
+    padding: 10px 10px 40px 10px;
+    background-image: url('../../assets/images/bg.png');
+    min-height: 100vh;
+}
 table {
+    width: 100%;
     margin: 10px auto;
-    padding: 10px 20px;
     color: aliceblue;
     text-align: center;
-    width: 100%;
     border: 1px solid white;
 }
 th, td {
@@ -17,17 +21,29 @@ button {
     color: black;
 }
 select{
-    margin-right: 50px;
     color: black;
-
 }
 label{
     color: aliceblue;
-    margin: 10px 20px 10px 10px;
+    padding: 10px;
 }
 .pagination{
+    margin-bottom: 10px;
     float: right;
+    margin-right: 15px;
 }
 .ant-pagination-total-text{
   color: aliceblue;
+}
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+.col-3{
+    display: inline-block;
+    padding: auto;
+}
+.row{
+    margin: unset;
 }
