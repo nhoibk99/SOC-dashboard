@@ -15,7 +15,7 @@ class AlertManagement extends React.Component{
             dataSearch: [],
             isSearch: false,
             currentPage: 1,
-            pageSize: 10,
+            pageSize: 23,
         }
     }  
     componentDidMount() {
@@ -92,14 +92,20 @@ class AlertManagement extends React.Component{
                     onSearchButtonClick={this.onSearchClick}
                     placeHolderText={"Search here..."}
                     data={this.state.data}
+                    style={{with:'60%'}}
                 />
                 <div className='filter'>
                     <label htmlFor="killChain">Kill chain</label>
                     <select defaultValue="all">
                         <option value="all">All</option>
-                        <option value="lime">Lime</option>
-                        <option value="coconut">Coconut</option>
-                        <option value="mango">Mango</option>
+                        <option value="Exploitation">Exploitation</option>
+                        <option value="LateralMovement">LateralMovement</option>
+                        <option value="Delivery">Delivery</option>
+                        <option value="Reconnaissance">Reconnaissance</option>
+                        <option value="Exfiltration">Exfiltration</option>
+                        <option value="Weaponization">Weaponization</option>
+                        <option value="Installation">Installation</option>
+                        <option value="Command and Control">Command and Control</option>
                     </select>
                     <label htmlFor="killChain">Layer</label>
                     <select defaultValue="grapefruit">
@@ -116,27 +122,32 @@ class AlertManagement extends React.Component{
                         <option value="mango">Mango</option>
                     </select>
                     <label htmlFor="killChain">Severity</label> 
-                    <select defaultValue="grapefruit">
-                        <option value="grapefruit">H</option>
-                        <option value="lime">Lime</option>
-                        <option value="coconut">Coconut</option>
-                        <option value="mango">Mango</option>
+                    <select defaultValue="H">
+                        <option value="H">H</option>
+                        <option value="L">L</option>
+                        <option value="M">M</option>
                     </select><br/>
                     <div className="duration">
+                        <label htmlFor="src">Source</label>
+                        <input type="text"/>
+                        <label htmlFor="des">Destination</label>
+                        <input type="text"/>
                         <label htmlFor="timeFrom">Time from</label>
                         <input type="text"/>
-                        <label htmlFor="timeto">to</label>
+                        <label htmlFor="timeTo">to</label>
                         <input type="text"/>
                     </div>
                 </div>
                 <table>
                     <thead>
                         <tr>
-                            <th style={{width:'5%'}}>#</th>
+                            <th style={{width:'auto'}}>#</th>
                             <th style={{width:'20%'}}>Customer</th>
-                            <th style={{width:'30%'}}>Kill_chain</th>
-                            <th style={{width:'20%'}}>Severity</th>
-                            <th style={{width:'auto'}}>Message</th>
+                            <th style={{width:'auto'}}>Kill_chain</th>
+                            <th style={{width:'10%'}}>Host</th>
+                            <th style={{width:'10%'}}>Internal ip</th>
+                            <th style={{width:'5%'}}>Severity</th>
+                            <th style={{width:'30%'}}>Message</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -147,6 +158,8 @@ class AlertManagement extends React.Component{
                                     <td>{index+1+indexOfFist}</td>
                                     <td>{item.customer}</td>
                                     <td>{item.kill_chain}</td>
+                                    <td>{item.host}</td>
+                                    <td>{item.internal_ip}</td>
                                     <td>{item.severity}</td>
                                     <td>{item.message}</td>
                                 </tr>
@@ -159,7 +172,7 @@ class AlertManagement extends React.Component{
                         total={totalRow}
                         showTotal={total => `Total ${total} items`}
                         showTotal={(total, range) => `${range[0]}-${range[1]} of ${total} items`}
-                        pageSizeOptions={["10", "20", "50"]} 
+                        pageSizeOptions={["10", "20", "50", "100"]} 
                         defaultPageSize={this.state.pageSize}
                         current={this.state.currentPage}
                         onChange={this.onChange}
