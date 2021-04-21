@@ -1,10 +1,11 @@
 import React from 'react';
 
 import './alertmanagement.styles.scss';
-import BgImage from '../../assets/images/bg.png';
 import SearchBar from 'react-js-search';
 import { Pagination } from 'antd';
-
+// Import React Table
+import ReactTable from 'react-table-6';
+// import 'react-table/react-table.css';
 let api = 'http://elastic.vninfosec.net/alert-khach_hanga/_search?pretty&size=300';
 
 class AlertManagement extends React.Component{
@@ -16,6 +17,7 @@ class AlertManagement extends React.Component{
             isSearch: false,
             currentPage: 1,
             pageSize: 20,
+            api : 'http://elastic.vninfosec.net/alert-khach_hanga/_search?pretty',
         }
     }  
     componentDidMount() {
@@ -28,9 +30,9 @@ class AlertManagement extends React.Component{
     }
 
     getData = () => {
-       
         const that = this;
-        fetch(api)
+        console.log("api state",that.state.api);
+        fetch(that.state.api)
             .then(function(response) {
                 return response.json();
             })
@@ -73,17 +75,29 @@ class AlertManagement extends React.Component{
             dataSearch: hits,
         })
     }
-    
+    filter = () => {
+        let killChain = document.getElementById('killChain').value;
+        let layer = document.getElementById('layer').value;
+        let impact = document.getElementById('impact').value;
+        let severity = document.getElementById('severity').value;
+        if(killChain != 'all'){
+            this.setState({
+                api: api +"&q=+kill_chain:(\""+killChain+"\")",
+            },()=>{
+                this.getData();
+            })
+            console.log("api1:", this.state.api);
+        }
+        // this.getData();
+    };
     render(){
         const {data, dataSearch, currentPage, pageSize} = this.state;
         const indexOfLast = currentPage * pageSize;
         const indexOfFist = indexOfLast - pageSize;
-        console.log('log',indexOfFist, indexOfLast);
         let list = [];
         let totalRow = 0;
         this.state.isSearch ? list = dataSearch.slice(indexOfFist, indexOfLast) : list = data.slice(indexOfFist, indexOfLast);
         this.state.isSearch ? totalRow = dataSearch.length : totalRow = data.length;
-        console.log('log2', list);
 
         return(
             <div className="alertManagement">
@@ -92,13 +106,12 @@ class AlertManagement extends React.Component{
                     onSearchButtonClick={this.onSearchClick}
                     placeHolderText={"Search here..."}
                     data={this.state.data}
-                    style={{with:'60%'}}
                 />
-                <div className='filter'>
+                <div className='filter'>    
                     <div className="row">
                         <div className='col-3'>
                             <label htmlFor="killChain">Kill chain</label>
-                            <select defaultValue="all">
+                            <select id='killChain' defaultValue="all" onChange={this.filter}>
                                 <option value="all">All</option>
                                 <option value="Exploitation">Exploitation</option>
                                 <option value="LateralMovement">LateralMovement</option>
@@ -111,26 +124,26 @@ class AlertManagement extends React.Component{
                             </select>
                         </div>
                         <div className='col-3'>
-                            <label htmlFor="killChain">Layer</label>
-                            <select defaultValue="grapefruit">
-                                <option value="grapefruit">NetWork</option>
-                                <option value="lime">Application</option>
-                                <option value="coconut">Coconut</option>
-                                <option value="mango">Mango</option>
+                            <label htmlFor="layer">Layer</label>
+                            <select id='layer'  defaultValue="all" onChange={this.filter}>
+                                <option value="all">All</option>
+                                <option value="NetWork">NetWork</option>
+                                <option value="Application">Application</option>
                             </select>
                         </div>
                         <div className='col-3'>
-                            <label htmlFor="killChain">Impact level</label>
-                            <select  defaultValue="grapefruit">
-                                <option value="grapefruit">Attack web</option>
-                                <option value="lime">Lime</option>
-                                <option value="coconut">Coconut</option>
-                                <option value="mango">Mango</option>
+                            <label htmlFor="impact">Impact level</label>
+                            <select id='impact' defaultValue="all" onChange={this.filter}>
+                                <option value="all">All</option>
+                                <option value="web">Attack web</option>
+                                <option value="app">Attack app</option>
+                                <option value="db">Attack data</option>
                             </select>
                         </div>
                         <div className='col-3'>
-                            <label htmlFor="killChain">Severity</label> 
-                            <select defaultValue="H">
+                            <label htmlFor="severity">Severity</label> 
+                            <select id='severity' defaultValue="all" onChange={this.filter}>
+                                <option value="all">All</option>
                                 <option value="H">H</option>
                                 <option value="L">L</option>
                                 <option value="M">M</option>
@@ -156,6 +169,25 @@ class AlertManagement extends React.Component{
                         </div>
                     </div>
                 </div>
+                {/* <ReactTable
+                    data={list}
+                    columns={[
+                        {
+                            Header: "Customer",
+                            accessor: "customer"
+                        },
+                        {
+                            Header: "Kill_chain",
+                            accessor: "kill_chain"
+                        }
+                        
+                    ]}
+                    defaultPageSize={10}
+                    style={{
+                        height: "80vh" // This will force the table body to overflow and scroll, since there is not enough room
+                    }}
+                    className="-striped -highlight"
+                /> */}
                 <table>
                     <thead>
                         <tr>
@@ -170,8 +202,8 @@ class AlertManagement extends React.Component{
                     </thead>
                     <tbody>
                         {
-                           console.log(list)}{
-                        list.map((item, index) =>{
+                            console.log(list)}{
+                            list.map((item, index) =>{
                                 return <tr key={index+1}>
                                     <td>{index+1+indexOfFist}</td>
                                     <td>{item.customer}</td>

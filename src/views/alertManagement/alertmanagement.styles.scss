@@ -7,6 +7,27 @@
     background-image: url('../../assets/images/bg.png');
     min-height: 100vh;
 }
+.ReactTable {
+    height: 95vh !important;
+}
+.ReactTable .rt-thead {
+    overflow: initial !important;
+}
+  
+.rt-table {
+    width: 100%;
+    margin: 10px auto;
+    color: aliceblue;
+    text-align: center;
+    border: 1px solid white;
+    .rt-thead{
+        .rt-tr{
+            border: 1px solid white;
+        }
+
+    }
+}
+
 table {
     width: 100%;
     margin: 10px auto;
@@ -21,9 +42,12 @@ button {
     color: black;
 }
 select{
+    max-width: 150px;
+    min-width: 150px;
     color: black;
 }
 label{
+    width: 100px;
     color: aliceblue;
     padding: 10px;
 }
@@ -42,8 +66,21 @@ label{
 }
 .col-3{
     display: inline-block;
-    padding: auto;
+    // padding: 0 50px 0 0 ;
+    // text-align: right;
+}
+.col-3 input{
+    max-width: 150px;
 }
 .row{
     margin: unset;
+}
+.searchComponent{
+    margin: 0 25px;
+    text-align: unset!important;
+}
+.search-container input{
+    margin: unset;
+    padding: 5px;
+    width: 70.5%;
 }
