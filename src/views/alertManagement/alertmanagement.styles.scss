@@ -11,20 +11,28 @@
     height: 95vh !important;
 }
 .ReactTable .rt-thead {
-    overflow: initial !important;
+    // overflow: initial !important;
 }
   
 .rt-table {
-    width: 100%;
+    // width: 100%;
     margin: 10px auto;
     color: aliceblue;
     text-align: center;
     border: 1px solid white;
     .rt-thead{
         .rt-tr{
-            border: 1px solid white;
+            .rt-th{
+                border: 1px solid white;
+            }
         }
-
+    }
+    .rt-tbody{
+        .rt-tr{
+            .rt-td{
+                border: 1px solid white;
+            }
+        }
     }
 }
 

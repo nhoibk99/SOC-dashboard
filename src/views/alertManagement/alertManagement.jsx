@@ -5,7 +5,7 @@ import SearchBar from 'react-js-search';
 import { Pagination } from 'antd';
 // Import React Table
 import ReactTable from 'react-table-6';
-// import 'react-table/react-table.css';
+import 'react-table-6/react-table.css';
 let api = 'http://elastic.vninfosec.net/alert-khach_hanga/_search?pretty&size=300';
 
 class AlertManagement extends React.Component{
@@ -169,7 +169,7 @@ class AlertManagement extends React.Component{
                         </div>
                     </div>
                 </div>
-                {/* <ReactTable
+                <ReactTable
                     data={list}
                     columns={[
                         {
@@ -179,6 +179,22 @@ class AlertManagement extends React.Component{
                         {
                             Header: "Kill_chain",
                             accessor: "kill_chain"
+                        },
+                        {
+                            Header: "Host",
+                            accessor: "host"
+                        },
+                        {
+                            Header: "Internal ip",
+                            accessor: "internal_ip"
+                        },
+                        {
+                            Header: "Severity",
+                            accessor: "severity"
+                        },
+                        {
+                            Header: "Message",
+                            accessor: "message"
                         }
                         
                     ]}
@@ -187,8 +203,8 @@ class AlertManagement extends React.Component{
                         height: "80vh" // This will force the table body to overflow and scroll, since there is not enough room
                     }}
                     className="-striped -highlight"
-                /> */}
-                <table>
+                />
+                {/* <table>
                     <thead>
                         <tr>
                             <th style={{width:'auto'}}>#</th>
@@ -216,8 +232,8 @@ class AlertManagement extends React.Component{
                             })
                         }
                     </tbody>
-                </table>
-                <div className='pagination'>    
+                </table> */}
+                {/* <div className='pagination'>    
                     <Pagination 
                         total={totalRow}
                         showTotal={total => `Total ${total} items`}
@@ -227,7 +243,7 @@ class AlertManagement extends React.Component{
                         current={this.state.currentPage}
                         onChange={this.onChange}
                     />
-                </div>
+                </div> */}
             </div>
         )
     }
