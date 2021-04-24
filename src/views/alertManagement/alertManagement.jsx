@@ -1,4 +1,5 @@
 import React from 'react';
+import Chart from './components/chart/chart.component';
 
 import './alertmanagement.styles.scss';
 import SearchBar from 'react-js-search';
@@ -101,26 +102,31 @@ class AlertManagement extends React.Component{
 
         return(
             <div className="alertManagement">
-                <SearchBar 
-                    onSearchTextChange={ (term,hits) => {this.onSearchChange(term,hits)}}
-                    onSearchButtonClick={this.onSearchClick}
-                    placeHolderText={"Search here..."}
-                    data={this.state.data}
-                />
+                 <Chart />
                 <div className='filter'>    
+                    <SearchBar 
+                        onSearchTextChange={ (term,hits) => {this.onSearchChange(term,hits)}}
+                        onSearchButtonClick={this.onSearchClick}
+                        placeHolderText={"Search here..."}
+                        data={this.state.data}
+                        />
                     <div className="row">
                         <div className='col-3'>
                             <label htmlFor="killChain">Kill chain</label>
                             <select id='killChain' defaultValue="all" onChange={this.filter}>
                                 <option value="all">All</option>
-                                <option value="Exploitation">Exploitation</option>
+                                <option value="Initial-Access">Initial-Access</option>
+                                <option value="Execution">Execution</option>
+                                <option value="Persistence">Persistence</option>
+                                <option value="Privilege-Escalation">Privilege-Escalation</option>
+                                <option value="Defense-Evasion">Defense-Evasion</option>
+                                <option value="Credential-Access">Credential-Access</option>
+                                <option value="Discovery">Discovery</option>
                                 <option value="LateralMovement">LateralMovement</option>
-                                <option value="Delivery">Delivery</option>
-                                <option value="Reconnaissance">Reconnaissance</option>
+                                <option value="Collection">Collection</option>
                                 <option value="Exfiltration">Exfiltration</option>
-                                <option value="Weaponization">Weaponization</option>
-                                <option value="Installation">Installation</option>
                                 <option value="Command and Control">Command and Control</option>
+                                <option value="Unknown">Unknown</option>
                             </select>
                         </div>
                         <div className='col-3'>
@@ -128,25 +134,44 @@ class AlertManagement extends React.Component{
                             <select id='layer'  defaultValue="all" onChange={this.filter}>
                                 <option value="all">All</option>
                                 <option value="NetWork">NetWork</option>
+                                <option value="Host">Host</option>
                                 <option value="Application">Application</option>
+                                <option value="Data">Data</option>
+                                <option value="Unknown">Unknown</option>
                             </select>
                         </div>
                         <div className='col-3'>
                             <label htmlFor="impact">Impact level</label>
                             <select id='impact' defaultValue="all" onChange={this.filter}>
                                 <option value="all">All</option>
-                                <option value="web">Attack web</option>
-                                <option value="app">Attack app</option>
-                                <option value="db">Attack data</option>
+                                <option value="Website vulnerability">Website vulnerability</option>
+                                <option value="Sensitive data exposure">Sensitive data exposure</option>
+                                <option value="Abnormal connection">Abnormal connection</option>
+                                <option value="CVE">CVE</option>
+                                <option value="Security misconfiguration">Security misconfiguration</option>
+                                <option value="Baseline IOC">Baseline IOC</option>
+                                <option value="DOS attack">DOS attack</option>
+                                <option value="Bruteforce attack">Bruteforce attack</option>
+                                <option value="Phishing attack">Phishing attack</option>
+                                <option value="Web attack">Web attack</option>
+                                <option value="Application attack">Application attack</option>
+                                <option value="Malware attack">Malware attack</option>
+                                <option value="Leaked data">Leaked data</option>
+                                <option value="Malware-infected host">Malware-infected host</option>
+                                <option value="Inaccessible Service">Inaccessible Service</option>
+                                <option value="Attacked website">Attacked website</option>
+                                <option value="Compromised server">Compromised server</option>
+                                <option value="Webshell">Webshell</option>
                             </select>
                         </div>
                         <div className='col-3'>
                             <label htmlFor="severity">Severity</label> 
                             <select id='severity' defaultValue="all" onChange={this.filter}>
                                 <option value="all">All</option>
+                                <option value="C">C</option>
                                 <option value="H">H</option>
-                                <option value="L">L</option>
                                 <option value="M">M</option>
+                                <option value="L">L</option>
                             </select>
                         </div>
                     </div>
@@ -161,11 +186,11 @@ class AlertManagement extends React.Component{
                         </div>
                         <div className='col-3'>
                             <label htmlFor="timeFrom">Time from: </label>
-                            <input type="text"/>
+                            <input type="datetime-local"/>
                         </div>
                         <div className='col-3'>
                             <label htmlFor="timeTo">to: </label>
-                            <input type="text"/>
+                            <input type="datetime-local"/>
                         </div>
                     </div>
                 </div>
@@ -200,7 +225,7 @@ class AlertManagement extends React.Component{
                     ]}
                     defaultPageSize={10}
                     style={{
-                        height: "80vh" // This will force the table body to overflow and scroll, since there is not enough room
+                        height: "55vh" // This will force the table body to overflow and scroll, since there is not enough room
                     }}
                     className="-striped -highlight"
                 />

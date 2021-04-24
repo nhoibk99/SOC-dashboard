@@ -1,0 +1,14 @@
+.chart {
+  width: 100%;
+  .recharts-text {
+    tspan {
+      fill: #b2b2b2;
+    }
+  }
+}
+.title-chart {
+  text-align: center;
+  color:rgba(255, 255, 255, 0.685);
+  font-size: 17px;
+  font-weight: bold;
+}

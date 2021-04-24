@@ -3,38 +3,47 @@
     box-sizing: border-box;
 }
 .alertManagement{
-    padding: 10px 10px 40px 10px;
+    padding: 10px ;
     background-image: url('../../assets/images/bg.png');
     min-height: 100vh;
 }
+
 .ReactTable {
-    height: 95vh !important;
-}
-.ReactTable .rt-thead {
-    // overflow: initial !important;
-}
-  
-.rt-table {
-    // width: 100%;
-    margin: 10px auto;
     color: aliceblue;
-    text-align: center;
-    border: 1px solid white;
-    .rt-thead{
-        .rt-tr{
-            .rt-th{
-                border: 1px solid white;
+    .rt-table {
+        // width: 100%;
+        margin: 10px auto;
+        text-align: center;
+        border: 1px solid white;
+        .rt-thead{
+            .rt-tr{
+                .rt-th{
+                    background: cadetblue;
+                    border: 1px solid white;
+                }
+            }
+        }
+        .rt-tbody{
+            .rt-tr{
+                .rt-td{
+                    border: 1px solid white;
+                }
             }
         }
     }
-    .rt-tbody{
-        .rt-tr{
-            .rt-td{
-                border: 1px solid white;
-            }
+    .pagination-bottom .-pagination{
+        button{
+            opacity: 80%;
+            background-color: cadetblue!important;
+            color: aliceblue!important;
+        }
+    
+        input {
+            color: black;
         }
     }
 }
+
 
 table {
     width: 100%;
@@ -50,35 +59,25 @@ button {
     color: black;
 }
 select{
-    max-width: 150px;
-    min-width: 150px;
+    max-width: 200px;
+    min-width: 200px;
     color: black;
 }
-label{
-    width: 100px;
+.row label{
+    width: 80px;
     color: aliceblue;
-    padding: 10px;
+    padding: 10px 0;
 }
 .pagination{
     margin-bottom: 10px;
-    float: right;
     margin-right: 15px;
+    float: right;
 }
 .ant-pagination-total-text{
   color: aliceblue;
-}
-.clearfix::after {
-    content: "";
-    clear: both;
-    display: table;
-}
-.col-3{
-    display: inline-block;
-    // padding: 0 50px 0 0 ;
-    // text-align: right;
-}
+}  
 .col-3 input{
-    max-width: 150px;
+    max-width: 200px;
 }
 .row{
     margin: unset;
