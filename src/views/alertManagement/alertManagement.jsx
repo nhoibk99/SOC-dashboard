@@ -104,13 +104,34 @@ class AlertManagement extends React.Component{
             <div className="alertManagement">
                  <Chart />
                 <div className='filter'>    
-                    <SearchBar 
-                        onSearchTextChange={ (term,hits) => {this.onSearchChange(term,hits)}}
-                        onSearchButtonClick={this.onSearchClick}
-                        placeHolderText={"Search here..."}
-                        data={this.state.data}
-                        />
+                    <div className='row'>
+                        <div className='col-9'>
+                            <SearchBar 
+                                onSearchTextChange={ (term,hits) => {this.onSearchChange(term,hits)}}
+                                // onSearchButtonClick={this.onSearchClick}
+                                placeHolderText={"Search here..."}
+                                data={this.state.data}
+                                />
+                        </div>
+                        <div className='col-3'>
+                            <label class="container">Auto refresh
+                                <input type="checkbox"/>
+                                <span className="checkmark"></span>
+                            </label>
+                        </div>
+                    </div>
                     <div className="row">
+                        <div className='col-3'>
+                            <label htmlFor="layer">Layer</label>
+                            <select id='layer'  defaultValue="all" onChange={this.filter}>
+                                <option value="all">All</option>
+                                <option value="NetWork">NetWork</option>
+                                <option value="Host">Host</option>
+                                <option value="Application">Application</option>
+                                <option value="Data">Data</option>
+                                <option value="Unknown">Unknown</option>
+                            </select>
+                        </div>
                         <div className='col-3'>
                             <label htmlFor="killChain">Kill chain</label>
                             <select id='killChain' defaultValue="all" onChange={this.filter}>
@@ -126,17 +147,6 @@ class AlertManagement extends React.Component{
                                 <option value="Collection">Collection</option>
                                 <option value="Exfiltration">Exfiltration</option>
                                 <option value="Command and Control">Command and Control</option>
-                                <option value="Unknown">Unknown</option>
-                            </select>
-                        </div>
-                        <div className='col-3'>
-                            <label htmlFor="layer">Layer</label>
-                            <select id='layer'  defaultValue="all" onChange={this.filter}>
-                                <option value="all">All</option>
-                                <option value="NetWork">NetWork</option>
-                                <option value="Host">Host</option>
-                                <option value="Application">Application</option>
-                                <option value="Data">Data</option>
                                 <option value="Unknown">Unknown</option>
                             </select>
                         </div>
@@ -174,8 +184,6 @@ class AlertManagement extends React.Component{
                                 <option value="L">L</option>
                             </select>
                         </div>
-                    </div>
-                    <div className="row">
                         <div className='col-3'>
                             <label htmlFor="src">Source: </label>
                             <input type="text"/>
@@ -198,28 +206,74 @@ class AlertManagement extends React.Component{
                     data={list}
                     columns={[
                         {
-                            Header: "Customer",
-                            accessor: "customer"
+                            Header: "STT",
+                            accessor: "stt",
+                            width: 50
                         },
                         {
-                            Header: "Kill_chain",
-                            accessor: "kill_chain"
-                        },
-                        {
-                            Header: "Host",
-                            accessor: "host"
-                        },
-                        {
-                            Header: "Internal ip",
-                            accessor: "internal_ip"
+                            Header: "Time",
+                            accessor: "@timestamp",
+                            width: 150
                         },
                         {
                             Header: "Severity",
-                            accessor: "severity"
+                            accessor: "severity",
+                            width: 50
                         },
                         {
                             Header: "Message",
-                            accessor: "message"
+                            accessor: "message",
+                            width: 150
+                        },
+                        {
+                            Header: "Soucre",
+                            accessor: "source",
+                            width: 100
+                        },
+                        {
+                            Header: "Destination",
+                            accessor: "dest",
+                            width: 120
+                        },
+                        {
+                            Header: "Internal ip",
+                            accessor: "internal_ip",
+                            width: 120
+                        },
+                        {
+                            Header: "Object",
+                            accessor: "object",
+                            width: 100
+                        },
+                        {
+                            Header: "Kill chain",
+                            accessor: "kill_chain",
+                            width: 150
+                        },
+                        {
+                            Header: "Host name",
+                            accessor: "hostname",
+                            width: 150
+                        },
+                        {
+                            Header: "File name",
+                            accessor: "filename",
+                            width: 100
+                        },
+                        {
+                            Header: "Source",
+                            accessor: "source",
+                            width: 100
+                        },
+                        {
+                            Header: "Impact level",
+                            accessor: "impact_level",
+                            width: 150
+                        },
+                        {
+                            Header: "Sub impact",
+                            accessor: "sub_impact_level",
+                            width: 200
                         }
                         
                     ]}
@@ -228,47 +282,50 @@ class AlertManagement extends React.Component{
                         height: "55vh" // This will force the table body to overflow and scroll, since there is not enough room
                     }}
                     className="-striped -highlight"
+                    onChange={this.onChange}
                 />
-                {/* <table>
-                    <thead>
-                        <tr>
-                            <th style={{width:'auto'}}>#</th>
-                            <th style={{width:'20%'}}>Customer</th>
-                            <th style={{width:'auto'}}>Kill_chain</th>
-                            <th style={{width:'10%'}}>Host</th>
-                            <th style={{width:'10%'}}>Internal ip</th>
-                            <th style={{width:'5%'}}>Severity</th>
-                            <th style={{width:'30%'}}>Message</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            console.log(list)}{
-                            list.map((item, index) =>{
-                                return <tr key={index+1}>
-                                    <td>{index+1+indexOfFist}</td>
-                                    <td>{item.customer}</td>
-                                    <td>{item.kill_chain}</td>
-                                    <td>{item.host}</td>
-                                    <td>{item.internal_ip}</td>
-                                    <td>{item.severity}</td>
-                                    <td>{item.message}</td>
-                                </tr>
-                            })
-                        }
-                    </tbody>
-                </table> */}
-                {/* <div className='pagination'>    
-                    <Pagination 
-                        total={totalRow}
-                        showTotal={total => `Total ${total} items`}
-                        showTotal={(total, range) => `${range[0]}-${range[1]} of ${total} items`}
-                        pageSizeOptions={["10", "20", "50", "100"]} 
-                        defaultPageSize={this.state.pageSize}
-                        current={this.state.currentPage}
-                        onChange={this.onChange}
-                    />
-                </div> */}
+                {
+                    /* <table>
+                        <thead>
+                            <tr>
+                                <th style={{width:'auto'}}>#</th>
+                                <th style={{width:'20%'}}>Customer</th>
+                                <th style={{width:'auto'}}>Kill_chain</th>
+                                <th style={{width:'10%'}}>Host</th>
+                                <th style={{width:'10%'}}>Internal ip</th>
+                                <th style={{width:'5%'}}>Severity</th>
+                                <th style={{width:'30%'}}>Message</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                console.log(list)}{
+                                list.map((item, index) =>{
+                                    return <tr key={index+1}>
+                                        <td>{index+1+indexOfFist}</td>
+                                        <td>{item.customer}</td>
+                                        <td>{item.kill_chain}</td>
+                                        <td>{item.host}</td>
+                                        <td>{item.internal_ip}</td>
+                                        <td>{item.severity}</td>
+                                        <td>{item.message}</td>
+                                    </tr>
+                                })
+                            }
+                        </tbody>
+                    </table> */}
+                    {/* <div className='pagination'>    
+                        <Pagination 
+                            total={totalRow}
+                            showTotal={total => `Total ${total} items`}
+                            showTotal={(total, range) => `${range[0]}-${range[1]} of ${total} items`}
+                            pageSizeOptions={["10", "20", "50", "100"]} 
+                            defaultPageSize={this.state.pageSize}
+                            current={this.state.currentPage}
+                            onChange={this.onChange}
+                        />
+                    </div> */
+                }
             </div>
         )
     }
