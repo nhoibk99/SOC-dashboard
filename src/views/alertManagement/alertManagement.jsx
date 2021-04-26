@@ -3,8 +3,6 @@ import Chart from './components/chart/chart.component';
 
 import './alertmanagement.styles.scss';
 import SearchBar from 'react-js-search';
-import { Pagination } from 'antd';
-// Import React Table
 import ReactTable from 'react-table-6';
 import 'react-table-6/react-table.css';
 let api = 'http://elastic.vninfosec.net/alert-khach_hanga/_search?pretty&size=300';
@@ -17,7 +15,9 @@ class AlertManagement extends React.Component{
             dataSearch: [],
             isSearch: false,
             currentPage: 1,
-            pageSize: 20,
+            sizeOfPage: 10,
+            totalPage: 0,
+            totalRow: 0,
             api : 'http://elastic.vninfosec.net/alert-khach_hanga/_search?pretty',
         }
     }  
@@ -32,13 +32,40 @@ class AlertManagement extends React.Component{
 
     getData = () => {
         const that = this;
-        console.log("api state",that.state.api);
-        fetch(that.state.api)
+        const {api, totalRow, currentPage, sizeOfPage} = this.state;
+        const indexOfLast = currentPage * sizeOfPage;
+        const indexOfFist = indexOfLast - sizeOfPage;
+
+        console.log(indexOfFist,indexOfLast);
+        // console.log(apiTotal);
+        
+        let apiTotal= api + '&filter_path=hits.total.value';
+        fetch(apiTotal)
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(jsonData) {
+                const fetchTotal = jsonData.hits.total.value;
+                console.log(fetchTotal);
+                that.setState({ 
+                   totalPage: parseInt(fetchTotal / that.state.sizeOfPage +1),
+                   totalRow: fetchTotal,
+                }); 
+                
+            })
+            .catch(function(error) {
+            that.setState({ apiInfo:error });
+            console.log(error);
+            });
+            
+        let apiFetchData= api + '&from='+indexOfFist+'&size='+sizeOfPage;
+        fetch(apiFetchData)
             .then(function(response) {
                 return response.json();
             })
             .then(function(jsonData) {
                 const dataFetch = jsonData.hits.hits;
+                console.log("data fetch", dataFetch);
                 let search = [];
                 dataFetch.map((item) => {
                     search = [...search, item._source]
@@ -55,13 +82,6 @@ class AlertManagement extends React.Component{
             });
     }
 
-    onChange = (page, pageSize) => {
-        this.setState({
-            currentPage: page,
-            pageSize: pageSize,
-        });
-        // console.log(this.state.current)
-    };
     onSearchChange = (term, hits) =>{
         // console.log("term", term);
         // console.log("hits",  hits);
@@ -76,6 +96,29 @@ class AlertManagement extends React.Component{
             dataSearch: hits,
         })
     }
+
+    onPageSizeChange = (pageSize) => {
+        console.log("page size change", pageSize);
+        this.setState({
+            currentPage: 1,
+            sizeOfPage: pageSize,
+        },()=>this.getData())
+        // console.log(this.state);
+    }
+
+    onPageChange = (pageIndex) => {
+        console.log("page change", pageIndex + 1);
+        this.setState({
+            currentPage: pageIndex + 1,
+        },()=>this.getData())
+        // console.log(this.state);
+    }
+    // next = () => {
+    //     console.log("next change");
+    //     this.setState({
+    //         currentPage: this.state.currentPage + 1,
+    //     },()=>this.getData())
+    // }
     filter = () => {
         let killChain = document.getElementById('killChain').value;
         let layer = document.getElementById('layer').value;
@@ -91,15 +134,8 @@ class AlertManagement extends React.Component{
         }
         // this.getData();
     };
-    render(){
-        const {data, dataSearch, currentPage, pageSize} = this.state;
-        const indexOfLast = currentPage * pageSize;
-        const indexOfFist = indexOfLast - pageSize;
-        let list = [];
-        let totalRow = 0;
-        this.state.isSearch ? list = dataSearch.slice(indexOfFist, indexOfLast) : list = data.slice(indexOfFist, indexOfLast);
-        this.state.isSearch ? totalRow = dataSearch.length : totalRow = data.length;
 
+    render(){
         return(
             <div className="alertManagement">
                  <Chart />
@@ -114,7 +150,7 @@ class AlertManagement extends React.Component{
                                 />
                         </div>
                         <div className='col-3'>
-                            <label class="container">Auto refresh
+                            <label className="container">Auto refresh
                                 <input type="checkbox"/>
                                 <span className="checkmark"></span>
                             </label>
@@ -203,7 +239,7 @@ class AlertManagement extends React.Component{
                     </div>
                 </div>
                 <ReactTable
-                    data={list}
+                    data={this.state.data}
                     columns={[
                         {
                             Header: "STT",
@@ -277,55 +313,22 @@ class AlertManagement extends React.Component{
                         }
                         
                     ]}
+                    pages={this.state.totalPage}
+                    pageIndex={this.state.currentPage}
                     defaultPageSize={10}
+                    // NextComponent={this.next}
                     style={{
                         height: "55vh" // This will force the table body to overflow and scroll, since there is not enough room
                     }}
                     className="-striped -highlight"
-                    onChange={this.onChange}
+                    onPageChange={(pageIndex) => {
+                        this.onPageChange(pageIndex)
+                    }}
+                    onPageSizeChange={(pageSize, pageIndex) => {
+                        this.onPageSizeChange(pageSize, pageIndex)
+                    }}
+                    
                 />
-                {
-                    /* <table>
-                        <thead>
-                            <tr>
-                                <th style={{width:'auto'}}>#</th>
-                                <th style={{width:'20%'}}>Customer</th>
-                                <th style={{width:'auto'}}>Kill_chain</th>
-                                <th style={{width:'10%'}}>Host</th>
-                                <th style={{width:'10%'}}>Internal ip</th>
-                                <th style={{width:'5%'}}>Severity</th>
-                                <th style={{width:'30%'}}>Message</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                console.log(list)}{
-                                list.map((item, index) =>{
-                                    return <tr key={index+1}>
-                                        <td>{index+1+indexOfFist}</td>
-                                        <td>{item.customer}</td>
-                                        <td>{item.kill_chain}</td>
-                                        <td>{item.host}</td>
-                                        <td>{item.internal_ip}</td>
-                                        <td>{item.severity}</td>
-                                        <td>{item.message}</td>
-                                    </tr>
-                                })
-                            }
-                        </tbody>
-                    </table> */}
-                    {/* <div className='pagination'>    
-                        <Pagination 
-                            total={totalRow}
-                            showTotal={total => `Total ${total} items`}
-                            showTotal={(total, range) => `${range[0]}-${range[1]} of ${total} items`}
-                            pageSizeOptions={["10", "20", "50", "100"]} 
-                            defaultPageSize={this.state.pageSize}
-                            current={this.state.currentPage}
-                            onChange={this.onChange}
-                        />
-                    </div> */
-                }
             </div>
         )
     }
