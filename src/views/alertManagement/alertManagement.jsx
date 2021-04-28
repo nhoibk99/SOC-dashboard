@@ -8,6 +8,7 @@ import 'react-table-6/react-table.css';
 let api = 'http://elastic.vninfosec.net/alert-khach_hanga/_search?pretty&size=300';
 
 class AlertManagement extends React.Component{
+    now = React.createRef();
     constructor(){
         super();
         this.state = {
@@ -36,7 +37,7 @@ class AlertManagement extends React.Component{
         const indexOfLast = currentPage * sizeOfPage;
         const indexOfFist = indexOfLast - sizeOfPage;
 
-        console.log(indexOfFist,indexOfLast);
+        // console.log(indexOfFist,indexOfLast);
         // console.log(apiTotal);
         
         let apiTotal= api + '&filter_path=hits.total.value';
@@ -46,7 +47,7 @@ class AlertManagement extends React.Component{
             })
             .then(function(jsonData) {
                 const fetchTotal = jsonData.hits.total.value;
-                console.log(fetchTotal);
+                // console.log(fetchTotal);
                 that.setState({ 
                    totalPage: parseInt(fetchTotal / that.state.sizeOfPage +1),
                    totalRow: fetchTotal,
@@ -65,10 +66,9 @@ class AlertManagement extends React.Component{
             })
             .then(function(jsonData) {
                 const dataFetch = jsonData.hits.hits;
-                console.log("data fetch", dataFetch);
                 let search = [];
-                dataFetch.map((item) => {
-                    search = [...search, item._source]
+                dataFetch.map((item,index) => {
+                    search = [...search, {...item._source,stt: index + indexOfFist + 1}]
                 });
                 that.setState({ 
                     data : search,
@@ -80,11 +80,19 @@ class AlertManagement extends React.Component{
             that.setState({ apiInfo:error });
             console.log(error);
             });
+        
+            this.now = new Date();
+            // let dateNow = this.now.toLocaleString();
+            // console.log('dateNow',dateNow);
+            // let date = newDate.getDate();
+            // let month = newDate.getMonth() + 1;
+            // let year = newDate.getFullYear();
+            // console.log(newDate);
     }
 
     onSearchChange = (term, hits) =>{
-        // console.log("term", term);
-        // console.log("hits",  hits);
+        console.log("term", term);
+        console.log("hits",  hits);
         term == '' ? 
         this.setState({
             currentPage: 1,
@@ -97,13 +105,13 @@ class AlertManagement extends React.Component{
         })
     }
 
-    onPageSizeChange = (pageSize) => {
+    onPageSizeChange = (pageSize, pageIndex) => {
         console.log("page size change", pageSize);
+        console.log("page change", pageIndex);
         this.setState({
             currentPage: 1,
             sizeOfPage: pageSize,
         },()=>this.getData())
-        // console.log(this.state);
     }
 
     onPageChange = (pageIndex) => {
@@ -111,14 +119,8 @@ class AlertManagement extends React.Component{
         this.setState({
             currentPage: pageIndex + 1,
         },()=>this.getData())
-        // console.log(this.state);
     }
-    // next = () => {
-    //     console.log("next change");
-    //     this.setState({
-    //         currentPage: this.state.currentPage + 1,
-    //     },()=>this.getData())
-    // }
+    
     filter = () => {
         let killChain = document.getElementById('killChain').value;
         let layer = document.getElementById('layer').value;
@@ -144,7 +146,7 @@ class AlertManagement extends React.Component{
                         <div className='col-9'>
                             <SearchBar 
                                 onSearchTextChange={ (term,hits) => {this.onSearchChange(term,hits)}}
-                                // onSearchButtonClick={this.onSearchClick}
+                                onSearchButtonClick={this.onSearchClick}
                                 placeHolderText={"Search here..."}
                                 data={this.state.data}
                                 />
@@ -234,7 +236,7 @@ class AlertManagement extends React.Component{
                         </div>
                         <div className='col-3'>
                             <label htmlFor="timeTo">to: </label>
-                            <input type="datetime-local"/>
+                            <input type="datetime-local" value={this.now}/>
                         </div>
                     </div>
                 </div>
@@ -254,7 +256,7 @@ class AlertManagement extends React.Component{
                         {
                             Header: "Severity",
                             accessor: "severity",
-                            width: 50
+                            width: 70
                         },
                         {
                             Header: "Message",
@@ -279,7 +281,8 @@ class AlertManagement extends React.Component{
                         {
                             Header: "Object",
                             accessor: "object",
-                            width: 100
+                            width: 150,
+                            
                         },
                         {
                             Header: "Kill chain",
@@ -316,7 +319,6 @@ class AlertManagement extends React.Component{
                     pages={this.state.totalPage}
                     pageIndex={this.state.currentPage}
                     defaultPageSize={10}
-                    // NextComponent={this.next}
                     style={{
                         height: "55vh" // This will force the table body to overflow and scroll, since there is not enough room
                     }}
@@ -327,7 +329,11 @@ class AlertManagement extends React.Component{
                     onPageSizeChange={(pageSize, pageIndex) => {
                         this.onPageSizeChange(pageSize, pageIndex)
                     }}
-                    
+                    manual
+                    onFetchData={(state, instance) => {
+                        // show the loading overlay
+                        this.setState({loading: true})
+                    }}
                 />
             </div>
         )
