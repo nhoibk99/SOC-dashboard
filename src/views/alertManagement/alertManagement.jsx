@@ -148,7 +148,7 @@ class AlertManagement extends React.Component{
                 apiFilter += "+layer:(\"" + layer + "\")";
             }
             if(impact != 'all'){
-                apiFilter += "+impact_level:(\"" + impact + "\")";
+                apiFilter += "+sub_impact_level:(\"" + impact + "\")";
             }
             if(severity != 'all'){
                 apiFilter += "+severity:(\"" + severity + "\")";
