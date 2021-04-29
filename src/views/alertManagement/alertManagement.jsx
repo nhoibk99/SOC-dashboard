@@ -12,23 +12,26 @@ class AlertManagement extends React.Component{
     constructor(){
         super();
         this.state = {
+            api : 'http://elastic.vninfosec.net/alert-khach_hanga/_search?pretty',
             data: [],
-            dataSearch: [],
             isSearch: false,
+            searchText:'',
+            dataSearch: [],
             currentPage: 1,
             sizeOfPage: 10,
             totalPage: 0,
             totalRow: 0,
-            api : 'http://elastic.vninfosec.net/alert-khach_hanga/_search?pretty',
+            autoRefresh: false,
         }
     }  
     componentDidMount() {
         this.getData();
-        // this.interval = setInterval(this.tick, 5000);
+        this.state.autoRefresh && (this.interval = setInterval(this.tick, 10000));
+        console.log("componentDidMount", this.state.autoRefresh);
     }
     
     componentWillUnmount() {
-    //    clearInterval(this.interval);
+       clearInterval(this.interval);
     }
 
     getData = () => {
@@ -39,6 +42,7 @@ class AlertManagement extends React.Component{
 
         // console.log(indexOfFist,indexOfLast);
         // console.log(apiTotal);
+        console.log('auto', this.state.autoRefresh);
         
         let apiTotal= api + '&filter_path=hits.total.value';
         fetch(apiTotal)
@@ -99,9 +103,10 @@ class AlertManagement extends React.Component{
             isSearch: false
         }):
         this.setState({
-            currentPage: 1,
             isSearch: true,
-            dataSearch: hits,
+            searchText: term,
+            currentPage: 1,
+            // dataSearch: hits,
         })
     }
 
@@ -121,20 +126,41 @@ class AlertManagement extends React.Component{
         },()=>this.getData())
     }
     
+    autoRefresh = () => {
+        console.log("auto refresh");
+        this.setState({
+            autoRefresh: !(this.autoRefresh),
+        },()=>this.getData())
+    }
+    
     filter = () => {
         let killChain = document.getElementById('killChain').value;
         let layer = document.getElementById('layer').value;
         let impact = document.getElementById('impact').value;
         let severity = document.getElementById('severity').value;
-        if(killChain != 'all'){
+        if(killChain != 'all' || layer != 'all' || impact != 'all' || severity != 'all'){
+            let apiFilter =  "&q=";
+
+            if(killChain != 'all'){
+                apiFilter += "+kill_chain:(\"" + killChain + "\")";
+            }
+            if(layer != 'all'){
+                apiFilter += "+layer:(\"" + layer + "\")";
+            }
+            if(impact != 'all'){
+                apiFilter += "+impact_level:(\"" + impact + "\")";
+            }
+            if(severity != 'all'){
+                apiFilter += "+severity:(\"" + severity + "\")";
+            }
+            // console.log("aip filter", apiFilter);
             this.setState({
-                api: api +"&q=+kill_chain:(\""+killChain+"\")",
+                api: api + apiFilter,
             },()=>{
                 this.getData();
             })
-            console.log("api1:", this.state.api);
+            // console.log("fetch api filter:", this.state.api);
         }
-        // this.getData();
     };
 
     render(){
@@ -153,7 +179,7 @@ class AlertManagement extends React.Component{
                         </div>
                         <div className='col-3'>
                             <label className="container">Auto refresh
-                                <input type="checkbox"/>
+                                <input id='autoRefresh' type="checkbox" onChange={this.autoRefresh}/>
                                 <span className="checkmark"></span>
                             </label>
                         </div>
@@ -271,6 +297,11 @@ class AlertManagement extends React.Component{
                         {
                             Header: "Destination",
                             accessor: "dest",
+                            width: 120
+                        },
+                        {
+                            Header: "Layer",
+                            accessor: "layer",
                             width: 120
                         },
                         {
