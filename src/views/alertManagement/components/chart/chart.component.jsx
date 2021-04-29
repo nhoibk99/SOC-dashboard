@@ -31,11 +31,11 @@ class Chart extends React.Component {
  
   componentDidMount() {
     this.tick();
-    // this.interval = setInterval(this.tick, 5000);
+    this.interval = setInterval(this.tick, 10000);
   }
    
   componentWillUnmount() {
-  //  clearInterval(this.interval);
+   clearInterval(this.interval);
   }
   tick = () => {
     const that = this;
