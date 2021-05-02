@@ -1,14 +1,15 @@
 import React from 'react';
 import Chart from './components/chart/chart.component';
-
+import moment from 'moment';
 import './alertmanagement.styles.scss';
 import SearchBar from 'react-js-search';
 import ReactTable from 'react-table-6';
 import 'react-table-6/react-table.css';
-let api = 'http://elastic.vninfosec.net/alert-khach_hanga/_search?pretty&size=300';
+let api = 'http://elastic.vninfosec.net/alert-khach_hanga/_search?pretty';
 
 class AlertManagement extends React.Component{
-    now = React.createRef();
+    timeNow = React.createRef();
+    timeDayAgo = React.createRef();
     constructor(){
         super();
         this.state = {
@@ -22,27 +23,28 @@ class AlertManagement extends React.Component{
             totalPage: 0,
             totalRow: 0,
             autoRefresh: false,
+            // killChain: this.props.data,
         }
     }  
     componentDidMount() {
         this.getData();
         this.state.autoRefresh && (this.interval = setInterval(this.tick, 10000));
-        console.log("componentDidMount", this.state.autoRefresh);
     }
     
     componentWillUnmount() {
-       clearInterval(this.interval);
+        this.state.autoRefresh && clearInterval(this.interval);
     }
 
     getData = () => {
+        // console.log("data from home", this.props);
         const that = this;
-        const {api, totalRow, currentPage, sizeOfPage} = this.state;
+        const {api, currentPage, sizeOfPage} = this.state;
         const indexOfLast = currentPage * sizeOfPage;
         const indexOfFist = indexOfLast - sizeOfPage;
 
         // console.log(indexOfFist,indexOfLast);
         // console.log(apiTotal);
-        console.log('auto', this.state.autoRefresh);
+        // console.log('auto', this.state.autoRefresh);
         
         let apiTotal= api + '&filter_path=hits.total.value';
         fetch(apiTotal)
@@ -70,13 +72,13 @@ class AlertManagement extends React.Component{
             })
             .then(function(jsonData) {
                 const dataFetch = jsonData.hits.hits;
-                let search = [];
+                let fetch = [];
                 dataFetch.map((item,index) => {
-                    search = [...search, {...item._source,stt: index + indexOfFist + 1}]
+                    fetch = [...fetch, {...item._source,stt: index + indexOfFist + 1 ,time: item._source["@timestamp"]}]
                 });
                 that.setState({ 
-                    data : search,
-                    dataSearch : search,
+                    data : fetch,
+                    dataSearch : fetch,
                 }); 
                 
             })
@@ -85,13 +87,14 @@ class AlertManagement extends React.Component{
             console.log(error);
             });
         
-            this.now = new Date();
-            // let dateNow = this.now.toLocaleString();
-            // console.log('dateNow',dateNow);
-            // let date = newDate.getDate();
-            // let month = newDate.getMonth() + 1;
-            // let year = newDate.getFullYear();
-            // console.log(newDate);
+            let timeNow = new Date();
+            this.timeNow = moment(timeNow).format('YYYY-MM-DDTHH:mm');
+            this.timeDayAgo = moment(timeNow).subtract(1,'d').format('YYYY-MM-DDTHH:mm');
+            // console.log("time now", this.timeNow);
+            // console.log("time day ago", this.timeDayAgo);
+            this.setState({
+
+            })
     }
 
     onSearchChange = (term, hits) =>{
@@ -127,7 +130,7 @@ class AlertManagement extends React.Component{
     }
     
     autoRefresh = () => {
-        console.log("auto refresh");
+        // console.log("auto refresh");
         this.setState({
             autoRefresh: !(this.autoRefresh),
         },()=>this.getData())
@@ -138,8 +141,10 @@ class AlertManagement extends React.Component{
         let layer = document.getElementById('layer').value;
         let impact = document.getElementById('impact').value;
         let severity = document.getElementById('severity').value;
-        if(killChain != 'all' || layer != 'all' || impact != 'all' || severity != 'all'){
-            let apiFilter =  "&q=";
+        let sourceIP = document.getElementById('srcIP')?document.getElementById('srcIP').value:'';
+        let destinationIP = document.getElementById('desIP')?document.getElementById('desIP').value:'';
+        if(killChain != 'all' || layer != 'all' || impact != 'all' || severity != 'all' || sourceIP != 'null' || destinationIP != 'null'){
+            let apiFilter =  this.state.api + "&q=";
 
             if(killChain != 'all'){
                 apiFilter += "+kill_chain:(\"" + killChain + "\")";
@@ -153,13 +158,19 @@ class AlertManagement extends React.Component{
             if(severity != 'all'){
                 apiFilter += "+severity:(\"" + severity + "\")";
             }
-            // console.log("aip filter", apiFilter);
+            if(sourceIP != ''){
+                apiFilter += "+internal_ip:(\"" + sourceIP + "\")";
+            }
+            if(destinationIP != ''){
+                apiFilter += "+dest:(\"" + destinationIP + "\")";
+            }
+            console.log("aip filter", apiFilter);
             this.setState({
-                api: api + apiFilter,
+                api: apiFilter,
             },()=>{
                 this.getData();
             })
-            // console.log("fetch api filter:", this.state.api);
+            console.log("fetch api filter:", this.state.api);
         }
     };
 
@@ -249,20 +260,20 @@ class AlertManagement extends React.Component{
                             </select>
                         </div>
                         <div className='col-3'>
-                            <label htmlFor="src">Source: </label>
-                            <input type="text"/>
+                            <label htmlFor="srcIP">Source: </label>
+                            <input id='srcIP' type="text" onChange={this.filter}/>
                         </div>
                         <div className='col-3'>
-                            <label htmlFor="des">Destination: </label>
-                            <input type="text"/>
+                            <label htmlFor="desIP">Destination: </label>
+                            <input id='desIP' type="text" onChange={this.filter}/>
                         </div>
                         <div className='col-3'>
                             <label htmlFor="timeFrom">Time from: </label>
-                            <input type="datetime-local"/>
+                            <input type="datetime-local" value={this.timeDayAgo} onChange={this.filter}/>
                         </div>
                         <div className='col-3'>
-                            <label htmlFor="timeTo">to: </label>
-                            <input type="datetime-local" value={this.now}/>
+                            <label htmlFor="timeTo" >to: </label>
+                            <input type="datetime-local" value={this.timeNow} onChange={this.filter} />
                         </div>
                     </div>
                 </div>
@@ -276,8 +287,8 @@ class AlertManagement extends React.Component{
                         },
                         {
                             Header: "Time",
-                            accessor: "@timestamp",
-                            width: 150
+                            accessor: "time",
+                            width: 190
                         },
                         {
                             Header: "Severity",
@@ -312,13 +323,13 @@ class AlertManagement extends React.Component{
                         {
                             Header: "Object",
                             accessor: "object",
-                            width: 150,
+                            width: 200
                             
                         },
                         {
                             Header: "Kill chain",
                             accessor: "kill_chain",
-                            width: 150
+                            width: 200
                         },
                         {
                             Header: "Host name",
