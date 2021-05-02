@@ -5,7 +5,6 @@ import './alertmanagement.styles.scss';
 import SearchBar from 'react-js-search';
 import ReactTable from 'react-table-6';
 import 'react-table-6/react-table.css';
-let api = 'http://elastic.vninfosec.net/alert-khach_hanga/_search?pretty';
 
 class AlertManagement extends React.Component{
     timeNow = React.createRef();
@@ -143,8 +142,9 @@ class AlertManagement extends React.Component{
         let severity = document.getElementById('severity').value;
         let sourceIP = document.getElementById('srcIP')?document.getElementById('srcIP').value:'';
         let destinationIP = document.getElementById('desIP')?document.getElementById('desIP').value:'';
-        if(killChain != 'all' || layer != 'all' || impact != 'all' || severity != 'all' || sourceIP != 'null' || destinationIP != 'null'){
-            let apiFilter =  this.state.api + "&q=";
+        let apiFilter = "http://elastic.vninfosec.net/alert-khach_hanga/_search?pretty";
+        if(killChain != 'all' || layer != 'all' || impact != 'all' || severity != 'all' || sourceIP != '' || destinationIP != ''){
+            apiFilter += "&q=";
 
             if(killChain != 'all'){
                 apiFilter += "+kill_chain:(\"" + killChain + "\")";
@@ -164,14 +164,13 @@ class AlertManagement extends React.Component{
             if(destinationIP != ''){
                 apiFilter += "+dest:(\"" + destinationIP + "\")";
             }
-            console.log("aip filter", apiFilter);
-            this.setState({
-                api: apiFilter,
-            },()=>{
-                this.getData();
-            })
-            console.log("fetch api filter:", this.state.api);
         }
+        console.log("aip filter", apiFilter);
+        this.setState({
+            api: apiFilter,
+        },()=>{
+            this.getData();
+        })
     };
 
     render(){
