@@ -14,6 +14,7 @@ class AlertManagement extends React.Component{
         this.state = {
             api : 'http://elastic.vninfosec.net/alert-khach_hanga/_search?pretty',
             data: [],
+            src: [],
             isSearch: false,
             searchText:'',
             dataSearch: [],
@@ -27,11 +28,16 @@ class AlertManagement extends React.Component{
     }  
     componentDidMount() {
         this.getData();
-        this.state.autoRefresh && (this.interval = setInterval(this.tick, 10000));
+        if(this.state.autoRefresh) {
+            this.interval = setInterval(this.tick, 10000);
+        }
     }
     
     componentWillUnmount() {
-        this.state.autoRefresh && clearInterval(this.interval);
+        if(this.state.autoRefresh) {
+            clearInterval(this.interval);
+        }
+        // this.state.autoRefresh && clearInterval(this.interval);
     }
 
     getData = () => {
@@ -64,7 +70,7 @@ class AlertManagement extends React.Component{
             console.log(error);
             });
             
-        let apiFetchData= api + '&from='+indexOfFist+'&size='+sizeOfPage;
+        let apiFetchData= api + '&from=' + indexOfFist + '&size=' + sizeOfPage;
         fetch(apiFetchData)
             .then(function(response) {
                 return response.json();
@@ -77,7 +83,7 @@ class AlertManagement extends React.Component{
                 });
                 that.setState({ 
                     data : fetch,
-                    dataSearch : fetch,
+                    // dataSearch : fetch,
                 }); 
                 
             })
@@ -89,8 +95,6 @@ class AlertManagement extends React.Component{
             let timeNow = new Date();
             this.timeNow = moment(timeNow).format('YYYY-MM-DDTHH:mm');
             this.timeDayAgo = moment(timeNow).subtract(1,'d').format('YYYY-MM-DDTHH:mm');
-            // console.log("time now", this.timeNow);
-            // console.log("time day ago", this.timeDayAgo);
             this.setState({
 
             })
@@ -108,13 +112,13 @@ class AlertManagement extends React.Component{
             isSearch: true,
             searchText: term,
             currentPage: 1,
-            // dataSearch: hits,
+            dataSearch: hits,
         })
     }
 
     onPageSizeChange = (pageSize, pageIndex) => {
-        console.log("page size change", pageSize);
-        console.log("page change", pageIndex);
+        // console.log("page size change", pageSize);
+        // console.log("page change", pageIndex);
         this.setState({
             currentPage: 1,
             sizeOfPage: pageSize,
@@ -122,7 +126,7 @@ class AlertManagement extends React.Component{
     }
 
     onPageChange = (pageIndex) => {
-        console.log("page change", pageIndex + 1);
+        // console.log("page change", pageIndex + 1);
         this.setState({
             currentPage: pageIndex + 1,
         },()=>this.getData())
@@ -165,7 +169,7 @@ class AlertManagement extends React.Component{
                 apiFilter += "+dest:(\"" + destinationIP + "\")";
             }
         }
-        console.log("aip filter", apiFilter);
+        // console.log("aip filter", apiFilter);
         this.setState({
             api: apiFilter,
         },()=>{
@@ -277,7 +281,7 @@ class AlertManagement extends React.Component{
                     </div>
                 </div>
                 <ReactTable
-                    data={this.state.data}
+                    data={this.state.isSearch ? this.state.dataSearch :this.state.data}
                     columns={[
                         {
                             Header: "STT",

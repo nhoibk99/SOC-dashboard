@@ -14,7 +14,7 @@ function App() {
     <Router>
       <div className="App">
           <Route path="/" exact component={Homepage} />
-          <Route path="/alert" component={AlertManagement} />
+          <Route path="/alert" component={AlertManagement} params={'liem'} />
       </div>
     </Router>
   );
