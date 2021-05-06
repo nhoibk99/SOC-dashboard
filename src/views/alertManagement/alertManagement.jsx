@@ -24,7 +24,8 @@ class AlertManagement extends React.Component{
             totalPage: 0,
             totalRow: 0,
             autoRefresh: false,
-            // killChain: this.props.data,
+            timeFrom:'',
+            timeTo:'',
         }
     }  
     componentDidMount() {
@@ -33,6 +34,13 @@ class AlertManagement extends React.Component{
         if(this.state.autoRefresh) {
             this.interval = setInterval(this.tick, 10000);
         }
+        let now = new Date();
+        let timeTo = moment(now).format('YYYY-MM-DDTHH:mm');
+        let timeFrom = moment(now).subtract(1,'d').format('YYYY-MM-DDTHH:mm');
+        this.setState({
+            timeFrom: timeFrom,
+            timeTo: timeTo,
+        })
     }
     
     componentWillUnmount() {
@@ -45,7 +53,7 @@ class AlertManagement extends React.Component{
     getData = () => {
         // console.log("data from home", this.props);
         const that = this;
-        let {api, apiStart, apiEnd, query, isSearch, searchText, currentPage, sizeOfPage} = this.state;
+        let {api, apiStart, apiEnd, query, isSearch, searchText, currentPage, sizeOfPage, timeFrom, timeTo} = this.state;
         const indexOfLast = currentPage * sizeOfPage;
         const indexOfFist = indexOfLast - sizeOfPage;
 
@@ -69,12 +77,9 @@ class AlertManagement extends React.Component{
             console.log(error);
             });
         
-        let now = new Date();
-        this.timeTo = moment(now).format('YYYY-MM-DDTHH:mm');
-        this.timeFrom = moment(now).subtract(1,'d').format('YYYY-MM-DDTHH:mm');
         //get data trong 1 ngày tính tới thời điểm hiện tại
-        // let queryTime = '{ "range":{ "@timestamp":{ "gte":"'+ this.timeFrom +'", "lt":"'+ this.timeTo +'" } } }';
-        // query = [...query, queryTime]
+        let queryTime = '{ "range":{ "@timestamp":{ "gte":"'+ timeFrom +'", "lt":"'+ timeTo +'" } } }';
+        query = [...query, queryTime]
         
         //get data theo search
         if(isSearch){
@@ -84,7 +89,6 @@ class AlertManagement extends React.Component{
         
         //get data theo page, pageSize
         let apiFetchData= apiStart + '"from" :' + indexOfFist + ', "size" :' + sizeOfPage +',"query":{"bool": { "must":['+ query.toString() + apiEnd;
-        console.log('apiFetchData', apiFetchData);
         fetch(apiFetchData)
             .then(function(response) {
                 return response.json();
@@ -151,6 +155,8 @@ class AlertManagement extends React.Component{
         let severity = document.getElementById('severity').value;
         let sourceIP = document.getElementById('srcIP')?document.getElementById('srcIP').value:'';
         let destinationIP = document.getElementById('desIP')?document.getElementById('desIP').value:'';
+        let timeFrom = document.getElementById('timeFrom')?document.getElementById('timeFrom').value:'';
+        let timeTo = document.getElementById('timeTo')?document.getElementById('timeTo').value:'';
         let queryFilter = [];
         if(killChain !== 'all'){
             let queryKillChain = '{ "query_string": { "analyze_wildcard": true, "query": "*' + killChain + '*", "fields": ["kill_chain"] } }';
@@ -176,9 +182,10 @@ class AlertManagement extends React.Component{
             let queryDestination = '{ "query_string": { "analyze_wildcard": true, "query": "*' + destinationIP + '*", "fields": ["dest"] } }';
             queryFilter = [...queryFilter, queryDestination]
         }
-        console.log('time', this.timeFrom, this.timeTo);
         this.setState({
             query: queryFilter,
+            timeFrom:timeFrom,
+            timeTo: timeTo,
         },() => this.getData())
     };
 
@@ -277,11 +284,11 @@ class AlertManagement extends React.Component{
                         </div>
                         <div className='col-3'>
                             <label htmlFor="timeFrom">Time from: </label>
-                            <input type="datetime-local" value={this.timeFrom} onChange={this.filter}/>
+                            <input id='timeFrom' type="datetime-local" defaultValue={this.state.timeFrom} onChange={this.filter}/>
                         </div>
                         <div className='col-3'>
                             <label htmlFor="timeTo" >to: </label>
-                            <input type="datetime-local" value={this.timeTo} onChange={this.filter} />
+                            <input id='timeTo' type="datetime-local" defaultValue={this.state.timeTo} onChange={this.filter} />
                         </div>
                     </div>
                 </div>
