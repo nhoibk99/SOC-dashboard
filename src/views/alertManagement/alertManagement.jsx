@@ -7,8 +7,6 @@ import ReactTable from 'react-table-6';
 import 'react-table-6/react-table.css';
 
 class AlertManagement extends React.Component{
-    timeTo = React.createRef();
-    timeFrom = React.createRef();
     constructor(){
         super();
         this.state = {
@@ -30,17 +28,16 @@ class AlertManagement extends React.Component{
     }  
     componentDidMount() {
         console.log("reload");
-        this.getData();
         if(this.state.autoRefresh) {
             this.interval = setInterval(this.tick, 10000);
         }
         let now = new Date();
-        let timeTo = moment(now).format('YYYY-MM-DDTHH:mm');
-        let timeFrom = moment(now).subtract(1,'d').format('YYYY-MM-DDTHH:mm');
+        let To = moment(now).format('YYYY-MM-DDTHH:mm');
+        let From = moment(now).subtract(1,'d').format('YYYY-MM-DDTHH:mm');
         this.setState({
-            timeFrom: timeFrom,
-            timeTo: timeTo,
-        })
+            timeFrom: From,
+            timeTo: To,
+        },() => this.getData())
     }
     
     componentWillUnmount() {
@@ -78,8 +75,10 @@ class AlertManagement extends React.Component{
             });
         
         //get data trong 1 ngày tính tới thời điểm hiện tại
-        let queryTime = '{ "range":{ "@timestamp":{ "gte":"'+ timeFrom +'", "lt":"'+ timeTo +'" } } }';
-        query = [...query, queryTime]
+        if((timeFrom !== '') && (timeTo !== '')){
+            let queryTime = '{ "range":{ "@timestamp":{ "gte":"'+ timeFrom +'", "lt":"'+ timeTo +'" } } }';
+            query = [...query, queryTime]
+        }
         
         //get data theo search
         if(isSearch){
@@ -97,7 +96,12 @@ class AlertManagement extends React.Component{
                 const dataFetch = jsonData.hits.hits;
                 let fetch = [];
                 dataFetch.map((item,index) => {
-                    fetch = [...fetch, {...item._source,stt: index + indexOfFist + 1 ,time: item._source["@timestamp"]}]
+                    fetch = [...fetch, {
+                            ...item._source,
+                            stt: index + indexOfFist + 1 ,
+                            time: moment(item._source["@timestamp"]).format("DD/MM/YYYY hh:mm:ss")
+                        }
+                    ]
                 });
                 that.setState({ 
                     data : fetch,
