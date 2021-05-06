@@ -53,26 +53,6 @@ class AlertManagement extends React.Component{
         let {api, apiStart, apiEnd, query, isSearch, searchText, currentPage, sizeOfPage, timeFrom, timeTo} = this.state;
         const indexOfLast = currentPage * sizeOfPage;
         const indexOfFist = indexOfLast - sizeOfPage;
-
-        //get total row data
-        let apiTotal= api + '&filter_path=hits.total.value';
-        fetch(apiTotal)
-            .then(function(response) {
-                return response.json();
-            })
-            .then(function(jsonData) {
-                const fetchTotal = jsonData.hits.total.value;
-                // console.log(fetchTotal);
-                that.setState({ 
-                   totalPage: parseInt(fetchTotal / that.state.sizeOfPage +1),
-                   totalRow: fetchTotal,
-                }); 
-                
-            })
-            .catch(function(error) {
-            that.setState({ apiInfo:error });
-            console.log(error);
-            });
         
         //get data trong 1 ngày tính tới thời điểm hiện tại
         if((timeFrom !== '') && (timeTo !== '')){
@@ -93,6 +73,11 @@ class AlertManagement extends React.Component{
                 return response.json();
             })
             .then(function(jsonData) {
+                const fetchTotal = jsonData.hits.total.value;
+                that.setState({ 
+                   totalPage: parseInt(fetchTotal / that.state.sizeOfPage +1),
+                   totalRow: fetchTotal,
+                }); 
                 const dataFetch = jsonData.hits.hits;
                 let fetch = [];
                 dataFetch.map((item,index) => {
