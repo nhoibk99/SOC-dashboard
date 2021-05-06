@@ -81,7 +81,7 @@ class AlertManagement extends React.Component{
             let querySearch = '{ "query_string": { "analyze_wildcard": true, "query": "*' + searchText + '*" } }';
             query = [...query, querySearch]
         }
-        console.log("query", query);
+        
         //get data theo page, pageSize
         let apiFetchData= apiStart + '"from" :' + indexOfFist + ', "size" :' + sizeOfPage +',"query":{"bool": { "must":['+ query.toString() + apiEnd;
         console.log('apiFetchData', apiFetchData);
@@ -176,30 +176,7 @@ class AlertManagement extends React.Component{
             let queryDestination = '{ "query_string": { "analyze_wildcard": true, "query": "*' + destinationIP + '*", "fields": ["dest"] } }';
             queryFilter = [...queryFilter, queryDestination]
         }
-        // let apiFilter = "http://elastic.vninfosec.net/alert-khach_hanga/_search?pretty";
-        // if(killChain !== 'all' || layer !== 'all' || impact !== 'all' || severity !== 'all' || sourceIP !== '' || destinationIP !== ''){
-        //     apiFilter += "&q=";
-
-        //     if(killChain !== 'all'){
-        //         apiFilter += "+kill_chain:(\"" + killChain + "\")";
-        //     }
-        //     if(layer !== 'all'){
-        //         apiFilter += "+layer:(\"" + layer + "\")";
-        //     }
-        //     if(impact !== 'all'){
-        //         apiFilter += "+sub_impact_level:(\"" + impact + "\")";
-        //     }
-        //     if(severity !== 'all'){
-        //         apiFilter += "+severity:(\"" + severity + "\")";
-        //     }
-        //     if(sourceIP !== ''){
-        //         apiFilter += "+internal_ip:(\"" + sourceIP + "\")";
-        //     }
-        //     if(destinationIP !== ''){
-        //         apiFilter += "+dest:(\"" + destinationIP + "\")";
-        //     }
-        // }
-        // console.log("aip filter", apiFilter);
+        console.log('time', this.timeFrom, this.timeTo);
         this.setState({
             query: queryFilter,
         },() => this.getData())
