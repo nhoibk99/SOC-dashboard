@@ -7,17 +7,18 @@ import ReactTable from 'react-table-6';
 import 'react-table-6/react-table.css';
 
 class AlertManagement extends React.Component{
-    timeNow = React.createRef();
-    timeDayAgo = React.createRef();
+    timeTo = React.createRef();
+    timeFrom = React.createRef();
     constructor(){
         super();
         this.state = {
             api : 'http://elastic.vninfosec.net/alert-khach_hanga/_search?pretty',
+            apiStart : 'http://elastic.vninfosec.net/alert-khach_hanga/_search?pretty&source= {',
+            apiEnd : ']}}}&source_content_type=application/json',
+            query:[],
             data: [],
-            src: [],
             isSearch: false,
             searchText:'',
-            dataSearch: [],
             currentPage: 1,
             sizeOfPage: 10,
             totalPage: 0,
@@ -27,6 +28,7 @@ class AlertManagement extends React.Component{
         }
     }  
     componentDidMount() {
+        console.log("reload");
         this.getData();
         if(this.state.autoRefresh) {
             this.interval = setInterval(this.tick, 10000);
@@ -43,14 +45,11 @@ class AlertManagement extends React.Component{
     getData = () => {
         // console.log("data from home", this.props);
         const that = this;
-        const {api, currentPage, sizeOfPage} = this.state;
+        let {api, apiStart, apiEnd, query, isSearch, searchText, currentPage, sizeOfPage} = this.state;
         const indexOfLast = currentPage * sizeOfPage;
         const indexOfFist = indexOfLast - sizeOfPage;
 
-        // console.log(indexOfFist,indexOfLast);
-        // console.log(apiTotal);
-        // console.log('auto', this.state.autoRefresh);
-        
+        //get total row data
         let apiTotal= api + '&filter_path=hits.total.value';
         fetch(apiTotal)
             .then(function(response) {
@@ -69,8 +68,23 @@ class AlertManagement extends React.Component{
             that.setState({ apiInfo:error });
             console.log(error);
             });
-            
-        let apiFetchData= api + '&from=' + indexOfFist + '&size=' + sizeOfPage;
+        
+        let now = new Date();
+        this.timeTo = moment(now).format('YYYY-MM-DDTHH:mm');
+        this.timeFrom = moment(now).subtract(1,'d').format('YYYY-MM-DDTHH:mm');
+        //get data trong 1 ngày tính tới thời điểm hiện tại
+        // let queryTime = '{ "range":{ "@timestamp":{ "gte":"'+ this.timeFrom +'", "lt":"'+ this.timeTo +'" } } }';
+        // query = [...query, queryTime]
+        
+        //get data theo search
+        if(isSearch){
+            let querySearch = '{ "query_string": { "analyze_wildcard": true, "query": "*' + searchText + '*" } }';
+            query = [...query, querySearch]
+        }
+        console.log("query", query);
+        //get data theo page, pageSize
+        let apiFetchData= apiStart + '"from" :' + indexOfFist + ', "size" :' + sizeOfPage +',"query":{"bool": { "must":['+ query.toString() + apiEnd;
+        console.log('apiFetchData', apiFetchData);
         fetch(apiFetchData)
             .then(function(response) {
                 return response.json();
@@ -83,7 +97,6 @@ class AlertManagement extends React.Component{
                 });
                 that.setState({ 
                     data : fetch,
-                    // dataSearch : fetch,
                 }); 
                 
             })
@@ -91,29 +104,21 @@ class AlertManagement extends React.Component{
             that.setState({ apiInfo:error });
             console.log(error);
             });
-        
-            let timeNow = new Date();
-            this.timeNow = moment(timeNow).format('YYYY-MM-DDTHH:mm');
-            this.timeDayAgo = moment(timeNow).subtract(1,'d').format('YYYY-MM-DDTHH:mm');
-            this.setState({
-
-            })
     }
 
     onSearchChange = (term, hits) =>{
         console.log("term", term);
         console.log("hits",  hits);
-        term == '' ? 
+        term === '' ? 
         this.setState({
             currentPage: 1,
             isSearch: false
-        }):
+        },()=>this.getData()):
         this.setState({
             isSearch: true,
             searchText: term,
             currentPage: 1,
-            dataSearch: hits,
-        })
+        },()=>this.getData())
     }
 
     onPageSizeChange = (pageSize, pageIndex) => {
@@ -146,35 +151,58 @@ class AlertManagement extends React.Component{
         let severity = document.getElementById('severity').value;
         let sourceIP = document.getElementById('srcIP')?document.getElementById('srcIP').value:'';
         let destinationIP = document.getElementById('desIP')?document.getElementById('desIP').value:'';
-        let apiFilter = "http://elastic.vninfosec.net/alert-khach_hanga/_search?pretty";
-        if(killChain != 'all' || layer != 'all' || impact != 'all' || severity != 'all' || sourceIP != '' || destinationIP != ''){
-            apiFilter += "&q=";
-
-            if(killChain != 'all'){
-                apiFilter += "+kill_chain:(\"" + killChain + "\")";
-            }
-            if(layer != 'all'){
-                apiFilter += "+layer:(\"" + layer + "\")";
-            }
-            if(impact != 'all'){
-                apiFilter += "+sub_impact_level:(\"" + impact + "\")";
-            }
-            if(severity != 'all'){
-                apiFilter += "+severity:(\"" + severity + "\")";
-            }
-            if(sourceIP != ''){
-                apiFilter += "+internal_ip:(\"" + sourceIP + "\")";
-            }
-            if(destinationIP != ''){
-                apiFilter += "+dest:(\"" + destinationIP + "\")";
-            }
+        let queryFilter = [];
+        if(killChain !== 'all'){
+            let queryKillChain = '{ "query_string": { "analyze_wildcard": true, "query": "*' + killChain + '*", "fields": ["kill_chain"] } }';
+            queryFilter = [...queryFilter, queryKillChain]
         }
+        if(layer !== 'all'){
+            let queryLayer = '{ "query_string": { "analyze_wildcard": true, "query": "*' + layer + '*", "fields": ["layer"] } }';
+            queryFilter = [...queryFilter, queryLayer]
+        }
+        if(impact !== 'all'){
+            let queryImpact = '{ "query_string": { "analyze_wildcard": true, "query": "*' + impact + '*", "fields": ["sub_impact_level"] } }';
+            queryFilter = [...queryFilter, queryImpact]
+        }
+        if(severity !== 'all'){
+            let querySecurity = '{ "query_string": { "analyze_wildcard": true, "query": "*' + severity + '*", "fields": ["severity"] } }';
+            queryFilter = [...queryFilter, querySecurity]
+        }
+        if(sourceIP !== ''){
+            let querySource = '{ "query_string": { "analyze_wildcard": true, "query": "*' + sourceIP + '*", "fields": ["internal_ip"] } }';
+            queryFilter = [...queryFilter, querySource]
+        }
+        if(destinationIP !== ''){
+            let queryDestination = '{ "query_string": { "analyze_wildcard": true, "query": "*' + destinationIP + '*", "fields": ["dest"] } }';
+            queryFilter = [...queryFilter, queryDestination]
+        }
+        // let apiFilter = "http://elastic.vninfosec.net/alert-khach_hanga/_search?pretty";
+        // if(killChain !== 'all' || layer !== 'all' || impact !== 'all' || severity !== 'all' || sourceIP !== '' || destinationIP !== ''){
+        //     apiFilter += "&q=";
+
+        //     if(killChain !== 'all'){
+        //         apiFilter += "+kill_chain:(\"" + killChain + "\")";
+        //     }
+        //     if(layer !== 'all'){
+        //         apiFilter += "+layer:(\"" + layer + "\")";
+        //     }
+        //     if(impact !== 'all'){
+        //         apiFilter += "+sub_impact_level:(\"" + impact + "\")";
+        //     }
+        //     if(severity !== 'all'){
+        //         apiFilter += "+severity:(\"" + severity + "\")";
+        //     }
+        //     if(sourceIP !== ''){
+        //         apiFilter += "+internal_ip:(\"" + sourceIP + "\")";
+        //     }
+        //     if(destinationIP !== ''){
+        //         apiFilter += "+dest:(\"" + destinationIP + "\")";
+        //     }
+        // }
         // console.log("aip filter", apiFilter);
         this.setState({
-            api: apiFilter,
-        },()=>{
-            this.getData();
-        })
+            query: queryFilter,
+        },() => this.getData())
     };
 
     render(){
@@ -272,16 +300,16 @@ class AlertManagement extends React.Component{
                         </div>
                         <div className='col-3'>
                             <label htmlFor="timeFrom">Time from: </label>
-                            <input type="datetime-local" value={this.timeDayAgo} onChange={this.filter}/>
+                            <input type="datetime-local" value={this.timeFrom} onChange={this.filter}/>
                         </div>
                         <div className='col-3'>
                             <label htmlFor="timeTo" >to: </label>
-                            <input type="datetime-local" value={this.timeNow} onChange={this.filter} />
+                            <input type="datetime-local" value={this.timeTo} onChange={this.filter} />
                         </div>
                     </div>
                 </div>
                 <ReactTable
-                    data={this.state.isSearch ? this.state.dataSearch :this.state.data}
+                    data={this.state.data}
                     columns={[
                         {
                             Header: "STT",

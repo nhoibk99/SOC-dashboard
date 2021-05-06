@@ -3,9 +3,7 @@ import GridLayout from 'react-grid-layout';
 import { Row, Col } from 'antd';
 import './gird.styles.scss';
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
+  BrowserRouter as 
   Link
 } from "react-router-dom";
 
