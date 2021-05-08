@@ -20,32 +20,62 @@ class TopoGraph extends React.Component{
                   { from: 2, to: 4 },
                   { from: 2, to: 5 }
                 ]
-              },
-              counter: 5,
-
+            },
+            counter: 5,
+            currentNode: 1,
         }
     }
     
     componentDidMount() {
     }
 
-    createNode = (x, y, node) => {
+    createNode = () => {
         const red = Math.floor(Math.random() * 256).toString(16).padStart(2, '0');
         const green = Math.floor(Math.random() * 256).toString(16).padStart(2, '0');
         const blue = Math.floor(Math.random() * 256).toString(16).padStart(2, '0');
         const color = '#' + red + green + blue;
 
-        const from = node[0];
+        const from = this.state.currentNode;
         let id = this.state.counter + 1,
         {nodes, edges} = this.state.graph;
 
         this.setState({
             graph: {
-                nodes: [...nodes,{ id, label: `Node ${id}`, color, x, y }],
+                nodes: [...nodes,{ id, label: `Node ${id}`, color }],
                 edges: [...edges,{ from, to: id }]
             },
             counter: id,
         });
+    }
+
+    addNode = () =>{
+        console.log('add node');
+        let currentNode = this.state.currentNode;
+        let {nodes, edges} =  this.state.graph;
+
+    }
+    deleteNode = () =>{
+        console.log('delete node');
+        let currentNode = this.state.currentNode;
+        let {nodes, edges} =  this.state.graph;
+        let newNodes = [], newEdges=[];
+        nodes.map(item =>{
+            if(item.id !== currentNode){
+                newNodes = [...newNodes,item]
+            }
+        })
+        edges.map(item =>{
+            if(item.from !== currentNode && item.to !== currentNode){
+                newEdges = [...newEdges,item]
+            }
+        })
+        // console.log('new node', newNodes);
+        // console.log('new edge', newEdges);
+        // console.log('graph', this.state.graph);
+
+        this.setState({
+            graph:{nodes:newNodes, edges: newEdges},
+        })
     }
     render() {
     
@@ -63,17 +93,21 @@ class TopoGraph extends React.Component{
         select: ({ nodes, edges }) => {
             // console.log("Selected nodes:",nodes);
             // console.log("Selected edges:",edges);
+            this.setState({currentNode: nodes && nodes[0]})
             alert("Selected node: " + nodes);
         },
-        doubleClick: ({ pointer: { canvas }, nodes }) => {
+        doubleClick: () => {
             // console.log('double click');
-            this.createNode(canvas.x, canvas.y, nodes);
+            this.createNode();
         }
         
     };
     return (
         <div className='topoGraph'>
             <h1 style={{color: 'yellow'}}>Topo Graph</h1>
+            <p style={{color: 'yellow'}}>currentNode:{this.state.currentNode}</p>
+            <button className='addNode' onClick={this.createNode}> Add node</button>
+            <button className='deleteNode' onClick={this.deleteNode}> Delete node</button>
             <Graph
                 graph={this.state.graph}
                 options={options}
