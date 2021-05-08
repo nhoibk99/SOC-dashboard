@@ -50,7 +50,7 @@ class AlertManagement extends React.Component{
     getData = () => {
         // console.log("data from home", this.props);
         const that = this;
-        let {api, apiStart, apiEnd, query, isSearch, searchText, currentPage, sizeOfPage, timeFrom, timeTo} = this.state;
+        let { apiStart, apiEnd, query, isSearch, searchText, currentPage, sizeOfPage, timeFrom, timeTo} = this.state;
         const indexOfLast = currentPage * sizeOfPage;
         const indexOfFist = indexOfLast - sizeOfPage;
         
@@ -172,8 +172,9 @@ class AlertManagement extends React.Component{
             queryFilter = [...queryFilter, queryDestination]
         }
         this.setState({
+            // currentPage: 0,
             query: queryFilter,
-            timeFrom:timeFrom,
+            timeFrom: timeFrom,
             timeTo: timeTo,
         },() => this.getData())
     };
@@ -251,6 +252,7 @@ class AlertManagement extends React.Component{
                                 <option value="Attacked website">Attacked website</option>
                                 <option value="Compromised server">Compromised server</option>
                                 <option value="Webshell">Webshell</option>
+                                <option value="Unknown">Unknown</option>
                             </select>
                         </div>
                         <div className='col-3'>

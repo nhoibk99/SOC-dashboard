@@ -52,7 +52,8 @@ class Header extends React.Component{
               <DropdownToggle caret>Menu</DropdownToggle>
               <DropdownMenu>
                 <DropdownItem href="">HomePage</DropdownItem>
-                <DropdownItem href="/alert"  target="_blank" rel="noopener noreferrer">Alert Managerment</DropdownItem>
+                <DropdownItem href="/alert"  target="_blank" rel="noreferrer">Alert Managerment</DropdownItem>
+                <DropdownItem href="/topo"  target="_blank" rel="noreferrer" >Topo Graph</DropdownItem>
                 {/* <DropdownItem text>Dropdown Item Text</DropdownItem>
                 <DropdownItem disabled>Action (disabled)</DropdownItem>
                 <DropdownItem divider />
@@ -65,7 +66,7 @@ class Header extends React.Component{
           <div className="col-sm-9" style={{overflow:'hidden'}}>
             <div className="marquee">
               {this.state.data.map((item, index) =>{
-                return <div style={{display: "table-cell"}} className="noti" key={index}><a href={item._source.url}  target="_blank">{item._source.title}</a></div>  
+                return <div style={{display: "table-cell"}} className="noti" key={index}><a href={item._source.url}  target="_blank" rel="noreferrer">{item._source.title}</a></div>  
               })
               }
             </div>

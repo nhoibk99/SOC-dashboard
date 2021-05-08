@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@regraph/connections": "0.0.1",
+    "@regraph/graph": "0.0.1",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -15,6 +17,7 @@
     "moment-timezone": "^0.5.33",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-graph-vis": "^1.0.7",
     "react-grid-layout": "^1.2.4",
     "react-js-pagination": "^3.0.3",
     "react-js-search": "^0.3.0",
@@ -27,6 +30,7 @@
     "react-timezone": "^2.4.0",
     "reactstrap": "^8.9.0",
     "recharts": "^2.0.9",
+    "regraph": "0.0.1",
     "web-vitals": "^1.0.1"
   },
   "scripts": {
