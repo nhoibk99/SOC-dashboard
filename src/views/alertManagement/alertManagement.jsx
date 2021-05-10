@@ -299,7 +299,24 @@ class AlertManagement extends React.Component{
                         {
                             Header: "Severity",
                             accessor: "severity",
-                            width: 70
+                            Cell: row => (
+                                <div
+                                    style={{
+                                      width: `${row.value}%`,
+                                      height: '100%',
+                                      color: 'black',
+                                      backgroundColor:
+                                        row.value == 'C' ? '#e00909'
+                                          : row.value == 'H' ? '#e07109'
+                                          : row.value == 'M' ? '#ebdea5'
+                                          : '#4de009',
+                                      borderRadius: '2px',
+                                      transition: 'all .2s ease-out'
+                                    }}
+                                  >
+                                      {row.value}
+                                  </div>
+                              )
                         },
                         {
                             Header: "Message",
