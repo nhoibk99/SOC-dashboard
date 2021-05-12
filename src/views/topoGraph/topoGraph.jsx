@@ -12,7 +12,7 @@ class TopoGraph extends React.Component{
                   image: 'https://i.pinimg.com/originals/3a/69/ae/3a69ae3942d4a9da6c3cbc93b1c8f051.jpg'},
                   { id: 2, label: "Node 2", color: "#e09c41",shape: 'icon',
                   icon: {
-                    face: 'FontAwesome',
+                    face: '"FontAwesome"',
                     code: '\uf0c0',
                     size: 50,
                     color: 'orange'
@@ -125,6 +125,7 @@ class TopoGraph extends React.Component{
                 // getNetwork={network => {
                 // //  if you want access to vis.js network api you can set the state in a parent component using this property
                 // }}
+                
             />
         </div>
         );

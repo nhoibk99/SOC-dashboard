@@ -51,6 +51,9 @@
 .filter .row{
     margin: unset;
     padding: 5px 120px;
+    .col-2 {
+        padding-top: 13px;
+    }
 
     .col-3 {    
         padding: 0 10px;
@@ -114,6 +117,7 @@
             border-width: 0 3px 3px 0;
             transform: rotate(45deg);
         }
+
         input{
             max-width: 70%;
             min-width: 70%;
@@ -136,6 +140,7 @@ select{
     margin: unset;
     text-align: center!important;
 }
+
 .search-container input{
     margin: unset;
     padding: 5px;

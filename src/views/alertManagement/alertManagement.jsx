@@ -1,10 +1,13 @@
 import React from 'react';
 import Chart from './components/chart/chart.component';
-import moment from 'moment';
 import './alertmanagement.styles.scss';
 import SearchBar from 'react-js-search';
 import ReactTable from 'react-table-6';
 import 'react-table-6/react-table.css';
+import moment from 'moment';
+
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 class AlertManagement extends React.Component{
     constructor(){
@@ -24,6 +27,7 @@ class AlertManagement extends React.Component{
             autoRefresh: false,
             timeFrom:'',
             timeTo:'',
+            allRow: 0,
         }
     }  
     componentDidMount() {
@@ -31,6 +35,22 @@ class AlertManagement extends React.Component{
         if(this.state.autoRefresh) {
             this.interval = setInterval(this.tick, 10000);
         }
+        const that = this
+        fetch(that.state.api)
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(jsonData) {
+                const all = jsonData.hits.total.value;
+                that.setState({ 
+                   allRow: all,
+                }); 
+                
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
+
         let now = new Date();
         let To = moment(now).format('YYYY-MM-DDTHH:mm');
         let From = moment(now).subtract(1,'d').format('YYYY-MM-DDTHH:mm');
@@ -73,10 +93,10 @@ class AlertManagement extends React.Component{
                 return response.json();
             })
             .then(function(jsonData) {
-                const fetchTotal = jsonData.hits.total.value;
+                const total = jsonData.hits.total.value;
                 that.setState({ 
-                   totalPage: parseInt(fetchTotal / that.state.sizeOfPage +1),
-                   totalRow: fetchTotal,
+                   totalPage: parseInt(total / that.state.sizeOfPage +1),
+                   totalRow: total,
                 }); 
                 const dataFetch = jsonData.hits.hits;
                 let fetch = [];
@@ -147,28 +167,29 @@ class AlertManagement extends React.Component{
         let timeFrom = document.getElementById('timeFrom')?document.getElementById('timeFrom').value:'';
         let timeTo = document.getElementById('timeTo')?document.getElementById('timeTo').value:'';
         let queryFilter = [];
+        const queryStart = '{ "query_string": { "analyze_wildcard": true, "query": "*';
         if(killChain !== 'all'){
-            let queryKillChain = '{ "query_string": { "analyze_wildcard": true, "query": "*' + killChain + '*", "fields": ["kill_chain"] } }';
+            let queryKillChain = queryStart + killChain + '*", "fields": ["kill_chain"] } }';
             queryFilter = [...queryFilter, queryKillChain]
         }
         if(layer !== 'all'){
-            let queryLayer = '{ "query_string": { "analyze_wildcard": true, "query": "*' + layer + '*", "fields": ["layer"] } }';
+            let queryLayer = queryStart + layer + '*", "fields": ["layer"] } }';
             queryFilter = [...queryFilter, queryLayer]
         }
         if(impact !== 'all'){
-            let queryImpact = '{ "query_string": { "analyze_wildcard": true, "query": "*' + impact + '*", "fields": ["sub_impact_level"] } }';
+            let queryImpact = queryStart + impact + '*", "fields": ["sub_impact_level"] } }';
             queryFilter = [...queryFilter, queryImpact]
         }
         if(severity !== 'all'){
-            let querySecurity = '{ "query_string": { "analyze_wildcard": true, "query": "*' + severity + '*", "fields": ["severity"] } }';
+            let querySecurity = queryStart + severity + '*", "fields": ["severity"] } }';
             queryFilter = [...queryFilter, querySecurity]
         }
         if(sourceIP !== ''){
-            let querySource = '{ "query_string": { "analyze_wildcard": true, "query": "*' + sourceIP + '*", "fields": ["internal_ip"] } }';
+            let querySource = queryStart + sourceIP + '*", "fields": ["internal_ip"] } }';
             queryFilter = [...queryFilter, querySource]
         }
         if(destinationIP !== ''){
-            let queryDestination = '{ "query_string": { "analyze_wildcard": true, "query": "*' + destinationIP + '*", "fields": ["dest"] } }';
+            let queryDestination = queryStart + destinationIP + '*", "fields": ["dest"] } }';
             queryFilter = [...queryFilter, queryDestination]
         }
         this.setState({
@@ -179,13 +200,98 @@ class AlertManagement extends React.Component{
         },() => this.getData())
     };
 
+    exportPDF = () => {
+        const that = this;
+        let api= 'http://elastic.vninfosec.net/alert-khach_hanga/_search?pretty&from=0&size=' + that.state.allRow;
+        fetch(api)
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(jsonData) {
+                const dataFetch = jsonData.hits.hits;
+                let fetch = [];
+                console.log(dataFetch);
+                dataFetch.map((item,index) => {
+                    fetch = [...fetch, {
+                            ...item._source,
+                            stt: index + 1 ,
+                            time: moment(item._source["@timestamp"]).format("DD/MM/YYYY hh:mm:ss")
+                        }
+                    ]
+                });
+                that.setState({ 
+                    allData : fetch,
+                },() => {
+                    const unit = "px";
+                    const size = "A4"; // Use A1, A2, A3 or A4
+                    const orientation = "landscape"; // portrait or landscape
+                    const doc = new jsPDF(orientation, unit, size);
+                    doc.setFontSize(15);
+                    // const title = "My Awesome Report";
+                    // doc.text(title, marginLeft, 40);
+                    doc.autoTable({
+                        theme: 'grid',
+                        body: that.state.allData,
+                        margin: {top: 10, right: 10, bottom: 10, left: 10},
+                        columns: [
+                            {
+                                header: "STT",
+                                dataKey: "stt",
+                            },
+                            {
+                                header: "Time",
+                                dataKey: "time",
+                            },
+                            {
+                                header: "Severity",
+                                dataKey: "severity",
+                            },
+                            {
+                                header: "Message",
+                                dataKey: "message",
+                            },
+                            {
+                                header: "Soucre",
+                                dataKey: "source",
+                            },
+                            {
+                                header: "Destination",
+                                dataKey: "dest",
+                                width: 150,
+                            },
+                            {
+                                header: "Layer",
+                                dataKey: "layer",
+                            },
+                            {
+                                header: "Kill chain",
+                                dataKey: "kill_chain",
+                            },
+                            {
+                                header: "Impact level",
+                                dataKey: "sub_impact_level",
+                            }
+                        ],
+                        rowPageBreak: 'avoid',
+                    });
+                    doc.save("data.pdf")
+                }); 
+                
+            })
+            .catch(e => {
+                console.log(e);
+                return e;
+              });
+        
+    }
+
     render(){
         return(
             <div className="alertManagement">
                  <Chart />
                 <div className='filter'>    
                     <div className='row'>
-                        <div className='col-9'>
+                        <div className='col-7'>
                             <SearchBar 
                                 onSearchTextChange={ (term,hits) => {this.onSearchChange(term,hits)}}
                                 onSearchButtonClick={this.onSearchClick}
@@ -198,6 +304,9 @@ class AlertManagement extends React.Component{
                                 <input id='autoRefresh' type="checkbox" onChange={this.autoRefresh}/>
                                 <span className="checkmark"></span>
                             </label>
+                        </div>
+                        <div className='col-2'>
+                            <button onClick={() => this.exportPDF()}>Generate Report</button>
                         </div>
                     </div>
                     <div className="row">
@@ -400,6 +509,7 @@ class AlertManagement extends React.Component{
                         this.setState({loading: true})
                     }}
                 />
+                 
             </div>
         )
     }
