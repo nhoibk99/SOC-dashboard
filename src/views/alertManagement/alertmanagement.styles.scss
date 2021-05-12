@@ -3,7 +3,6 @@
     box-sizing: border-box;
 }
 .alertManagement{
-    
     padding: 10px ;
     background-image: url('../../assets/images/bg.png');
     min-height: 100vh;
@@ -18,7 +17,7 @@
           linear-gradient(to top, #53a3ce 2px, transparent 2px) 0 100%,
           linear-gradient(to top, #53a3ce 2px, transparent 2px) 100% 100%;  
         background-repeat: no-repeat;
-        background-size: 20px 20px;
+        background-size: 10px 10px;
         margin: 10px 0;
         padding: 10px;
 
@@ -33,6 +32,7 @@
             }
 
             .search-container input{
+                background-color: aliceblue;
                 margin: unset;
                 padding: 5px;
                 width: 90%;
@@ -79,7 +79,7 @@
                 
                 /* When the checkbox is checked, add a blue background */
                 .container input:checked ~ .checkmark {
-                    background-color: #2196F3;
+                    background-color: #cadetblue;
                 }
                 
                 /* Create the checkmark/indicator (hidden when not checked) */
@@ -106,6 +106,17 @@
                 }
         
                 input{
+                    background: linear-gradient(to right, #53a3ce 2px, transparent 2px) 0 0,
+                    linear-gradient(to right, #53a3ce 2px, transparent 2px) 0 100%,
+                    linear-gradient(to left, #53a3ce 2px, transparent 2px) 100% 0,
+                    linear-gradient(to left, #53a3ce 2px, transparent 2px) 100% 100%,
+                    linear-gradient(to bottom, #53a3ce 2px, transparent 2px) 0 0,
+                    linear-gradient(to bottom, #53a3ce 2px, transparent 2px) 100% 0,
+                    linear-gradient(to top, #53a3ce 2px, transparent 2px) 0 100%,
+                    linear-gradient(to top, #53a3ce 2px, transparent 2px) 100% 100%;  
+                    background-repeat: no-repeat;
+                    background-size: 5px 5px;
+                    color: #2196F3;
                     max-width: 70%;
                     min-width: 70%;
                 }
@@ -113,7 +124,7 @@
             
             label{
                 width: 80px;
-                color: aliceblue;
+                color: #53a3ce;
                 padding-top: 10px;
             }
         }
@@ -142,27 +153,48 @@
                 }
             }
             .pagination-bottom .-pagination{
+                color: darkslategray!important;
                 button{
                     opacity: 80%;
                     background-color: cadetblue!important;
-                    color: aliceblue!important;
                 }
             
                 input {
-                    color: black;
+                    background-color: cadetblue;
+                    color:darkslategray;
                 }
                 select{
+                    background-color: cadetblue;
+                    color:darkslategray;
+
                     width: 200px;
                 }
             }
         }
-            }
+    }
 }
 
 
 
 select{ 
+    box-shadow: 0px 0px 2px #6b9fda;
+    background: linear-gradient(to right, #53a3ce 2px, transparent 2px) 0 0,
+        linear-gradient(to right, #53a3ce 2px, transparent 2px) 0 100%,
+        linear-gradient(to left, #53a3ce 2px, transparent 2px) 100% 0,
+        linear-gradient(to left, #53a3ce 2px, transparent 2px) 100% 100%,
+        linear-gradient(to bottom, #53a3ce 2px, transparent 2px) 0 0,
+        linear-gradient(to bottom, #53a3ce 2px, transparent 2px) 100% 0,
+        linear-gradient(to top, #53a3ce 2px, transparent 2px) 0 100%,
+        linear-gradient(to top, #53a3ce 2px, transparent 2px) 100% 100%;
+        
+    background-repeat: no-repeat;
+    background-size: 5px 5px;
     max-width: 70%;
     min-width: 70%;
-    color: black;
+    background-color: cadetblue;
+    color:darkslategray;
+}
+button{
+    background-color: cadetblue;
+    color:darkslategray;
 }

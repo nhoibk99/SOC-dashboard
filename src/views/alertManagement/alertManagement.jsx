@@ -495,7 +495,7 @@ class AlertManagement extends React.Component{
                         pageIndex={this.state.currentPage}
                         defaultPageSize={10}
                         style={{
-                            height: "51vh" // This will force the table body to overflow and scroll, since there is not enough room
+                            height: "50vh" // This will force the table body to overflow and scroll, since there is not enough room
                         }}
                         className="-striped -highlight"
                         onPageChange={(pageIndex) => {
