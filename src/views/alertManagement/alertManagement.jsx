@@ -101,7 +101,7 @@ class AlertManagement extends React.Component{
                 const dataFetch = jsonData.hits.hits;
                 let fetch = [];
                 dataFetch.map((item,index) => {
-                    fetch = [...fetch, {
+                    return fetch = [...fetch, {
                             ...item._source,
                             stt: index + indexOfFist + 1 ,
                             time: moment(item._source["@timestamp"]).format("DD/MM/YYYY hh:mm:ss")
@@ -212,7 +212,7 @@ class AlertManagement extends React.Component{
                 let fetch = [];
                 console.log(dataFetch);
                 dataFetch.map((item,index) => {
-                    fetch = [...fetch, {
+                    return fetch = [...fetch, {
                             ...item._source,
                             stt: index + 1 ,
                             time: moment(item._source["@timestamp"]).format("DD/MM/YYYY hh:mm:ss")
@@ -416,9 +416,9 @@ class AlertManagement extends React.Component{
                                         height: '100%',
                                         color: 'black',
                                         backgroundColor:
-                                            row.value == 'C' ? '#e00909'
-                                            : row.value == 'H' ? '#e07109'
-                                            : row.value == 'M' ? '#ebdea5'
+                                            row.value === 'C' ? '#e00909'
+                                            : row.value === 'H' ? '#e07109'
+                                            : row.value === 'M' ? '#ebdea5'
                                             : '#4de009',
                                         borderRadius: '2px',
                                         transition: 'all .2s ease-out'

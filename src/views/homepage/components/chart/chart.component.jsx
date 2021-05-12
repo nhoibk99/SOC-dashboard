@@ -76,6 +76,7 @@ class Chart extends React.Component {
               that.setState({ 
                 chartdata :data
               }); 
+              return data;
             }
           );
           

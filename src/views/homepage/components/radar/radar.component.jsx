@@ -166,7 +166,7 @@ class Radar extends React.Component {
             //data.details.low
             if(item._source.data.details.low.information.trim()!=='')
               radar_data_temp.push.apply(radar_data_temp,  genCoordinates(item._source.data.details.low.information, 'data','low', low_color ));
-            
+            return 0;
           }
         );
 
@@ -185,12 +185,14 @@ class Radar extends React.Component {
                   item_choice=itemy;
                   bcheck=true;
                 }
+                return 0;
               }
             );
             if(bcheck===true)
               radar_data_new.push(item_choice);
             else 
               radar_data_new.push(itemx);
+            return bcheck;
           }
         );
        

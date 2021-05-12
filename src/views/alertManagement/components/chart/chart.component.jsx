@@ -49,6 +49,7 @@ class Chart extends React.Component {
             {
               let today = new Date(item.key);
               data = [...data,{ name: (today.getDate() + '/' + (today.getMonth() + 1)), count: item.doc_count, color: '#ffbe00'}]
+              return data;
             });
             that.setState({ 
               chartdata :data

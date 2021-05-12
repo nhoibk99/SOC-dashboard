@@ -80,7 +80,8 @@ class Grid extends React.Component {
                 item._source.data.details.low.count,
                 item._source.data.count
               ]
-             }); 
+            });
+            return item;
           }
         );
          

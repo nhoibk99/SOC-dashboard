@@ -74,6 +74,7 @@ class Grid extends React.Component {
               ]
              
              }); 
+             return 0;
           }
         );
          

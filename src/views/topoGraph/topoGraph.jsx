@@ -60,8 +60,8 @@ class TopoGraph extends React.Component{
 
     addNode = () =>{
         console.log('add node');
-        let currentNode = this.state.currentNode;
-        let {nodes, edges} =  this.state.graph;
+        // let currentNode = this.state.currentNode;
+        // let {nodes, edges} =  this.state.graph;
 
     }
     deleteNode = () =>{
@@ -73,11 +73,13 @@ class TopoGraph extends React.Component{
             if(item.id !== currentNode){
                 newNodes = [...newNodes,item]
             }
+            return newNodes;
         })
         edges.map(item =>{
             if(item.from !== currentNode && item.to !== currentNode){
                 newEdges = [...newEdges,item]
             }
+            return newEdges;
         })
         // console.log('new node', newNodes);
         // console.log('new edge', newEdges);
