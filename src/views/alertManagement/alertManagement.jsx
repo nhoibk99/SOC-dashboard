@@ -288,227 +288,229 @@ class AlertManagement extends React.Component{
     render(){
         return(
             <div className="alertManagement">
-                 <Chart />
-                <div className='filter'>    
-                    <div className='row'>
-                        <div className='col-7'>
-                            <SearchBar 
-                                onSearchTextChange={ (term,hits) => {this.onSearchChange(term,hits)}}
-                                onSearchButtonClick={this.onSearchClick}
-                                placeHolderText={"Search here..."}
-                                data={this.state.data}
-                                />
+                <Chart />
+                <div className='table'>
+                    <div className='filter'>    
+                        <div className='row'>
+                            <div className='col-7'>
+                                <SearchBar 
+                                    onSearchTextChange={ (term,hits) => {this.onSearchChange(term,hits)}}
+                                    onSearchButtonClick={this.onSearchClick}
+                                    placeHolderText={"Search here..."}
+                                    data={this.state.data}
+                                    />
+                            </div>
+                            <div className='col-3'>
+                                <label className="container">Auto refresh
+                                    <input id='autoRefresh' type="checkbox" onChange={this.autoRefresh}/>
+                                    <span className="checkmark"></span>
+                                </label>
+                            </div>
+                            <div className='col-2'>
+                                <button onClick={() => this.exportPDF()}>Generate Report</button>
+                            </div>
                         </div>
-                        <div className='col-3'>
-                            <label className="container">Auto refresh
-                                <input id='autoRefresh' type="checkbox" onChange={this.autoRefresh}/>
-                                <span className="checkmark"></span>
-                            </label>
-                        </div>
-                        <div className='col-2'>
-                            <button onClick={() => this.exportPDF()}>Generate Report</button>
+                        <div className="row">
+                            <div className='col-3'>
+                                <label htmlFor="layer">Layer</label>
+                                <select id='layer'  defaultValue="all" onChange={this.filter}>
+                                    <option value="all">All</option>
+                                    <option value="NetWork">NetWork</option>
+                                    <option value="Host">Host</option>
+                                    <option value="Application">Application</option>
+                                    <option value="Data">Data</option>
+                                    <option value="Unknown">Unknown</option>
+                                </select>
+                            </div>
+                            <div className='col-3'>
+                                <label htmlFor="killChain">Kill chain</label>
+                                <select id='killChain' defaultValue="all" onChange={this.filter}>
+                                    <option value="all">All</option>
+                                    <option value="Initial-Access">Initial-Access</option>
+                                    <option value="Execution">Execution</option>
+                                    <option value="Persistence">Persistence</option>
+                                    <option value="Privilege-Escalation">Privilege-Escalation</option>
+                                    <option value="Defense-Evasion">Defense-Evasion</option>
+                                    <option value="Credential-Access">Credential-Access</option>
+                                    <option value="Discovery">Discovery</option>
+                                    <option value="LateralMovement">LateralMovement</option>
+                                    <option value="Collection">Collection</option>
+                                    <option value="Exfiltration">Exfiltration</option>
+                                    <option value="Command and Control">Command and Control</option>
+                                    <option value="Unknown">Unknown</option>
+                                </select>
+                            </div>
+                            <div className='col-3'>
+                                <label htmlFor="impact">Impact level</label>
+                                <select id='impact' defaultValue="all" onChange={this.filter}>
+                                    <option value="all">All</option>
+                                    <option value="Website vulnerability">Website vulnerability</option>
+                                    <option value="Sensitive data exposure">Sensitive data exposure</option>
+                                    <option value="Abnormal connection">Abnormal connection</option>
+                                    <option value="CVE">CVE</option>
+                                    <option value="Security misconfiguration">Security misconfiguration</option>
+                                    <option value="Baseline IOC">Baseline IOC</option>
+                                    <option value="DOS attack">DOS attack</option>
+                                    <option value="Bruteforce attack">Bruteforce attack</option>
+                                    <option value="Phishing attack">Phishing attack</option>
+                                    <option value="Web attack">Web attack</option>
+                                    <option value="Application attack">Application attack</option>
+                                    <option value="Malware attack">Malware attack</option>
+                                    <option value="Leaked data">Leaked data</option>
+                                    <option value="Malware-infected host">Malware-infected host</option>
+                                    <option value="Inaccessible Service">Inaccessible Service</option>
+                                    <option value="Attacked website">Attacked website</option>
+                                    <option value="Compromised server">Compromised server</option>
+                                    <option value="Webshell">Webshell</option>
+                                    <option value="Unknown">Unknown</option>
+                                </select>
+                            </div>
+                            <div className='col-3'>
+                                <label htmlFor="severity">Severity</label> 
+                                <select id='severity' defaultValue="all" onChange={this.filter}>
+                                    <option value="all">All</option>
+                                    <option value="C">C</option>
+                                    <option value="H">H</option>
+                                    <option value="M">M</option>
+                                    <option value="L">L</option>
+                                </select>
+                            </div>
+                            <div className='col-3'>
+                                <label htmlFor="srcIP">Source: </label>
+                                <input id='srcIP' type="text" onChange={this.filter}/>
+                            </div>
+                            <div className='col-3'>
+                                <label htmlFor="desIP">Destination: </label>
+                                <input id='desIP' type="text" onChange={this.filter}/>
+                            </div>
+                            <div className='col-3'>
+                                <label htmlFor="timeFrom">Time from: </label>
+                                <input id='timeFrom' type="datetime-local" defaultValue={this.state.timeFrom} onChange={this.filter}/>
+                            </div>
+                            <div className='col-3'>
+                                <label htmlFor="timeTo" >to: </label>
+                                <input id='timeTo' type="datetime-local" defaultValue={this.state.timeTo} onChange={this.filter} />
+                            </div>
                         </div>
                     </div>
-                    <div className="row">
-                        <div className='col-3'>
-                            <label htmlFor="layer">Layer</label>
-                            <select id='layer'  defaultValue="all" onChange={this.filter}>
-                                <option value="all">All</option>
-                                <option value="NetWork">NetWork</option>
-                                <option value="Host">Host</option>
-                                <option value="Application">Application</option>
-                                <option value="Data">Data</option>
-                                <option value="Unknown">Unknown</option>
-                            </select>
-                        </div>
-                        <div className='col-3'>
-                            <label htmlFor="killChain">Kill chain</label>
-                            <select id='killChain' defaultValue="all" onChange={this.filter}>
-                                <option value="all">All</option>
-                                <option value="Initial-Access">Initial-Access</option>
-                                <option value="Execution">Execution</option>
-                                <option value="Persistence">Persistence</option>
-                                <option value="Privilege-Escalation">Privilege-Escalation</option>
-                                <option value="Defense-Evasion">Defense-Evasion</option>
-                                <option value="Credential-Access">Credential-Access</option>
-                                <option value="Discovery">Discovery</option>
-                                <option value="LateralMovement">LateralMovement</option>
-                                <option value="Collection">Collection</option>
-                                <option value="Exfiltration">Exfiltration</option>
-                                <option value="Command and Control">Command and Control</option>
-                                <option value="Unknown">Unknown</option>
-                            </select>
-                        </div>
-                        <div className='col-3'>
-                            <label htmlFor="impact">Impact level</label>
-                            <select id='impact' defaultValue="all" onChange={this.filter}>
-                                <option value="all">All</option>
-                                <option value="Website vulnerability">Website vulnerability</option>
-                                <option value="Sensitive data exposure">Sensitive data exposure</option>
-                                <option value="Abnormal connection">Abnormal connection</option>
-                                <option value="CVE">CVE</option>
-                                <option value="Security misconfiguration">Security misconfiguration</option>
-                                <option value="Baseline IOC">Baseline IOC</option>
-                                <option value="DOS attack">DOS attack</option>
-                                <option value="Bruteforce attack">Bruteforce attack</option>
-                                <option value="Phishing attack">Phishing attack</option>
-                                <option value="Web attack">Web attack</option>
-                                <option value="Application attack">Application attack</option>
-                                <option value="Malware attack">Malware attack</option>
-                                <option value="Leaked data">Leaked data</option>
-                                <option value="Malware-infected host">Malware-infected host</option>
-                                <option value="Inaccessible Service">Inaccessible Service</option>
-                                <option value="Attacked website">Attacked website</option>
-                                <option value="Compromised server">Compromised server</option>
-                                <option value="Webshell">Webshell</option>
-                                <option value="Unknown">Unknown</option>
-                            </select>
-                        </div>
-                        <div className='col-3'>
-                            <label htmlFor="severity">Severity</label> 
-                            <select id='severity' defaultValue="all" onChange={this.filter}>
-                                <option value="all">All</option>
-                                <option value="C">C</option>
-                                <option value="H">H</option>
-                                <option value="M">M</option>
-                                <option value="L">L</option>
-                            </select>
-                        </div>
-                        <div className='col-3'>
-                            <label htmlFor="srcIP">Source: </label>
-                            <input id='srcIP' type="text" onChange={this.filter}/>
-                        </div>
-                        <div className='col-3'>
-                            <label htmlFor="desIP">Destination: </label>
-                            <input id='desIP' type="text" onChange={this.filter}/>
-                        </div>
-                        <div className='col-3'>
-                            <label htmlFor="timeFrom">Time from: </label>
-                            <input id='timeFrom' type="datetime-local" defaultValue={this.state.timeFrom} onChange={this.filter}/>
-                        </div>
-                        <div className='col-3'>
-                            <label htmlFor="timeTo" >to: </label>
-                            <input id='timeTo' type="datetime-local" defaultValue={this.state.timeTo} onChange={this.filter} />
-                        </div>
-                    </div>
-                </div>
-                <ReactTable
-                    data={this.state.data}
-                    columns={[
-                        {
-                            Header: "STT",
-                            accessor: "stt",
-                            width: 50
-                        },
-                        {
-                            Header: "Time",
-                            accessor: "time",
-                            width: 190
-                        },
-                        {
-                            Header: "Severity",
-                            accessor: "severity",
-                            Cell: row => (
-                                <div
-                                    style={{
-                                      width: `${row.value}%`,
-                                      height: '100%',
-                                      color: 'black',
-                                      backgroundColor:
-                                        row.value == 'C' ? '#e00909'
-                                          : row.value == 'H' ? '#e07109'
-                                          : row.value == 'M' ? '#ebdea5'
-                                          : '#4de009',
-                                      borderRadius: '2px',
-                                      transition: 'all .2s ease-out'
-                                    }}
-                                  >
-                                      {row.value}
-                                  </div>
-                              )
-                        },
-                        {
-                            Header: "Message",
-                            accessor: "message",
-                            width: 150
-                        },
-                        {
-                            Header: "Soucre",
-                            accessor: "source",
-                            width: 100
-                        },
-                        {
-                            Header: "Destination",
-                            accessor: "dest",
-                            width: 120
-                        },
-                        {
-                            Header: "Layer",
-                            accessor: "layer",
-                            width: 120
-                        },
-                        {
-                            Header: "Internal ip",
-                            accessor: "internal_ip",
-                            width: 120
-                        },
-                        {
-                            Header: "Object",
-                            accessor: "object",
-                            width: 200
+                    <ReactTable
+                        data={this.state.data}
+                        columns={[
+                            {
+                                Header: "STT",
+                                accessor: "stt",
+                                width: 50
+                            },
+                            {
+                                Header: "Time",
+                                accessor: "time",
+                                width: 190
+                            },
+                            {
+                                Header: "Severity",
+                                accessor: "severity",
+                                Cell: row => (
+                                    <div
+                                        style={{
+                                        width: `${row.value}%`,
+                                        height: '100%',
+                                        color: 'black',
+                                        backgroundColor:
+                                            row.value == 'C' ? '#e00909'
+                                            : row.value == 'H' ? '#e07109'
+                                            : row.value == 'M' ? '#ebdea5'
+                                            : '#4de009',
+                                        borderRadius: '2px',
+                                        transition: 'all .2s ease-out'
+                                        }}
+                                    >
+                                        {row.value}
+                                    </div>
+                                )
+                            },
+                            {
+                                Header: "Message",
+                                accessor: "message",
+                                width: 150
+                            },
+                            {
+                                Header: "Soucre",
+                                accessor: "source",
+                                width: 100
+                            },
+                            {
+                                Header: "Destination",
+                                accessor: "dest",
+                                width: 120
+                            },
+                            {
+                                Header: "Layer",
+                                accessor: "layer",
+                                width: 120
+                            },
+                            {
+                                Header: "Internal ip",
+                                accessor: "internal_ip",
+                                width: 120
+                            },
+                            {
+                                Header: "Object",
+                                accessor: "object",
+                                width: 200
+                                
+                            },
+                            {
+                                Header: "Kill chain",
+                                accessor: "kill_chain",
+                                width: 200
+                            },
+                            {
+                                Header: "Host name",
+                                accessor: "hostname",
+                                width: 150
+                            },
+                            {
+                                Header: "File name",
+                                accessor: "filename",
+                                width: 100
+                            },
+                            {
+                                Header: "Source",
+                                accessor: "source",
+                                width: 100
+                            },
+                            {
+                                Header: "Impact level",
+                                accessor: "impact_level",
+                                width: 150
+                            },
+                            {
+                                Header: "Sub impact",
+                                accessor: "sub_impact_level",
+                                width: 200
+                            }
                             
-                        },
-                        {
-                            Header: "Kill chain",
-                            accessor: "kill_chain",
-                            width: 200
-                        },
-                        {
-                            Header: "Host name",
-                            accessor: "hostname",
-                            width: 150
-                        },
-                        {
-                            Header: "File name",
-                            accessor: "filename",
-                            width: 100
-                        },
-                        {
-                            Header: "Source",
-                            accessor: "source",
-                            width: 100
-                        },
-                        {
-                            Header: "Impact level",
-                            accessor: "impact_level",
-                            width: 150
-                        },
-                        {
-                            Header: "Sub impact",
-                            accessor: "sub_impact_level",
-                            width: 200
-                        }
-                        
-                    ]}
-                    pages={this.state.totalPage}
-                    pageIndex={this.state.currentPage}
-                    defaultPageSize={10}
-                    style={{
-                        height: "55vh" // This will force the table body to overflow and scroll, since there is not enough room
-                    }}
-                    className="-striped -highlight"
-                    onPageChange={(pageIndex) => {
-                        this.onPageChange(pageIndex)
-                    }}
-                    onPageSizeChange={(pageSize, pageIndex) => {
-                        this.onPageSizeChange(pageSize, pageIndex)
-                    }}
-                    manual
-                    onFetchData={(state, instance) => {
-                        // show the loading overlay
-                        this.setState({loading: true})
-                    }}
-                />
+                        ]}
+                        pages={this.state.totalPage}
+                        pageIndex={this.state.currentPage}
+                        defaultPageSize={10}
+                        style={{
+                            height: "51vh" // This will force the table body to overflow and scroll, since there is not enough room
+                        }}
+                        className="-striped -highlight"
+                        onPageChange={(pageIndex) => {
+                            this.onPageChange(pageIndex)
+                        }}
+                        onPageSizeChange={(pageSize, pageIndex) => {
+                            this.onPageSizeChange(pageSize, pageIndex)
+                        }}
+                        manual
+                        onFetchData={(state, instance) => {
+                            // show the loading overlay
+                            this.setState({loading: true})
+                        }}
+                    />
+                </div>
                  
             </div>
         )

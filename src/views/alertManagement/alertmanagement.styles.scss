@@ -3,147 +3,166 @@
     box-sizing: border-box;
 }
 .alertManagement{
+    
     padding: 10px ;
     background-image: url('../../assets/images/bg.png');
     min-height: 100vh;
-}
+    .table{
+        box-shadow: 0px 0px 10px #6b9fda;
+        background: linear-gradient(to right, #53a3ce 2px, transparent 2px) 0 0,
+          linear-gradient(to right, #53a3ce 2px, transparent 2px) 0 100%,
+          linear-gradient(to left, #53a3ce 2px, transparent 2px) 100% 0,
+          linear-gradient(to left, #53a3ce 2px, transparent 2px) 100% 100%,
+          linear-gradient(to bottom, #53a3ce 2px, transparent 2px) 0 0,
+          linear-gradient(to bottom, #53a3ce 2px, transparent 2px) 100% 0,
+          linear-gradient(to top, #53a3ce 2px, transparent 2px) 0 100%,
+          linear-gradient(to top, #53a3ce 2px, transparent 2px) 100% 100%;  
+        background-repeat: no-repeat;
+        background-size: 20px 20px;
+        margin: 10px 0;
+        padding: 10px;
 
-.ReactTable {
-    color: aliceblue;
-    .rt-table {
-        // width: 100%;
-        margin: 10px auto;
-        text-align: center;
-        border: 1px solid white;
-        .rt-thead{
-            .rt-tr{
-                .rt-th{
-                    background: cadetblue;
-                    border: 2px solid white;
-                }
-            }
-        }
-        .rt-tbody{
-            .rt-tr{
-                .rt-td{
-                    border: 1px solid white;
-                }
-            }
-        }
-    }
-    .pagination-bottom .-pagination{
-        button{
-            opacity: 80%;
-            background-color: cadetblue!important;
-            color: aliceblue!important;
-        }
-    
-        input {
-            color: black;
-        }
-        select{
-            width: 200px;
-        }
-    }
-}
-
-
-.filter .row{
-    margin: unset;
-    padding: 5px 120px;
-    .col-2 {
-        padding-top: 13px;
-    }
-
-    .col-3 {    
-        padding: 0 10px;
-        .container {
-            display: block;
-            width: 100%;
-            position: relative;
-            padding: 13px 0 0 35px;
+        .filter .row{
+            
             margin: unset;
-            cursor: pointer;
-            font-size: 18px;
-          }
-          
-          /* Hide the browser's default checkbox */
-          .container input {
-              position: absolute;
-            cursor: pointer;
-            height: 0;
-            width: 0;
-          }
-          
-          /* Create a custom checkbox */
-          .checkmark {
-            position: absolute;
-            bottom: 2px;
-            left: 0px;
-            height: 25px;
-            width: 25px;
-            background-color: #eee;
-        }
+            padding: 5px 120px;
+            
+            .searchComponent{
+                margin: unset;
+                text-align: center!important;
+            }
+
+            .search-container input{
+                margin: unset;
+                padding: 5px;
+                width: 90%;
+                // height: 30px;
+            }
+            .col-2 {
+                padding-top: 13px;
+            }
         
-        /* On mouse-over, add a grey background color */
-        .container:hover input ~ .checkmark {
-            background-color: #ccc;
-        }
+            .col-3 {    
+                padding: 0 10px;
+                .container {
+                    display: block;
+                    width: 100%;
+                    position: relative;
+                    padding: 13px 0 0 35px;
+                    margin: unset;
+                    cursor: pointer;
+                    font-size: 18px;
+                  }
+                  
+                  /* Hide the browser's default checkbox */
+                  .container input {
+                      position: absolute;
+                    cursor: pointer;
+                    height: 0;
+                    width: 0;
+                  }
+                  
+                  /* Create a custom checkbox */
+                  .checkmark {
+                    position: absolute;
+                    bottom: 2px;
+                    left: 0px;
+                    height: 25px;
+                    width: 25px;
+                    background-color: #eee;
+                }
+                
+                /* On mouse-over, add a grey background color */
+                .container:hover input ~ .checkmark {
+                    background-color: #ccc;
+                }
+                
+                /* When the checkbox is checked, add a blue background */
+                .container input:checked ~ .checkmark {
+                    background-color: #2196F3;
+                }
+                
+                /* Create the checkmark/indicator (hidden when not checked) */
+                .checkmark:after {
+                    content: "";
+                    position: absolute;
+                    display: none;
+                }
+                
+                /* Show the checkmark when checked */
+                .container input:checked ~ .checkmark:after {
+                    display: block;
+                }
+                
+                /* Style the checkmark/indicator */
+                .container .checkmark:after {
+                    left: 9px;
+                    top: 5px;
+                    width: 7px;
+                    height: 12px;
+                    border: solid white;
+                    border-width: 0 3px 3px 0;
+                    transform: rotate(45deg);
+                }
         
-        /* When the checkbox is checked, add a blue background */
-        .container input:checked ~ .checkmark {
-            background-color: #2196F3;
-        }
-        
-        /* Create the checkmark/indicator (hidden when not checked) */
-        .checkmark:after {
-            content: "";
-            position: absolute;
-            display: none;
-        }
-        
-        /* Show the checkmark when checked */
-        .container input:checked ~ .checkmark:after {
-            display: block;
-        }
-        
-        /* Style the checkmark/indicator */
-        .container .checkmark:after {
-            left: 9px;
-            top: 5px;
-            width: 7px;
-            height: 12px;
-            border: solid white;
-            border-width: 0 3px 3px 0;
-            transform: rotate(45deg);
+                input{
+                    max-width: 70%;
+                    min-width: 70%;
+                }
+            }
+            
+            label{
+                width: 80px;
+                color: aliceblue;
+                padding-top: 10px;
+            }
         }
 
-        input{
-            max-width: 70%;
-            min-width: 70%;
+        .ReactTable {
+            color: aliceblue;
+            .rt-table {
+                // width: 90%;
+                margin: 10px auto;
+                text-align: center;
+                border: 1px solid white;
+                .rt-thead{
+                    .rt-tr{
+                        .rt-th{
+                            background: cadetblue;
+                            border: 2px solid white;
+                        }
+                    }
+                }
+                .rt-tbody{
+                    .rt-tr{
+                        .rt-td{
+                            border: 1px solid white;
+                        }
+                    }
+                }
+            }
+            .pagination-bottom .-pagination{
+                button{
+                    opacity: 80%;
+                    background-color: cadetblue!important;
+                    color: aliceblue!important;
+                }
+            
+                input {
+                    color: black;
+                }
+                select{
+                    width: 200px;
+                }
+            }
         }
-    }
-    
-    label{
-        width: 80px;
-        color: aliceblue;
-        padding-top: 10px;
-    }
+            }
 }
+
+
+
 select{ 
     max-width: 70%;
     min-width: 70%;
     color: black;
-}
-
-.searchComponent{
-    margin: unset;
-    text-align: center!important;
-}
-
-.search-container input{
-    margin: unset;
-    padding: 5px;
-    width: 70%;
-    // height: 30px;
 }
