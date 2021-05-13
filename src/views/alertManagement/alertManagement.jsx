@@ -5,7 +5,7 @@ import SearchBar from 'react-js-search';
 import ReactTable from 'react-table-6';
 import 'react-table-6/react-table.css';
 import moment from 'moment';
-
+import { CSVLink } from 'react-csv'
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 
@@ -308,6 +308,7 @@ class AlertManagement extends React.Component{
                             </div>
                             <div className='col-2'>
                                 <button onClick={() => this.exportPDF()}>Generate Report</button>
+                                <button ><CSVLink data={this.state.data?this.state.data:[]} filename={'reportData.csv'}>Export</CSVLink></button>
                             </div>
                         </div>
                         <div className="row">
