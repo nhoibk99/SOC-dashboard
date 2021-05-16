@@ -37,6 +37,9 @@ class TopoGraph extends React.Component{
     }
     
     componentDidMount() {
+        window.oncontextmenu = function () {
+            alert('Right Click')
+          }
     }
 
     createNode = () => {
@@ -111,6 +114,10 @@ class TopoGraph extends React.Component{
         doubleClick: () => {
             // console.log('double click');
             this.createNode();
+        },
+        contextmenu:() =>{
+            alert("context menu");
+            return false;
         }
         
     };
