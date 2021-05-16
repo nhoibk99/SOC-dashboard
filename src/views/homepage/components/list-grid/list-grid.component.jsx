@@ -1,5 +1,6 @@
 import React from 'react';
 // import GridLayout from 'react-grid-layout';
+import { Link } from "react-router-dom";
 import {Col, Row} from 'antd';
 import './list-grid.styles.scss';
 
@@ -91,29 +92,41 @@ class Grid extends React.Component {
           <Row className="box-noti-list gx-5">
             <Col span={12} className="pd-10">
               <div className="grid-item">
-                <span className="name">Website vulnerability</span>
+                <Link to={{pathname: "/alert"}} onClick={() => localStorage.setItem('dataFromHome',['', '', 'Website vulnerability'])} target="_blank">
+                  <span className="name">Website vulnerability</span>
+                </Link>
                 <span className="value">{this.state.threat_vulnerability_data[0]}</span>
               </div>
               <div className="grid-item">
-              <span className="name">Sensitive data exposure</span>
+                <Link to={{pathname: "/alert"}} onClick={() => localStorage.setItem('dataFromHome',['', '', 'Sensitive data exposure'])} target="_blank">
+                <span className="name">Sensitive data exposure</span>
+                </Link>
                 <span className="value">{this.state.threat_vulnerability_data[2]}</span>
               </div>
               <div className="grid-item">
-                <span className="name">Abnormal connection</span>
+                <Link to={{pathname: "/alert"}} onClick={() => localStorage.setItem('dataFromHome',['', '', 'Abnormal connection'])} target="_blank">
+                  <span className="name">Abnormal connection</span>
+                </Link>
                 <span className="value">{this.state.threat_vulnerability_data[4]}</span>
               </div>
             </Col>
             <Col span={12} className="pd-10">
               <div className="grid-item">
-              <span className="name">CVE</span>
+                <Link to={{pathname: "/alert"}} onClick={() => localStorage.setItem('dataFromHome',['', '', 'CVE'])} target="_blank">
+                <span className="name">CVE</span>
+                </Link>
                 <span className="value">{this.state.threat_vulnerability_data[1]}</span>
               </div>
               <div className="grid-item">
-                <span className="name">Security misconfiguration</span>
+                <Link to={{pathname: "/alert"}} onClick={() => localStorage.setItem('dataFromHome',['', '', 'Security misconfiguration'])} target="_blank">
+                  <span className="name">Security misconfiguration</span>
+                </Link>
                 <span className="value">{this.state.threat_vulnerability_data[3]}</span>
               </div>
               <div className="grid-item">
-                <span className="name">Baseline IOC</span>
+                <Link to={{pathname: "/alert"}} onClick={() => localStorage.setItem('dataFromHome',['', '', 'Baseline IOC'])} target="_blank">
+                  <span className="name">Baseline IOC</span>
+                </Link>
                 <span className="value">{this.state.threat_vulnerability_data[5]}</span>
               </div>
             </Col>
@@ -123,29 +136,41 @@ class Grid extends React.Component {
           <Row className="box-noti-list gx-5">
             <Col span={12} className="pd-10">
               <div className="grid-item">
-                <span className="name">DOS attack</span>
+                <Link to={{pathname: "/alert"}} onClick={() => localStorage.setItem('dataFromHome',['', '', 'DOS attack'])} target="_blank">
+                  <span className="name">DOS attack</span>
+                </Link>
                 <span className="value">{this.state.attack_data[0]}</span>
               </div>
               <div className="grid-item">
-                <span className="name">Bruteforce attack</span>
+                <Link to={{pathname: "/alert"}} onClick={() => localStorage.setItem('dataFromHome',['', '', 'Bruteforce attack'])} target="_blank">
+                  <span className="name">Bruteforce attack</span>
+                </Link>
                 <span className="value">{this.state.attack_data[2]}</span>
               </div>
               <div className="grid-item">
-                <span className="name">Phishing attack</span>
+                <Link to={{pathname: "/alert"}} onClick={() => localStorage.setItem('dataFromHome',['', '', 'Phishing attack'])} target="_blank">
+                  <span className="name">Phishing attack</span>
+                </Link>
                 <span className="value">{this.state.attack_data[4]}</span>
               </div>
             </Col>
             <Col span={12} className="pd-10">
               <div className="grid-item">
-                <span className="name">Web attack</span>
+                <Link to={{pathname: "/alert"}} onClick={() => localStorage.setItem('dataFromHome',['', '', 'Web attack'])} target="_blank">
+                  <span className="name">Web attack</span>
+                </Link>
                 <span className="value">{this.state.attack_data[1]}</span>
               </div>
               <div className="grid-item">
-                <span className="name">Application attack</span>
+                <Link to={{pathname: "/alert"}} onClick={() => localStorage.setItem('dataFromHome',['', '', 'Application attack'])} target="_blank">
+                  <span className="name">Application attack</span>
+                </Link>
                 <span className="value">{this.state.attack_data[3]}</span>
               </div>
               <div className="grid-item">
-                <span className="name">Malware attack</span>
+                <Link to={{pathname: "/alert"}} onClick={() => localStorage.setItem('dataFromHome',['', '', 'Malware attack'])} target="_blank">
+                  <span className="name">Malware attack</span>
+                </Link>
                 <span className="value">{this.state.attack_data[5]}</span>
               </div>
             </Col>
@@ -155,29 +180,41 @@ class Grid extends React.Component {
           <Row className="box-noti-list gx-5">
             <Col span={12} className="pd-10">
               <div className="grid-item">
-                <span className="name">Leaked data</span>
+                <Link to={{pathname: "/alert"}} onClick={() => localStorage.setItem('dataFromHome',['', '', 'Leaked data'])} target="_blank">
+                  <span className="name">Leaked data</span>
+                </Link>
                 <span className="value">{this.state.incident_data[0]}</span>
               </div>
               <div className="grid-item">
-                <span className="name">Malware-infected host</span>
+                <Link to={{pathname: "/alert"}} onClick={() => localStorage.setItem('dataFromHome',['', '', 'Malware-infected host'])} target="_blank">
+                  <span className="name">Malware-infected host</span>
+                </Link>
                 <span className="value">{this.state.incident_data[2]}</span>
               </div>
               <div className="grid-item">
-                <span className="name">Inaccessible Service</span>
+                <Link to={{pathname: "/alert"}} onClick={() => localStorage.setItem('dataFromHome',['', '', 'Inaccessible Service'])} target="_blank">
+                  <span className="name">Inaccessible Service</span>
+                </Link>
                 <span className="value">{this.state.incident_data[4]}</span>
               </div>
             </Col>
             <Col span={12} className="pd-10">
               <div className="grid-item">
-                <span className="name">Attacked website</span>
+                <Link to={{pathname: "/alert"}} onClick={() => localStorage.setItem('dataFromHome',['', '', 'Attacked website'])} target="_blank">
+                  <span className="name">Attacked website</span>
+                </Link>
                 <span className="value">{this.state.incident_data[1]}</span>
               </div>
               <div className="grid-item">
-                <span className="name">Compromised server</span>
+                <Link to={{pathname: "/alert"}} onClick={() => localStorage.setItem('dataFromHome',['', '', 'Compromised server'])} target="_blank">
+                  <span className="name">Compromised server</span>
+                </Link>
                 <span className="value">{this.state.incident_data[3]}</span>
               </div>
               <div className="grid-item">
-                <span className="name">Webshell</span>
+                <Link to={{pathname: "/alert"}} onClick={() => localStorage.setItem('dataFromHome',['', '', 'Webshell'])} target="_blank">
+                  <span className="name">Webshell</span>
+                </Link>
                 <span className="value">{this.state.incident_data[5]}</span>
               </div>
             </Col>
