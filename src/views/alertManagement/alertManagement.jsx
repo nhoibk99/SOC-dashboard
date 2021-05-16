@@ -32,8 +32,8 @@ class AlertManagement extends React.Component{
     }  
     componentDidMount() {
         console.log("reload");
-        const layer = localStorage.getItem('layer')|| null;
-        console.log('layer ', layer);
+        const layer = localStorage.getItem('layer').split(',')|| null;
+        layer && this.setData(layer);
         if(this.state.autoRefresh) {
             this.interval = setInterval(this.tick, 10000);
         }
@@ -69,7 +69,18 @@ class AlertManagement extends React.Component{
         // this.state.autoRefresh && clearInterval(this.interval);
     }
 
+    setData = (layer) => {
+        if(layer[0]){
+            document.getElementById('layer').value = layer[0];
+        }
+        if(layer[1]){
+            document.getElementById('severity').value = layer[1];
+        }
+    }
+
     getData = () => {
+        
+        
         // console.log("data from home", this.props);
         const that = this;
         let { apiStart, apiEnd, query, isSearch, searchText, currentPage, sizeOfPage, timeFrom, timeTo} = this.state;

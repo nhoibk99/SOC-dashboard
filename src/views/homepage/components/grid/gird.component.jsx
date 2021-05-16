@@ -119,84 +119,156 @@ class Grid extends React.Component {
         
           <div className="grid-item" key='0' data-grid={layout[0]} >
             <div className="grid-item-name">Network layer :   
-            <Link
-              to={{pathname: "/alert"}}
-              onClick={() => localStorage.setItem('layer','Network'+ this.state.networklayer_data[4])}
-              target="_blank"
-            >
-            <label className="label_layer">{this.state.networklayer_data[4]}</label>
-            </Link>
+              <Link to={{pathname: "/alert"}} onClick={() => localStorage.setItem('layer',['NetWork', ''])} target="_blank">
+                <label className="label_layer">{this.state.networklayer_data[4]}</label>
+              </Link>
             </div>
             <div className="grid-item-data">
               <Row className="row-grid">
                 <Col span={6}>
-                  <div className="item-data"><span className="item-critical-label">Critical</span>: <span className="item-value">{this.state.networklayer_data[0]}</span></div>
+                  <div className="item-data"><span className="item-critical-label">Critical: </span>
+                    <Link to={{pathname: "/alert"}} onClick={() => localStorage.setItem('layer',['NetWork', 'C'])} target="_blank">
+                    <span className="item-value">{this.state.networklayer_data[0]}</span>
+                    </Link>
+                  </div>
                 </Col>
                 <Col span={6}>
-                  <div className="item-data"><span className="item-high-label">High</span>: <span className="item-value">{this.state.networklayer_data[1]}</span></div>
+                  <div className="item-data"><span className="item-high-label">High: </span>
+                    <Link to={{pathname: "/alert"}} onClick={() => localStorage.setItem('layer',['NetWork', 'H'])} target="_blank">
+                    <span className="item-value">{this.state.networklayer_data[1]}</span>
+                    </Link>
+                  </div>
                 </Col>
                 <Col span={6}>
-                  <div className="item-data"><span className="item-medium-label">Medium</span>: <span className="item-value">{this.state.networklayer_data[2]}</span></div>
+                  <div className="item-data"><span className="item-medium-label">Medium: </span>
+                    <Link to={{pathname: "/alert"}} onClick={() => localStorage.setItem('layer',['NetWork', 'M'])} target="_blank">
+                    <span className="item-value">{this.state.networklayer_data[2]}</span>
+                    </Link>
+                  </div>
                 </Col>
                 <Col span={6}>
-                  <div className="item-data"><span className="item-low-label">Low</span>: <span className="item-value">{this.state.networklayer_data[3]}</span></div>
+                  <div className="item-data"><span className="item-low-label">Low: </span>
+                    <Link to={{pathname: "/alert"}} onClick={() => localStorage.setItem('layer',['NetWork', 'L'])} target="_blank">
+                    <span className="item-value">{this.state.networklayer_data[3]}</span>
+                    </Link>
+                  </div>
                 </Col>
               </Row>
             </div>
           </div>
-          <div className="grid-item" key='1'data-grid={layout[1]} >
-            <div className="grid-item-name">Host layer  :  <label className="label_layer">{this.state.hostlayer_data[4]}</label></div>
+          <div className="grid-item" key='1' data-grid={layout[0]} >
+            <div className="grid-item-name">Host layer :   
+              <Link to={{pathname: "/alert"}} onClick={() => localStorage.setItem('layer',['NetWork', ''])} target="_blank">
+                <label className="label_layer">{this.state.hostlayer_data[4]}</label>
+              </Link>
+            </div>
             <div className="grid-item-data">
               <Row className="row-grid">
                 <Col span={6}>
-                  <div className="item-data"><span className="item-critical-label">Critical</span>: <span className="item-value">{this.state.hostlayer_data[0]}</span></div>
+                  <div className="item-data"><span className="item-critical-label">Critical: </span>
+                    <Link to={{pathname: "/alert"}} onClick={() => localStorage.setItem('layer',['NetWork', 'C'])} target="_blank">
+                    <span className="item-value">{this.state.hostlayer_data[0]}</span>
+                    </Link>
+                  </div>
                 </Col>
                 <Col span={6}>
-                  <div className="item-data"><span className="item-high-label">High</span>: <span className="item-value">{this.state.hostlayer_data[1]}</span></div>
+                  <div className="item-data"><span className="item-high-label">High: </span>
+                    <Link to={{pathname: "/alert"}} onClick={() => localStorage.setItem('layer',['NetWork', 'H'])} target="_blank">
+                    <span className="item-value">{this.state.hostlayer_data[1]}</span>
+                    </Link>
+                  </div>
                 </Col>
                 <Col span={6}>
-                  <div className="item-data"><span className="item-medium-label">Medium</span>: <span className="item-value">{this.state.hostlayer_data[2]}</span></div>
+                  <div className="item-data"><span className="item-medium-label">Medium: </span>
+                    <Link to={{pathname: "/alert"}} onClick={() => localStorage.setItem('layer',['NetWork', 'M'])} target="_blank">
+                    <span className="item-value">{this.state.hostlayer_data[2]}</span>
+                    </Link>
+                  </div>
                 </Col>
                 <Col span={6}>
-                  <div className="item-data"><span className="item-low-label">Low</span>: <span className="item-value">{this.state.hostlayer_data[3]}</span></div>
+                  <div className="item-data"><span className="item-low-label">Low: </span>
+                    <Link to={{pathname: "/alert"}} onClick={() => localStorage.setItem('layer',['NetWork', 'L'])} target="_blank">
+                    <span className="item-value">{this.state.hostlayer_data[3]}</span>
+                    </Link>
+                  </div>
                 </Col>
               </Row>
             </div>
           </div>
-          <div className="grid-item" key='2' data-grid={layout[2]} >
-            <div className="grid-item-name">Application layer  :  <label className="label_layer">{this.state.applicationlayer_data[4]}</label></div>
+          <div className="grid-item" key='2' data-grid={layout[0]} >
+            <div className="grid-item-name">Application layer :   
+              <Link to={{pathname: "/alert"}} onClick={() => localStorage.setItem('layer',['NetWork', ''])} target="_blank">
+                <label className="label_layer">{this.state.applicationlayer_data[4]}</label>
+              </Link>
+            </div>
             <div className="grid-item-data">
               <Row className="row-grid">
                 <Col span={6}>
-                  <div className="item-data"><span className="item-critical-label">Critical</span>: <span className="item-value">{this.state.applicationlayer_data[0]}</span></div>
+                  <div className="item-data"><span className="item-critical-label">Critical: </span>
+                    <Link to={{pathname: "/alert"}} onClick={() => localStorage.setItem('layer',['NetWork', 'C'])} target="_blank">
+                    <span className="item-value">{this.state.applicationlayer_data[0]}</span>
+                    </Link>
+                  </div>
                 </Col>
                 <Col span={6}>
-                  <div className="item-data"><span className="item-high-label">High</span>: <span className="item-value">{this.state.applicationlayer_data[1]}</span></div>
+                  <div className="item-data"><span className="item-high-label">High: </span>
+                    <Link to={{pathname: "/alert"}} onClick={() => localStorage.setItem('layer',['NetWork', 'H'])} target="_blank">
+                    <span className="item-value">{this.state.applicationlayer_data[1]}</span>
+                    </Link>
+                  </div>
                 </Col>
                 <Col span={6}>
-                  <div className="item-data"><span className="item-medium-label">Medium</span>: <span className="item-value">{this.state.applicationlayer_data[2]}</span></div>
+                  <div className="item-data"><span className="item-medium-label">Medium: </span>
+                    <Link to={{pathname: "/alert"}} onClick={() => localStorage.setItem('layer',['NetWork', 'M'])} target="_blank">
+                    <span className="item-value">{this.state.applicationlayer_data[2]}</span>
+                    </Link>
+                  </div>
                 </Col>
                 <Col span={6}>
-                  <div className="item-data"><span className="item-low-label">Low</span>: <span className="item-value">{this.state.applicationlayer_data[3]}</span></div>
+                  <div className="item-data"><span className="item-low-label">Low: </span>
+                    <Link to={{pathname: "/alert"}} onClick={() => localStorage.setItem('layer',['NetWork', 'L'])} target="_blank">
+                    <span className="item-value">{this.state.applicationlayer_data[3]}</span>
+                    </Link>
+                  </div>
                 </Col>
               </Row>
             </div>
           </div>
-          <div className="grid-item" key='3'data-grid={layout[3]} >
-            <div className="grid-item-name">Data layer  :  <label className="label_layer">{this.state.datalayer_data[4]}</label></div>
+          <div className="grid-item" key='3' data-grid={layout[0]} >
+            <div className="grid-item-name">Data layer :   
+              <Link to={{pathname: "/alert"}} onClick={() => localStorage.setItem('layer',['NetWork', ''])} target="_blank">
+                <label className="label_layer">{this.state.datalayer_data[4]}</label>
+              </Link>
+            </div>
             <div className="grid-item-data">
               <Row className="row-grid">
                 <Col span={6}>
-                  <div className="item-data"><span className="item-critical-label">Critical</span>: <span className="item-value">{this.state.datalayer_data[0]}</span></div>
+                  <div className="item-data"><span className="item-critical-label">Critical: </span>
+                    <Link to={{pathname: "/alert"}} onClick={() => localStorage.setItem('layer',['NetWork', 'C'])} target="_blank">
+                    <span className="item-value">{this.state.datalayer_data[0]}</span>
+                    </Link>
+                  </div>
                 </Col>
                 <Col span={6}>
-                  <div className="item-data"><span className="item-high-label">High</span>: <span className="item-value">{this.state.datalayer_data[1]}</span></div>
+                  <div className="item-data"><span className="item-high-label">High: </span>
+                    <Link to={{pathname: "/alert"}} onClick={() => localStorage.setItem('layer',['NetWork', 'H'])} target="_blank">
+                    <span className="item-value">{this.state.datalayer_data[1]}</span>
+                    </Link>
+                  </div>
                 </Col>
                 <Col span={6}>
-                  <div className="item-data"><span className="item-medium-label">Medium</span>: <span className="item-value">{this.state.datalayer_data[2]}</span></div>
+                  <div className="item-data"><span className="item-medium-label">Medium: </span>
+                    <Link to={{pathname: "/alert"}} onClick={() => localStorage.setItem('layer',['NetWork', 'M'])} target="_blank">
+                    <span className="item-value">{this.state.datalayer_data[2]}</span>
+                    </Link>
+                  </div>
                 </Col>
                 <Col span={6}>
-                  <div className="item-data"><span className="item-low-label">Low</span>: <span className="item-value">{this.state.datalayer_data[3]}</span></div>
+                  <div className="item-data"><span className="item-low-label">Low: </span>
+                    <Link to={{pathname: "/alert"}} onClick={() => localStorage.setItem('layer',['NetWork', 'L'])} target="_blank">
+                    <span className="item-value">{this.state.datalayer_data[3]}</span>
+                    </Link>
+                  </div>
                 </Col>
               </Row>
             </div>
