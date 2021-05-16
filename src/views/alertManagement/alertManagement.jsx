@@ -32,6 +32,8 @@ class AlertManagement extends React.Component{
     }  
     componentDidMount() {
         console.log("reload");
+        const layer = localStorage.getItem('layer')|| null;
+        console.log('layer ', layer);
         if(this.state.autoRefresh) {
             this.interval = setInterval(this.tick, 10000);
         }
@@ -307,8 +309,8 @@ class AlertManagement extends React.Component{
                                 </label>
                             </div>
                             <div className='col-2'>
-                                <button onClick={() => this.exportPDF()}>Generate Report</button>
-                                <button ><CSVLink data={this.state.data?this.state.data:[]} filename={'reportData.csv'}>Export</CSVLink></button>
+                                <button id='exportPDF' onClick={() => this.exportPDF()}>Generate Report</button>
+                                <button ><CSVLink id='exportCSV' data={this.state.data?this.state.data:[]} filename={'reportData.csv'}>Export CSV</CSVLink></button>
                             </div>
                         </div>
                         <div className="row">

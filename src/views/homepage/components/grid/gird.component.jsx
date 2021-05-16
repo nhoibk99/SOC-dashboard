@@ -2,10 +2,7 @@ import React from 'react';
 import GridLayout from 'react-grid-layout';
 import { Row, Col } from 'antd';
 import './gird.styles.scss';
-import {
-  BrowserRouter as 
-  Link
-} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 
 let url = 'http://elastic.vninfosec.net/threat-hunting-statistics/_search?pretty=true&q=%2Bcustomer%3A%28%22khach+hang+a%22%29%2Bdisplay_classification%3A%28%22four+layers%22%29%2Btime%3A%28%22last+day%22%29&filter_path=-hits.hits._source.**.details.**.information';
@@ -121,8 +118,14 @@ class Grid extends React.Component {
       >
         
           <div className="grid-item" key='0' data-grid={layout[0]} >
-            <div className="grid-item-name">Network layer  :  
-            <Link to="/alert" params={{ testvalue: "hello" }} state={{hello: "Hello World"}}><label className="label_layer">{this.state.networklayer_data[4]}</label></Link>
+            <div className="grid-item-name">Network layer :   
+            <Link
+              to={{pathname: "/alert"}}
+              onClick={() => localStorage.setItem('layer','Network'+ this.state.networklayer_data[4])}
+              target="_blank"
+            >
+            <label className="label_layer">{this.state.networklayer_data[4]}</label>
+            </Link>
             </div>
             <div className="grid-item-data">
               <Row className="row-grid">
