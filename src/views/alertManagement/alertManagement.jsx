@@ -80,6 +80,7 @@ class AlertManagement extends React.Component{
         if(dataFromHome[2]){
             document.getElementById('impact').value = dataFromHome[2];
         }
+        localStorage.clear();
     }
 
     getData = () => {

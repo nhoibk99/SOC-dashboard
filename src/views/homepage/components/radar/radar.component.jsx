@@ -96,7 +96,7 @@ class Radar extends React.Component {
     let radar_data_temp1= this.state.radar_data;
     let radar_data_new=[];
 
-      fetch(url)
+    fetch(url)
       .then(function(response) {
           return response.json();
       })
@@ -203,8 +203,9 @@ class Radar extends React.Component {
           radar_data : radar_data_new,
         });
 
-      }).catch(function(error) { that.setState({info:error});
-    });
+      })
+      .catch(function(error) { that.setState({info:error});
+      });
   }
 
   render(){
