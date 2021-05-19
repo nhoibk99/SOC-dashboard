@@ -8,7 +8,20 @@ import moment from 'moment';
 import { CSVLink } from 'react-csv'
 import jsPDF from "jspdf";
 import "jspdf-autotable";
-
+import { saveAs } from "file-saver";
+import {
+    AlignmentType,
+    Document,
+    HeadingLevel,
+    Packer,
+    Paragraph,
+    TabStopPosition,
+    TabStopType,
+    TextRun
+  } from "docx";
+  const PHONE_NUMBER = "07534563401";
+  const PROFILE_URL = "https://www.linkedin.com/in/dolan1";
+  const EMAIL = "docx@docx.com";
 class AlertManagement extends React.Component{
     constructor(){
         super();
@@ -303,6 +316,36 @@ class AlertManagement extends React.Component{
         
     }
 
+    generate = ()=> {
+        const document = new Document({
+            sections: [
+              {
+                children: [
+                  new Paragraph({
+                    text: "Test export file .docx",
+                    heading: HeadingLevel.TITLE
+                  }),
+                  new Paragraph(
+                    "Dr. Dean Mohamedally Director of Postgraduate Studies Department of Computer Science, University College London Malet Place, Bloomsbury, London WC1E d.mohamedally@ucl.ac.uk"
+                  ),
+                  new Paragraph("More references upon request"),
+                  new Paragraph({
+                    text:
+                      "This CV was generated in real-time based on my Linked-In profile from my personal website www.dolan.bio.",
+                    alignment: AlignmentType.CENTER
+                  })
+                ]
+              }
+            ]
+          });
+    
+        Packer.toBlob(document).then(blob => {
+          console.log(blob);
+          saveAs(blob, "example.docx");
+          console.log("Document created successfully");
+        });
+      }
+
     render(){
         return(
             <div className="alertManagement">
@@ -325,6 +368,7 @@ class AlertManagement extends React.Component{
                                 </label>
                             </div>
                             <div className='col-2'>
+                                <button onClick={this.generate}>Generate CV with docx!</button>
                                 <button id='exportPDF' onClick={() => this.exportPDF()}>Generate Report</button>
                                 <button ><CSVLink id='exportCSV' data={this.state.data?this.state.data:[]} filename={'reportData.csv'}>Export CSV</CSVLink></button>
                             </div>
