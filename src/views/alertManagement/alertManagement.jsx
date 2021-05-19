@@ -14,14 +14,8 @@ import {
     Document,
     HeadingLevel,
     Packer,
-    Paragraph,
-    TabStopPosition,
-    TabStopType,
-    TextRun
+    Paragraph, Table, TableCell, TableRow
   } from "docx";
-  const PHONE_NUMBER = "07534563401";
-  const PROFILE_URL = "https://www.linkedin.com/in/dolan1";
-  const EMAIL = "docx@docx.com";
 class AlertManagement extends React.Component{
     constructor(){
         super();
@@ -317,23 +311,138 @@ class AlertManagement extends React.Component{
     }
 
     generate = ()=> {
+        const table = new Table({
+            rows: [
+                new TableRow({
+                    children: [
+                        new TableCell({
+                            children: [new Paragraph("Thể hiện")],
+                        }),
+                        new TableCell({
+                            children: [new Paragraph("Ý nghĩa")],
+                        }),
+                        new TableCell({
+                            children: [new Paragraph("Số lượng")],
+                        }),
+                    ],
+                }),
+                new TableRow({
+                    children: [
+                        new TableCell({
+                            children: [new Paragraph("C")],
+                        }),
+                        new TableCell({
+                            children: [new Paragraph("Nghiêm trọng")],
+                        }),
+                        new TableCell({
+                            children: [new Paragraph("0")],
+                        }),
+                    ],
+                }),
+                new TableRow({
+                    children: [
+                        new TableCell({
+                            children: [new Paragraph("H")],
+                        }),
+                        new TableCell({
+                            children: [new Paragraph("Cao")],
+                        }),
+                        new TableCell({
+                            children: [new Paragraph("0")],
+                        }),
+                    ],
+                }),
+                new TableRow({
+                    children: [
+                        new TableCell({
+                            children: [new Paragraph("M")],
+                        }),
+                        new TableCell({
+                            children: [new Paragraph("Trung bình")],
+                        }),
+                        new TableCell({
+                            children: [new Paragraph("11")],
+                        }),
+                    ],
+                }),
+                new TableRow({
+                    children: [
+                        new TableCell({
+                            children: [new Paragraph("L")],
+                        }),
+                        new TableCell({
+                            children: [new Paragraph("Thấp")],
+                        }),
+                        new TableCell({
+                            children: [new Paragraph("11")],
+                        }),
+                    ],
+                }),
+            ],
+        });
+        console.log('dâta',this.state.data);
+        let row = [];
+        this.state.data.map(item => {
+            row = [...row, new TableRow({
+                        children: [
+                            new TableCell({
+                                children: [new Paragraph(item.time)],
+                            }),
+                            new TableCell({
+                                children: [new Paragraph(item.severity)],
+                            }),
+                            new TableCell({
+                                children: [new Paragraph(item.message)],
+                            }),
+                            new TableCell({
+                                children: [new Paragraph(item.kill_chain)],
+                            }),
+                            new TableCell({
+                                children: [new Paragraph(item.internal_ip)],
+                            }),
+                            new TableCell({
+                                children: [new Paragraph(item.dest)],
+                            }),
+                        ],
+                    }),
+                ]
+        })
+        const tableData = new Table({
+            rows: [
+                new TableRow({
+                    children: [
+                        new TableCell({
+                            children: [new Paragraph("Thời gian")],
+                        }),
+                        new TableCell({
+                            children: [new Paragraph("Mức độ")],
+                        }),
+                        new TableCell({
+                            children: [new Paragraph("Cảnh báo")],
+                        }),
+                        new TableCell({
+                            children: [new Paragraph("Attack chain")],
+                        }),
+                        new TableCell({
+                            children: [new Paragraph("Nguồn")],
+                        }),
+                        new TableCell({
+                            children: [new Paragraph("Đích")],
+                        }),
+                    ],
+                }),...row]
+        });
         const document = new Document({
             sections: [
               {
                 children: [
                   new Paragraph({
-                    text: "Test export file .docx",
-                    heading: HeadingLevel.TITLE
+                    text: "Số liệu cảnh báo từ 12.05.2021 đến 17.05.2021",
                   }),
+                  table,
                   new Paragraph(
-                    "Dr. Dean Mohamedally Director of Postgraduate Studies Department of Computer Science, University College London Malet Place, Bloomsbury, London WC1E d.mohamedally@ucl.ac.uk"
-                  ),
-                  new Paragraph("More references upon request"),
-                  new Paragraph({
-                    text:
-                      "This CV was generated in real-time based on my Linked-In profile from my personal website www.dolan.bio.",
-                    alignment: AlignmentType.CENTER
-                  })
+                    " "
+                  ),tableData
                 ]
               }
             ]
@@ -368,8 +477,8 @@ class AlertManagement extends React.Component{
                                 </label>
                             </div>
                             <div className='col-2'>
-                                <button onClick={this.generate}>Generate CV with docx!</button>
-                                <button id='exportPDF' onClick={() => this.exportPDF()}>Generate Report</button>
+                                <button onClick={this.generate}>Export docx</button>
+                                <button id='exportPDF' onClick={() => this.exportPDF()}>Export pdf</button>
                                 <button ><CSVLink id='exportCSV' data={this.state.data?this.state.data:[]} filename={'reportData.csv'}>Export CSV</CSVLink></button>
                             </div>
                         </div>
