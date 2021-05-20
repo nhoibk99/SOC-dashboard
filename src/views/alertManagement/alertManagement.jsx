@@ -312,17 +312,43 @@ class AlertManagement extends React.Component{
 
     generate = ()=> {
         const table = new Table({
-            columnWidths: [1500, 1000,3500,1500,1500,1500],
             rows: [
                 new TableRow({
                     children: [
                         new TableCell({
+                            width: {
+                                size: 1500,
+                                type: WidthType.DXA,
+                            },
+                            shading: {
+                                fill: "blue",
+                                val: ShadingType.SOLID,
+                                color: "blue",
+                            },
                             children: [new Paragraph("Thể hiện")],
                         }),
                         new TableCell({
+                            width: {
+                                size: 2000,
+                                type: WidthType.DXA,
+                            },
+                            shading: {
+                                fill: "blue",
+                                val: ShadingType.SOLID,
+                                color: "blue",
+                            },
                             children: [new Paragraph("Ý nghĩa")],
                         }),
                         new TableCell({
+                            width: {
+                                size: 1500,
+                                type: WidthType.DXA,
+                            },
+                            shading: {
+                                fill: "blue",
+                                val: ShadingType.SOLID,
+                                color: "blue",
+                            },
                             children: [new Paragraph("Số lượng")],
                         }),
                     ],
@@ -416,7 +442,7 @@ class AlertManagement extends React.Component{
                             }),
                             new TableCell({
                                 width: {
-                                    size: 1000,
+                                    size: 1200,
                                     type: WidthType.DXA,
                                 },
                                 shading: {
@@ -433,7 +459,7 @@ class AlertManagement extends React.Component{
                             }),
                             new TableCell({
                                 width: {
-                                    size: 3500,
+                                    size: 7500,
                                     type: WidthType.DXA,
                                 },
                                 verticalAlign: VerticalAlign.CENTER,
@@ -488,7 +514,7 @@ class AlertManagement extends React.Component{
                         }),
                         new TableCell({
                             width: {
-                                size: 1500,
+                                size: 1200,
                                 type: WidthType.DXA,
                             },
                             verticalAlign: VerticalAlign.CENTER,
@@ -501,7 +527,7 @@ class AlertManagement extends React.Component{
                         }),
                         new TableCell({
                             width: {
-                                size: 1500,
+                                size: 7500,
                                 type: WidthType. b,
                             },
                             verticalAlign: VerticalAlign.CENTER,
