@@ -14,7 +14,7 @@ import {
     Document,
     HeadingLevel,
     Packer,
-    Paragraph, Table, TableCell, TableRow
+    Paragraph, Table, TableCell, TableRow, WidthType, VerticalAlign, ShadingType 
   } from "docx";
 class AlertManagement extends React.Component{
     constructor(){
@@ -312,6 +312,7 @@ class AlertManagement extends React.Component{
 
     generate = ()=> {
         const table = new Table({
+            columnWidths: [1500, 1000,3500,1500,1500,1500],
             rows: [
                 new TableRow({
                     children: [
@@ -329,6 +330,11 @@ class AlertManagement extends React.Component{
                 new TableRow({
                     children: [
                         new TableCell({
+                            shading: {
+                                fill: "42c5f4",
+                                val: ShadingType.SOLID,
+                                color: '#e00909',
+                            },
                             children: [new Paragraph("C")],
                         }),
                         new TableCell({
@@ -342,6 +348,11 @@ class AlertManagement extends React.Component{
                 new TableRow({
                     children: [
                         new TableCell({
+                            shading: {
+                                fill: "42c5f4",
+                                val: ShadingType.SOLID,
+                                color: '#e07109',
+                            },
                             children: [new Paragraph("H")],
                         }),
                         new TableCell({
@@ -355,6 +366,11 @@ class AlertManagement extends React.Component{
                 new TableRow({
                     children: [
                         new TableCell({
+                            shading: {
+                                fill: "42c5f4",
+                                val: ShadingType.SOLID,
+                                color: '#ebdea5',
+                            },
                             children: [new Paragraph("M")],
                         }),
                         new TableCell({
@@ -368,6 +384,11 @@ class AlertManagement extends React.Component{
                 new TableRow({
                     children: [
                         new TableCell({
+                            shading: {
+                                fill: "42c5f4",
+                                val: ShadingType.SOLID,
+                                color: '#4de009',
+                            },
                             children: [new Paragraph("L")],
                         }),
                         new TableCell({
@@ -386,21 +407,60 @@ class AlertManagement extends React.Component{
             row = [...row, new TableRow({
                         children: [
                             new TableCell({
+                                width: {
+                                    size: 1500,
+                                    type: WidthType.DXA,
+                                },
+                                verticalAlign: VerticalAlign.CENTER,
                                 children: [new Paragraph(item.time)],
                             }),
                             new TableCell({
+                                width: {
+                                    size: 1000,
+                                    type: WidthType.DXA,
+                                },
+                                shading: {
+                                    fill: "42c5f4",
+                                    val: ShadingType.SOLID,
+                                    color: 
+                                    item.severity === 'C' ? '#e00909'
+                                    : item.severity === 'H' ? '#e07109'
+                                    : item.severity === 'M' ? '#ebdea5'
+                                    : '#4de009',
+                                },
+                                verticalAlign: VerticalAlign.CENTER,
                                 children: [new Paragraph(item.severity)],
                             }),
                             new TableCell({
+                                width: {
+                                    size: 3500,
+                                    type: WidthType.DXA,
+                                },
+                                verticalAlign: VerticalAlign.CENTER,
                                 children: [new Paragraph(item.message)],
                             }),
                             new TableCell({
+                                width: {
+                                    size: 1500,
+                                    type: WidthType.DXA,
+                                },
+                                verticalAlign: VerticalAlign.CENTER,
                                 children: [new Paragraph(item.kill_chain)],
                             }),
                             new TableCell({
+                                width: {
+                                    size: 1500,
+                                    type: WidthType.DXA,
+                                },
+                                verticalAlign: VerticalAlign.CENTER,
                                 children: [new Paragraph(item.internal_ip)],
                             }),
                             new TableCell({
+                                width: {
+                                    size: 1500,
+                                    type: WidthType.DXA,
+                                },
+                                verticalAlign: VerticalAlign.CENTER,
                                 children: [new Paragraph(item.dest)],
                             }),
                         ],
@@ -408,29 +468,95 @@ class AlertManagement extends React.Component{
                 ]
         })
         const tableData = new Table({
+            
+            alignment: AlignmentType.CENTER,
             rows: [
                 new TableRow({
                     children: [
                         new TableCell({
+                            width: {
+                                size: 1500,
+                                type: WidthType.DXA,
+                            },
+                            verticalAlign: VerticalAlign.CENTER,
+                            shading: {
+                                fill: "blue",
+                                val: ShadingType.SOLID,
+                                color: "blue",
+                            },
                             children: [new Paragraph("Thời gian")],
                         }),
                         new TableCell({
+                            width: {
+                                size: 1500,
+                                type: WidthType.DXA,
+                            },
+                            verticalAlign: VerticalAlign.CENTER,
+                            shading: {
+                                fill: "blue",
+                                val: ShadingType.SOLID,
+                                color: "blue",
+                            },
                             children: [new Paragraph("Mức độ")],
                         }),
                         new TableCell({
+                            width: {
+                                size: 1500,
+                                type: WidthType. b,
+                            },
+                            verticalAlign: VerticalAlign.CENTER,
+                            shading: {
+                                fill: "blue",
+                                val: ShadingType.SOLID,
+                                color: "blue",
+                            },
                             children: [new Paragraph("Cảnh báo")],
                         }),
                         new TableCell({
+                            width: {
+                                size: 1500,
+                                type: WidthType.DXA,
+                            },
+                            verticalAlign: VerticalAlign.CENTER,
+                            shading: {
+                                fill: "blue",
+                                val: ShadingType.SOLID,
+                                color: "blue",
+                            },
                             children: [new Paragraph("Attack chain")],
                         }),
                         new TableCell({
+                            width: {
+                                size: 1500,
+                                type: WidthType.DXA,
+                            },
+                            verticalAlign: VerticalAlign.CENTER,
+                            shading: {
+                                fill: "blue",
+                                val: ShadingType.SOLID,
+                                color: "blue",
+                            },
                             children: [new Paragraph("Nguồn")],
                         }),
                         new TableCell({
+                            width: {
+                                size: 1500,
+                                type: WidthType.DXA,
+                            },
+                            verticalAlign: VerticalAlign.CENTER,
+                            shading: {
+                                fill: "blue",
+                                val: ShadingType.SOLID,
+                                color: "blue",
+                            },
                             children: [new Paragraph("Đích")],
                         }),
                     ],
-                }),...row]
+                }),...row],
+                width: {
+                    size: 100,
+                    type: WidthType.AUTO,
+                },
         });
         const document = new Document({
             sections: [
@@ -439,10 +565,10 @@ class AlertManagement extends React.Component{
                   new Paragraph({
                     text: "Số liệu cảnh báo từ 12.05.2021 đến 17.05.2021",
                   }),
+                  new Paragraph(" "),
                   table,
-                  new Paragraph(
-                    " "
-                  ),tableData
+                  new Paragraph(" "),
+                  tableData
                 ]
               }
             ]
