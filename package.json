@@ -34,8 +34,10 @@
     "react-table-6": "^6.11.0",
     "react-table-pdf": "0.0.4",
     "react-timezone": "^2.4.0",
+    "react-use": "^17.2.4",
     "reactstrap": "^8.9.0",
     "recharts": "^2.0.9",
+    "recharts-to-png": "^1.0.0",
     "regraph": "0.0.1",
     "web-vitals": "^1.0.1"
   },

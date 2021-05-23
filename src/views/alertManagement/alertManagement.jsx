@@ -16,6 +16,7 @@ import {
     Packer,
     Paragraph, Table, TableCell, TableRow, WidthType, VerticalAlign, ShadingType, convertInchesToTwip
   } from "docx";
+
 class AlertManagement extends React.Component{
     constructor(){
         super();

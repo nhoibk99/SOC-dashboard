@@ -10,7 +10,8 @@ import {
   Cell
 } from 'recharts';
 import './chart.styles.scss';
-
+import FileSaver from "file-saver";
+import ChartFunc from './chart.functioncomponent';
 // let url = 'http://elastic.vninfosec.net/threat-hunting-statistics/_search?pretty=true&q=%2Bcustomer%3A%28%22khach+hang+a%22%29%2Bdisplay_classification%3A%28%22mitre+att%26ck%22%29%2Btime%3A%28%22last+day%22%29';
 // let base64= require('base-64');
 // let username='admin';
@@ -37,6 +38,7 @@ class Chart extends React.Component {
   componentWillUnmount() {
    clearInterval(this.interval);
   }
+
   tick = () => {
     const that = this;
     fetch(api)
@@ -60,21 +62,33 @@ class Chart extends React.Component {
           console.log(error);
       });
     }
+
+  handleDownload =  () => {
+    // Use FileSaver to download the PNG
+    FileSaver.saveAs(this.state.png, "test.png");
+  };
+
   render() {
     return (
       <div className="chart">
         <div className="title-chart">Dữ liệu trong 30 ngày gần nhất</div>
-        <ResponsiveContainer width="100%" height={150}>
+        
+        <ChartFunc />
+        {/* <ResponsiveContainer width="100%" height={150}>
+          <span style={{ float: "left" }}>
+            <button onClick={this.handleDownload}>Download</button>
+          </span>
           <BarChart 
-          width={400} height={420} 
-          layout="horizontal" 
-          data={this.state.chartdata} 
-          drawValueAboveBar ={true}
-          xAxis= {{
-            drawLabels: true,
-          }}
-          options = {{ plugins: { datalabels: { display: true }}}}
-          margin={{ top: 0, right: 0, bottom: 0, left: -30 }}>
+            ref= {this.state.ref} 
+            width={400} height={420} 
+            layout="horizontal" 
+            data={this.state.chartdata} 
+            drawValueAboveBar ={true}
+            xAxis= {{
+              drawLabels: true,
+            }}
+            options = {{ plugins: { datalabels: { display: true }}}}
+            margin={{ top: 0, right: 0, bottom: 0, left: -30 }}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="name" type="category"  fontWeight='bold' axisLine={false} dx={-5} tickLine={false} />
             <YAxis type="number" />
@@ -86,6 +100,7 @@ class Chart extends React.Component {
             </Bar>
           </BarChart>
         </ResponsiveContainer>
+       */}
       </div>
     );
   }
