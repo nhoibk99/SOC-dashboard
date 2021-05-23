@@ -14,7 +14,7 @@ import {
     Document,
     HeadingLevel,
     Packer,
-    Paragraph, Table, TableCell, TableRow, WidthType, VerticalAlign, ShadingType 
+    Paragraph, Table, TableCell, TableRow, WidthType, VerticalAlign, ShadingType, convertInchesToTwip
   } from "docx";
 class AlertManagement extends React.Component{
     constructor(){
@@ -316,8 +316,11 @@ class AlertManagement extends React.Component{
                 new TableRow({
                     children: [
                         new TableCell({
+                            margins: {
+                                left: convertInchesToTwip(0.1),
+                            },
                             width: {
-                                size: 1500,
+                                size: 1000,
                                 type: WidthType.DXA,
                             },
                             shading: {
@@ -328,8 +331,11 @@ class AlertManagement extends React.Component{
                             children: [new Paragraph("Thể hiện")],
                         }),
                         new TableCell({
+                            margins: {
+                                left: convertInchesToTwip(0.1),
+                            },
                             width: {
-                                size: 2000,
+                                size: 1700,
                                 type: WidthType.DXA,
                             },
                             shading: {
@@ -340,8 +346,11 @@ class AlertManagement extends React.Component{
                             children: [new Paragraph("Ý nghĩa")],
                         }),
                         new TableCell({
+                            margins: {
+                                left: convertInchesToTwip(0.1),
+                            },
                             width: {
-                                size: 1500,
+                                size: 1200,
                                 type: WidthType.DXA,
                             },
                             shading: {
@@ -356,6 +365,9 @@ class AlertManagement extends React.Component{
                 new TableRow({
                     children: [
                         new TableCell({
+                            margins: {
+                                left: convertInchesToTwip(0.3),
+                            },
                             shading: {
                                 fill: "42c5f4",
                                 val: ShadingType.SOLID,
@@ -364,9 +376,15 @@ class AlertManagement extends React.Component{
                             children: [new Paragraph("C")],
                         }),
                         new TableCell({
+                            margins: {
+                                left: convertInchesToTwip(0.2),
+                            },
                             children: [new Paragraph("Nghiêm trọng")],
                         }),
                         new TableCell({
+                            margins: {
+                                left: convertInchesToTwip(0.35),
+                            },
                             children: [new Paragraph("0")],
                         }),
                     ],
@@ -374,6 +392,9 @@ class AlertManagement extends React.Component{
                 new TableRow({
                     children: [
                         new TableCell({
+                            margins: {
+                                left: convertInchesToTwip(0.3),
+                            },
                             shading: {
                                 fill: "42c5f4",
                                 val: ShadingType.SOLID,
@@ -382,9 +403,15 @@ class AlertManagement extends React.Component{
                             children: [new Paragraph("H")],
                         }),
                         new TableCell({
+                            margins: {
+                                left: convertInchesToTwip(0.2),
+                            },
                             children: [new Paragraph("Cao")],
                         }),
                         new TableCell({
+                            margins: {
+                                left: convertInchesToTwip(0.35),
+                            },
                             children: [new Paragraph("0")],
                         }),
                     ],
@@ -392,6 +419,9 @@ class AlertManagement extends React.Component{
                 new TableRow({
                     children: [
                         new TableCell({
+                            margins: {
+                                left: convertInchesToTwip(0.3),
+                            },
                             shading: {
                                 fill: "42c5f4",
                                 val: ShadingType.SOLID,
@@ -400,9 +430,15 @@ class AlertManagement extends React.Component{
                             children: [new Paragraph("M")],
                         }),
                         new TableCell({
+                            margins: {
+                                left: convertInchesToTwip(0.2),
+                            },
                             children: [new Paragraph("Trung bình")],
                         }),
                         new TableCell({
+                            margins: {
+                                left: convertInchesToTwip(0.35),
+                            },
                             children: [new Paragraph("11")],
                         }),
                     ],
@@ -410,6 +446,9 @@ class AlertManagement extends React.Component{
                 new TableRow({
                     children: [
                         new TableCell({
+                            margins: {
+                                left: convertInchesToTwip(0.3),
+                            },
                             shading: {
                                 fill: "42c5f4",
                                 val: ShadingType.SOLID,
@@ -418,9 +457,15 @@ class AlertManagement extends React.Component{
                             children: [new Paragraph("L")],
                         }),
                         new TableCell({
+                            margins: {
+                                left: convertInchesToTwip(0.2),
+                            },
                             children: [new Paragraph("Thấp")],
                         }),
                         new TableCell({
+                            margins: {
+                                left: convertInchesToTwip(0.35),
+                            },
                             children: [new Paragraph("11")],
                         }),
                     ],
@@ -453,6 +498,10 @@ class AlertManagement extends React.Component{
                                     : item.severity === 'H' ? '#e07109'
                                     : item.severity === 'M' ? '#ebdea5'
                                     : '#4de009',
+                                },
+                                margins: {
+                                    left: convertInchesToTwip(0.22),
+                                    right: convertInchesToTwip(0.22),
                                 },
                                 verticalAlign: VerticalAlign.CENTER,
                                 children: [new Paragraph(item.severity)],
@@ -579,10 +628,10 @@ class AlertManagement extends React.Component{
                         }),
                     ],
                 }),...row],
-                width: {
-                    size: 100,
-                    type: WidthType.AUTO,
-                },
+            width: {
+                size: 11000,
+                type: WidthType.DXA,
+            },
         });
         const document = new Document({
             sections: [
@@ -840,6 +889,5 @@ class AlertManagement extends React.Component{
         )
     }
 }
-
 
 export default AlertManagement;
