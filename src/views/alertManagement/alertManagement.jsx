@@ -316,9 +316,6 @@ class AlertManagement extends React.Component{
                 new TableRow({
                     children: [
                         new TableCell({
-                            margins: {
-                                left: convertInchesToTwip(0.1),
-                            },
                             width: {
                                 size: 1000,
                                 type: WidthType.DXA,
@@ -328,7 +325,10 @@ class AlertManagement extends React.Component{
                                 val: ShadingType.SOLID,
                                 color: "blue",
                             },
-                            children: [new Paragraph("Thể hiện")],
+                            children: [new Paragraph({
+                                text: "Thể hiện",
+                                alignment: AlignmentType.CENTER,
+                            })],
                         }),
                         new TableCell({
                             margins: {
@@ -346,9 +346,6 @@ class AlertManagement extends React.Component{
                             children: [new Paragraph("Ý nghĩa")],
                         }),
                         new TableCell({
-                            margins: {
-                                left: convertInchesToTwip(0.1),
-                            },
                             width: {
                                 size: 1200,
                                 type: WidthType.DXA,
@@ -358,115 +355,118 @@ class AlertManagement extends React.Component{
                                 val: ShadingType.SOLID,
                                 color: "blue",
                             },
-                            children: [new Paragraph("Số lượng")],
+                            children: [new Paragraph({
+                                text: "Số Lượng",
+                                alignment: AlignmentType.CENTER,
+                            })],
                         }),
-                    ],
-                }),
+                        ],
+                    }),
                 new TableRow({
                     children: [
                         new TableCell({
-                            margins: {
-                                left: convertInchesToTwip(0.3),
-                            },
+                            children: [new Paragraph({
+                                text: "C",
+                                alignment: AlignmentType.CENTER,
+                            })],
                             shading: {
                                 fill: "42c5f4",
                                 val: ShadingType.SOLID,
                                 color: '#e00909',
                             },
-                            children: [new Paragraph("C")],
                         }),
                         new TableCell({
-                            margins: {
-                                left: convertInchesToTwip(0.2),
-                            },
-                            children: [new Paragraph("Nghiêm trọng")],
+                            children: [new Paragraph({
+                                text: "Nghiêm trọng",
+                                alignment: AlignmentType.CENTER,
+                            })],
                         }),
                         new TableCell({
-                            margins: {
-                                left: convertInchesToTwip(0.35),
-                            },
-                            children: [new Paragraph("0")],
+                            children: [new Paragraph({
+                                text: "0",
+                                alignment: AlignmentType.CENTER,
+                            })],
                         }),
-                    ],
-                }),
+                        ],
+                    }),
                 new TableRow({
                     children: [
                         new TableCell({
-                            margins: {
-                                left: convertInchesToTwip(0.3),
-                            },
+                            children: [new Paragraph({
+                                text: "H",
+                                alignment: AlignmentType.CENTER,
+                            })],
                             shading: {
                                 fill: "42c5f4",
                                 val: ShadingType.SOLID,
                                 color: '#e07109',
                             },
-                            children: [new Paragraph("H")],
                         }),
                         new TableCell({
-                            margins: {
-                                left: convertInchesToTwip(0.2),
-                            },
-                            children: [new Paragraph("Cao")],
+                            children: [new Paragraph({
+                                text: "Cao",
+                                alignment: AlignmentType.CENTER,
+                            })],
                         }),
                         new TableCell({
-                            margins: {
-                                left: convertInchesToTwip(0.35),
-                            },
-                            children: [new Paragraph("0")],
+                            children: [new Paragraph({
+                                text: "1",
+                                alignment: AlignmentType.CENTER,
+                            })],
                         }),
                     ],
                 }),
                 new TableRow({
                     children: [
                         new TableCell({
-                            margins: {
-                                left: convertInchesToTwip(0.3),
-                            },
+                            children: [new Paragraph({
+                                text: "M",
+                                alignment: AlignmentType.CENTER,
+                            })],
                             shading: {
                                 fill: "42c5f4",
                                 val: ShadingType.SOLID,
                                 color: '#ebdea5',
                             },
-                            children: [new Paragraph("M")],
                         }),
                         new TableCell({
-                            margins: {
-                                left: convertInchesToTwip(0.2),
-                            },
-                            children: [new Paragraph("Trung bình")],
+                            children: [new Paragraph({
+                                text: "Trung bình",
+                                alignment: AlignmentType.CENTER,
+                            })],
                         }),
                         new TableCell({
-                            margins: {
-                                left: convertInchesToTwip(0.35),
-                            },
-                            children: [new Paragraph("11")],
+                            children: [new Paragraph({
+                                text: "12",
+                                alignment: AlignmentType.CENTER,
+                            })],
                         }),
                     ],
                 }),
                 new TableRow({
                     children: [
                         new TableCell({
-                            margins: {
-                                left: convertInchesToTwip(0.3),
-                            },
+                            children: [new Paragraph({
+                                text: "L",
+                                alignment: AlignmentType.CENTER,
+                            })],
                             shading: {
                                 fill: "42c5f4",
                                 val: ShadingType.SOLID,
                                 color: '#4de009',
                             },
-                            children: [new Paragraph("L")],
                         }),
                         new TableCell({
-                            margins: {
-                                left: convertInchesToTwip(0.2),
-                            },
-                            children: [new Paragraph("Thấp")],
+                            children: [new Paragraph({
+                                text: "Thấp",
+                                alignment: AlignmentType.CENTER,
+                            })],
                         }),
                         new TableCell({
-                            margins: {
-                                left: convertInchesToTwip(0.35),
-                            },
-                            children: [new Paragraph("11")],
+                            children: [new Paragraph({
+                                text: "10",
+                                alignment: AlignmentType.CENTER,
+                            })],
                         }),
                     ],
                 }),
@@ -504,7 +504,10 @@ class AlertManagement extends React.Component{
                                     right: convertInchesToTwip(0.22),
                                 },
                                 verticalAlign: VerticalAlign.CENTER,
-                                children: [new Paragraph(item.severity)],
+                                children: [new Paragraph({
+                                    text: item.severity,
+                                    alignment: AlignmentType.CENTER,
+                                })],
                             }),
                             new TableCell({
                                 width: {
