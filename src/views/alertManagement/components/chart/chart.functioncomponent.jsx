@@ -12,7 +12,11 @@ import {
   YAxis
 } from "recharts";
 import { useRechartToPng } from "recharts-to-png";
-
+import {
+    Document,
+    Packer,
+    Paragraph, ImageRun,
+  } from "docx";
 const ChartFunc = () => {
     const [containerRef, { width: containerWidth }] = useMeasure();
   // The chart ref that we want to download the PNG for.
@@ -21,7 +25,34 @@ const ChartFunc = () => {
   const handleDownload = React.useCallback(async () => {
       console.log('da vao day',png);
     // Use FileSaver to download the PNG
-    FileSaver.saveAs(png, "test.png");
+    const doc = new Document({
+        sections: [
+          {
+            children: [
+              new Paragraph({
+                children: [
+                  new ImageRun({
+                    data: Uint8Array.from(atob(png.split(',')[1]), c =>
+                      c.charCodeAt(0)
+                    ),
+                    transformation: {
+                      width: 600,
+                      height: 300
+                    }
+                  })
+                ]
+              })
+            ]
+          }
+        ]
+      });
+  
+      Packer.toBlob(doc).then(blob => {
+        console.log(blob);
+        FileSaver.saveAs(blob, "example.docx");
+        console.log("Document created successfully");
+      });
+    // FileSaver.saveAs(png, "test.png");
   }, [png]);
 
   const data = [
