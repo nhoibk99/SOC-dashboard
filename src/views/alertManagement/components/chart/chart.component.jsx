@@ -41,27 +41,26 @@ class Chart extends React.Component {
 
   tick = () => {
     const that = this;
-    fetch(api)
-        .then(function(response) {
-            return response.json();
-        })
-        .then(function(jsonData) {
-          let data = [];
-          jsonData.aggregations.byday.buckets.map((item,index) =>
-            {
-              let today = new Date(item.key);
-              data = [...data,{ name: (today.getDate() + '/' + (today.getMonth() + 1)), count: item.doc_count, color: '#ffbe00'}]
-              return data;
-            });
-            that.setState({ 
-              chartdata :data
-            }); 
-          
-        }).catch(function(error) {
-          that.setState({ apiInfo:error });
-          console.log(error);
-      });
-    }
+    // fetch(api)
+    //     .then(function(response) {
+    //         return response.json();
+    //     })
+    //     .then(function(jsonData) {
+    //       let data = [];
+    //       jsonData.aggregations.byday.buckets.map((item,index) =>
+    //         {
+    //           let today = new Date(item.key);
+    //           data = [...data,{ name: (today.getDate() + '/' + (today.getMonth() + 1)), count: item.doc_count, color: '#ffbe00'}]
+    //           return data;
+    //         });
+    //         that.setState({ 
+    //           chartdata :data
+    //         }); 
+    //     }).catch(function(error) {
+    //       that.setState({ apiInfo:error });
+    //       console.log(error);
+    //   });
+  }
 
   handleDownload =  () => {
     // Use FileSaver to download the PNG
@@ -84,7 +83,7 @@ class Chart extends React.Component {
             layout="horizontal" 
             data={this.state.chartdata} 
             drawValueAboveBar ={true}
-            xAxis= {{
+            xAxis= {{ 
               drawLabels: true,
             }}
             options = {{ plugins: { datalabels: { display: true }}}}
