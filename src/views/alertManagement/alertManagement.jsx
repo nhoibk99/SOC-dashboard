@@ -1,5 +1,5 @@
 import React from 'react';
-import Chart from './components/chart/chart.component';
+import ChartFunc from './components/chart/chart.functioncomponent';
 import './alertmanagement.styles.scss';
 import SearchBar from 'react-js-search';
 import ReactTable from 'react-table-6';
@@ -663,7 +663,10 @@ class AlertManagement extends React.Component{
     render(){
         return(
             <div className="alertManagement">
-                <Chart />
+                <div className="chart">
+                    <div className="title-chart">Dữ liệu trong 30 ngày gần nhất</div>
+                    <ChartFunc />
+                </div>
                 <div className='table'>
                     <div className='filter'>    
                         <div className='row'>

@@ -1,33 +1,11 @@
 
 import FileSaver from "file-saver";
-import React , {useState} from "react";
+import React , {useState, useEffect} from "react";
 import { useMeasure } from "react-use";
-// import {
-//   CartesianGrid,
-//   Legend,
-//   Line,
-//   LineChart,
-//   Tooltip,
-//   XAxis,
-//   YAxis
-// } from "recharts";
-import {
-  ResponsiveContainer,
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Legend,
-  Tooltip,
-  Cell
-} from 'recharts';
+import { ResponsiveContainer,  BarChart,  Bar,  XAxis,  YAxis, CartesianGrid, Tooltip, Cell } from 'recharts';
 import { useRechartToPng } from "recharts-to-png";
-import {
-    Document,
-    Packer,
-    Paragraph, ImageRun,
-  } from "docx";
+import { Document, Packer,  Paragraph, ImageRun } from "docx";
+
 const ChartFunc = () => {
   let api = 'http://elastic.vninfosec.net/alert-khach_hanga/_search?pretty&filter_path=aggregations&source=%7b%22query%22:%20%7b%22range%22:%20%7b%22@timestamp%22:%20%7b%22gte%22:%20%22now-30d/d%22,%22lte%22:%20%22now/d%22%7d%7d%7d,%22aggs%22:%20%7b%22byday%22:%20%7b%22date_histogram%22:%20%7b%22field%22:%20%22@timestamp%22,%22interval%22:%20%22day%22%7d%7d%7d%7d&source_content_type=application/json';
 
@@ -35,7 +13,8 @@ const ChartFunc = () => {
   // The chart ref that we want to download the PNG for.
   const [png, ref] = useRechartToPng();
   const [data, setData] = useState();
-  const handleDownload = React.useCallback(async () => {
+  useEffect(() => {
+    // Update the document title using the browser API
     fetch(api)
         .then(function(response) {
             return response.json();
@@ -54,6 +33,9 @@ const ChartFunc = () => {
           console.log(error);
         });
     console.log('da vao day data',data);
+  });
+  const handleDownload = React.useCallback(async () => {
+    
     // console.log('da vao day png',png);
     // Use FileSaver to download the PNG
     const doc = new Document({
@@ -105,7 +87,6 @@ const ChartFunc = () => {
           <XAxis dataKey="name" type="category"  fontWeight='bold' axisLine={false} dx={-5} tickLine={false} />
           <YAxis type="number" />
           <Tooltip />
-          {/* <Legend wrapperStyle={{ bottom: 5 }} /> */}
           <Bar dataKey="count" minPointSize={2} barSize={15}>
             {data?.map((d, idx) => {
               return <Cell fill={d.color} />;
