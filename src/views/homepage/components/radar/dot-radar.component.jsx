@@ -24,15 +24,17 @@ const DotRadar = ({dotData, r}) => {
   const {x, y, label, id, color} = dotData;
   const [left, top] = getTopLeft(x, y, r);
   return (
-    <div className="dot-radar" style={{left, top, backgroundColor: color}} id={'Tooltip-' + id}>
-      <Tooltip
-        placement="top"
-        isOpen={tooltipOpen}
-        target={'Tooltip-' + id}
-        toggle={toggle}
-      >
-        {label}
-      </Tooltip>
+    <div className="border-dot" style={{left, top}}>
+      <div className="dot-radar" style={{left, top, backgroundColor: color}} id={'Tooltip-' + id}>
+        <Tooltip
+          placement="top"
+          isOpen={tooltipOpen}
+          target={'Tooltip-' + id}
+          toggle={toggle}
+          >
+          {label}
+        </Tooltip>
+      </div>
     </div>
   );
 };
