@@ -122,17 +122,19 @@
     background-repeat: no-repeat;
     width: 16px;
     height: 16px;
+    right: -3px;
+    bottom: -3px;
     position: absolute;
-    padding: 3px;
+    cursor: pointer;
   }
   .dot-radar {
-    // position: absolute;
+    // margin: 3px;
+    position: absolute;
     z-index: 4;
     width: 10px;
     height: 10px;
     background-color: blue;
     border-radius: 50%;
-    cursor: pointer;
   }
   .circle-text {
     color: white;

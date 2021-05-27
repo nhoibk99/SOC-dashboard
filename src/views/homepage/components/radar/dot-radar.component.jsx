@@ -26,8 +26,8 @@ const DotRadar = ({dotData, r}) => {
   const nodeType = label.split('.')[1].split(' ')[0];
   {console.log('nodeType',nodeType)}
   return (
-    <div className={nodeType == 'critical' ? "border-dot-critical" :"border-dot"} style={{left, top}}>
-      <div className="dot-radar" style={{left, top, backgroundColor: color}} id={'Tooltip-' + id}>
+    <div className="dot-radar" style={{left, top, backgroundColor: color}} >
+        <div className={nodeType == 'critical' ? "border-dot-critical" :"border-dot"} id={'Tooltip-' + id}>
         <Tooltip
           placement="top"
           isOpen={tooltipOpen}
