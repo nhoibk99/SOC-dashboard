@@ -34,41 +34,25 @@ const ChartFunc = () => {
         });
     console.log('da vao day data',data);
   });
+ 
+
   const handleDownload = React.useCallback(async () => {
-    
-    // console.log('da vao day png',png);
-    // Use FileSaver to download the PNG
-    const doc = new Document({
-      sections: [
-          {
-          children: [
-            new Paragraph({
-              children: [
-                new ImageRun({
-                  data: Uint8Array.from(atob(png.split(',')[1]), c =>
-                    c.charCodeAt(0)
-                  ),
-                  transformation: {
-                    width: 600,
-                    height: 300
-                  }
-                })
-              ]
-            })
-          ]
-          }
-        ]
-      });
-
-      Packer.toBlob(doc).then(blob => {
-        console.log(blob);
-        FileSaver.saveAs(blob, "example.docx");
-        console.log("Document created successfully");
-      });
-      // FileSaver.saveAs(png, "test.png");
-  }, [png]);
-
+    //    console.log('da vao day',png);
+      // Use FileSaver to download the PNG
+     // FileSaver.saveAs(png, "test.png");
+     fetch('http://localhost:3061/chart')
+     //                         vvvv
+     .then(response => response.blob())
+     .then(data => {
+         // Then create a local URL for that image and print it 
+         FileSaver.saveAs(data, "test.docx");
+         let outside = URL.createObjectURL(data)
+         window.alert(outside);
+     }).catch(function (error) {
+      window.alert(error);
+     });
   
+    });
   return (
     <div>
       <ResponsiveContainer width="100%" height={150}>
