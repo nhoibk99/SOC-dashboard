@@ -23,8 +23,10 @@ const DotRadar = ({dotData, r}) => {
   const toggle = () => setTooltipOpen(!tooltipOpen);
   const {x, y, label, id, color} = dotData;
   const [left, top] = getTopLeft(x, y, r);
+  const nodeType = label.split('.')[1].split(' ')[0];
+  {console.log('nodeType',nodeType)}
   return (
-    <div className="border-dot" style={{left, top}}>
+    <div className={nodeType == 'critical' ? "border-dot-critical" :"border-dot"} style={{left, top}}>
       <div className="dot-radar" style={{left, top, backgroundColor: color}} id={'Tooltip-' + id}>
         <Tooltip
           placement="top"

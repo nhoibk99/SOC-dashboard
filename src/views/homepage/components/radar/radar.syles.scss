@@ -104,29 +104,35 @@
     left: 50%;
   }
   .border-dot{
-    background: linear-gradient(to right, #53a3ce 1px, transparent 1px) 0 0,
-      linear-gradient(to right, #53a3ce 1px, transparent 1px) 0 100%,
-      linear-gradient(to left, #53a3ce 1px, transparent 1px) 100% 0,
-      linear-gradient(to left, #53a3ce 1px, transparent 1px) 100% 100%,
-      linear-gradient(to bottom, #53a3ce 1px, transparent 1px) 0 0,
-      linear-gradient(to bottom, #53a3ce 1px, transparent 1px) 100% 0,
-      linear-gradient(to top, #53a3ce 1px, transparent 1px) 0 100%,
-      linear-gradient(to top, #53a3ce 1px, transparent 1px) 100% 100%;  
-    background-size: 5px 5px;
-    background-repeat: no-repeat;
     width: 20px;
     height: 20px;
     position: absolute;
     padding: 5px;
-    .dot-radar {
-      // position: absolute;
-      z-index: 3;
-      width: 10px;
-      height: 10px;
-      background-color: blue;
-      border-radius: 50%;
-      cursor: pointer;
-    }
+  }
+  .border-dot-critical{
+    background: linear-gradient(to right, #FFFFFF 1px, transparent 1px) 0 0,
+      linear-gradient(to right, #FFFFFF 1px, transparent 1px) 0 100%,
+      linear-gradient(to left, #FFFFFF 1px, transparent 1px) 100% 0,
+      linear-gradient(to left, #FFFFFF 1px, transparent 1px) 100% 100%,
+      linear-gradient(to bottom, #FFFFFF 1px, transparent 1px) 0 0,
+      linear-gradient(to bottom, #FFFFFF 1px, transparent 1px) 100% 0,
+      linear-gradient(to top, #FFFFFF 1px, transparent 1px) 0 100%,
+      linear-gradient(to top, #FFFFFF 1px, transparent 1px) 100% 100%;  
+    background-size: 4px 4px;
+    background-repeat: no-repeat;
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    padding: 3px;
+  }
+  .dot-radar {
+    // position: absolute;
+    z-index: 4;
+    width: 10px;
+    height: 10px;
+    background-color: blue;
+    border-radius: 50%;
+    cursor: pointer;
   }
   .circle-text {
     color: white;
