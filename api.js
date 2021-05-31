@@ -128,26 +128,55 @@ app.get("/chart", async function (req, res) {
     let config = {
       type: "bar",
       data: {
-        labels: ["Nghiêm trọng", "Cao", "Trung bình ", "Thấp"],
+      
         datasets: [
           {
-            label: "CẢNH BÁO ATTT THEO MỨC ĐÔ",
-            data: [dataexport_critical.length, dataexport_high.length, dataexport_medium.length, dataexport_low.length],
-            backgroundColor: [
-              "#e00909",
-              "#e07109",
-              "#ebdea5",
-              "#4de009",
-            ],
-            borderColor: [
-              "#e00909",
-              "#e07109",
-              "#ebdea5",
-              "#4de009",
-            ],
+           
+            data: [critical_count],
+            label: "Critical ("+critical_count.toString()+')' ,
+            backgroundColor: "rgba(161, 4, 4, 1)", 
+            borderColor: "rgba(0, 0, 0, 0.5)",
             borderWidth: 1,
+            datalabels: {
+              align: 'start',
+              anchor: 'start'
+          }
+          },
+          {
+            data: [high_count],
+            label: "High ("+high_count.toString()+')' ,
+            backgroundColor: "rgba(255, 25, 25, 1)", 
+            borderColor: "rgba(0, 0, 0, 0.5)",
+            borderWidth: 1,
+            datalabels: {
+              align: 'start',
+              anchor: 'start'
+          }
+          },
+          {
+            data: [medium_count],
+            label: "Medium ("+medium_count.toString()+')' ,
+            backgroundColor: "rgba(255, 192, 0, 1)", 
+            borderColor: "rgba(0, 0, 0, 0.5)",
+            borderWidth: 1,
+            datalabels: {
+              align: 'start',
+              anchor: 'start'
+          }
+          },
+          {
+            data: [low_count],
+            label: "Low ("+low_count.toString()+')' ,
+            backgroundColor: "rgba(0, 176, 80, 1)", 
+            borderColor: "rgba(0, 0, 0, 0.5)",
+            borderWidth: 1,
+            datalabels: {
+              align: 'start',
+              anchor: 'start'
+          }
           },
         ],
+        
       },
       options: {
         scales: {
