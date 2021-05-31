@@ -1,6 +1,6 @@
 const express = require("express");
 const Chart = require('chart.js');
-const datalabels = require('chartjs-plugin-datalabels')
+const ChartDataLabels = require('chartjs-plugin-datalabels');
 const { CanvasRenderService } = require("chartjs-node-canvas");
 const moment  = require('moment')
 const docx = require("docx");
@@ -18,71 +18,12 @@ const {
   VerticalAlign,
   ShadingType,
   convertInchesToTwip,
+  TextRun,
   ImageRun,
 } = docx;
 
 const {monent} = moment;
 let app = express();
-
-// var configuration = {
-//   type: "bar",
-//   data: {
-//     labels: ["Nghiêm trọng", "Cao", "Trung bình ", "Thấp"],
-//     datasets: [
-//       {
-//         label: "CẢNH BÁO ATTT THEO MỨC ĐÔ",
-//         data: [0, 0, 0, 0],
-//         backgroundColor: [
-//           "rgba(255, 99, 132, 0.2)",
-//           "rgba(54, 162, 235, 0.2)",
-//           "rgba(255, 206, 86, 0.2)",
-//           "rgba(75, 192, 192, 0.2)",
-//           "rgba(153, 102, 255, 0.2)",
-//           "rgba(255, 159, 64, 0.2)",
-//         ],
-//         borderColor: [
-//           "rgba(255,99,132,1)",
-//           "rgba(54, 162, 235, 1)",
-//           "rgba(255, 206, 86, 1)",
-//           "rgba(75, 192, 192, 1)",
-//           "rgba(153, 102, 255, 1)",
-//           "rgba(255, 159, 64, 1)",
-//         ],
-//         borderWidth: 1,
-//       },
-//     ],
-//   },
-//   options: {
-//     scales: {
-//       yAxes: [
-//         {
-//           ticks: {
-//             precision: 0,
-//             beginAtZero: true,
-//           },
-//         },
-//       ],
-//     },
-//   },
-//   plugins: {
-//     datalabels: {
-//         backgroundColor: function(context) {
-//             return context.dataset.backgroundColor;
-//         },
-//         borderRadius: 4,
-//         color: 'red',
-//         font: {
-//             weight: 'bold'
-//         },
-//         formatter: Math.round
-//     }
-//   }
-// };
-
-// const mkChart = async (params) => {
-//   const canvasRenderService = new CanvasRenderService(400, 400);
-//   return await canvasRenderService.renderToBuffer(configuration);
-// };
 
 app.get("/chart", async function (req, res) {
   let url =
@@ -185,65 +126,65 @@ app.get("/chart", async function (req, res) {
     console.log('data export L',dataexport_low.length)
     let fetchCount = [dataexport_critical.length, dataexport_critical.length, dataexport_critical.length, dataexport_critical.length]
     let config = {
-        type: "bar",
-        data: {
-          labels: ["Nghiêm trọng", "Cao", "Trung bình ", "Thấp"],
-          datasets: [
+      type: "bar",
+      data: {
+        labels: ["Nghiêm trọng", "Cao", "Trung bình ", "Thấp"],
+        datasets: [
+          {
+            label: "CẢNH BÁO ATTT THEO MỨC ĐÔ",
+            data: [dataexport_critical.length, dataexport_high.length, dataexport_medium.length, dataexport_low.length],
+            backgroundColor: [
+              "#e00909",
+              "#e07109",
+              "#ebdea5",
+              "#4de009",
+            ],
+            borderColor: [
+              "#e00909",
+              "#e07109",
+              "#ebdea5",
+              "#4de009",
+            ],
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        scales: {
+          yAxes: [
             {
-              label: "CẢNH BÁO ATTT THEO MỨC ĐÔ",
-              data: [dataexport_critical.length, dataexport_high.length, dataexport_medium.length, dataexport_low.length],
-              backgroundColor: [
-                "#e00909",
-                "#e07109",
-                "#ebdea5",
-                "#4de009",
-              ],
-              borderColor: [
-                "#e00909",
-                "#e07109",
-                "#ebdea5",
-                "#4de009",
-              ],
-              borderWidth: 1,
+              ticks: {
+                precision: 0,
+                beginAtZero: true,
+              },
             },
           ],
         },
-        options: {
-          scales: {
-            yAxes: [
-              {
-                ticks: {
-                  precision: 0,
-                  beginAtZero: true,
-                },
-              },
-            ],
-          },
-        },
-        plugins: {
-          datalabels: {
-              backgroundColor: function(context) {
-                  return context.dataset.backgroundColor;
-              },
-              borderRadius: 4,
-              color: 'red',
-              font: {
-                  weight: 'bold'
-              },
-              formatter: Math.round
-          }
-        }
-      }
-    const width = 600;
-    const height = 400;
-    const chartCallback = (ChartJS) => {
-      ChartJS.defaults.global.elements.rectangle.borderWidth = 2;
-      ChartJS.plugins.register({
-          datalabels
-      });
-    };
-    const canvasRenderService = new CanvasRenderService(width, height, chartCallback);
-    var imagetemp = canvasRenderService.renderToBuffer(config);
+      },
+      // plugins: {
+      //   datalabels: {
+      //       backgroundColor: function(context) {
+      //           return context.dataset.backgroundColor;
+      //       },
+      //       borderRadius: 4,
+      //       color: 'red',
+      //       font: {
+      //           weight: 'bold'
+      //       },
+      //       formatter: Math.round
+      //   }
+      // }
+    }
+  const width = 600;
+  const height = 400;
+  const chartCallback = (ChartJS) => {
+    ChartJS.defaults.global.elements.rectangle.borderWidth = 2;
+    ChartJS.plugins.register({
+        // datalabels
+    });
+  };
+  const canvasRenderService = new CanvasRenderService(width, height, chartCallback);
+  var imagetemp = canvasRenderService.renderToBuffer(config);
 
   const image = new ImageRun({
     data: imagetemp,
@@ -268,8 +209,14 @@ app.get("/chart", async function (req, res) {
             },
             children: [
               new Paragraph({
-                text: "Thể hiện",
                 alignment: AlignmentType.CENTER,
+                children: [
+                  new docx.TextRun({
+                    text: "Thể hiện",
+                    font: 'Calibri',
+                    size: 22,
+                  }),
+                ],
               }),
             ],
           }),
@@ -287,7 +234,16 @@ app.get("/chart", async function (req, res) {
               val: ShadingType.SOLID,
               color: "blue",
             },
-            children: [new Paragraph("Ý nghĩa")],
+            children: [new Paragraph({
+              alignment: AlignmentType.CENTER,
+              children: [
+                new docx.TextRun({
+                  text: "Ý nghĩa",
+                  font: 'Calibri',
+                  size: 22,
+                }),
+              ],
+            })],
           }),
           new TableCell({
             width: {
@@ -301,7 +257,13 @@ app.get("/chart", async function (req, res) {
             },
             children: [
               new Paragraph({
-                text: "Số Lượng",
+                children: [
+                  new docx.TextRun({
+                    text: "Số Lượng",
+                    font: 'Calibri',
+                    size: 22,
+                  }),
+                ],
                 alignment: AlignmentType.CENTER,
               }),
             ],
@@ -318,7 +280,13 @@ app.get("/chart", async function (req, res) {
             },
             children: [
               new Paragraph({
-                text: "C",
+                children: [
+                  new docx.TextRun({
+                    text: "C",
+                    font: 'Calibri',
+                    size: 22,
+                  }),
+                ],
                 alignment: AlignmentType.CENTER,
               }),
             ],
@@ -326,7 +294,13 @@ app.get("/chart", async function (req, res) {
           new TableCell({
             children: [
               new Paragraph({
-                text: "Nghiêm trọng",
+                children: [
+                  new docx.TextRun({
+                    text: "Nghiêm trọng",
+                    font: 'Calibri',
+                    size: 22,
+                  }),
+                ],
                 alignment: AlignmentType.CENTER,
               }),
             ],
@@ -334,7 +308,13 @@ app.get("/chart", async function (req, res) {
           new TableCell({
             children: [
               new Paragraph({
-                text: critical_count.toString(),
+                children: [
+                  new docx.TextRun({
+                    text: critical_count.toString(),
+                    font: 'Calibri',
+                    size: 22,
+                  }),
+                ],
                 alignment: AlignmentType.CENTER,
               }),
             ],
@@ -351,7 +331,13 @@ app.get("/chart", async function (req, res) {
             },
             children: [
               new Paragraph({
-                text: "H",
+                children: [
+                  new docx.TextRun({
+                    text: "H",
+                    font: 'Calibri',
+                    size: 22,
+                  }),
+                ],
                 alignment: AlignmentType.CENTER,
               }),
             ],
@@ -359,7 +345,13 @@ app.get("/chart", async function (req, res) {
           new TableCell({
             children: [
               new Paragraph({
-                text: "Cao",
+                children: [
+                  new docx.TextRun({
+                    text: "Cao",
+                    font: 'Calibri',
+                    size: 22,
+                  }),
+                ],
                 alignment: AlignmentType.CENTER,
               }),
             ],
@@ -367,7 +359,13 @@ app.get("/chart", async function (req, res) {
           new TableCell({
             children: [
               new Paragraph({
-                text: high_count.toString(),
+                children: [
+                  new docx.TextRun({
+                    text: high_count.toString(),
+                    font: 'Calibri',
+                    size: 22,
+                  }),
+                ],
                 alignment: AlignmentType.CENTER,
               }),
             ],
@@ -384,7 +382,13 @@ app.get("/chart", async function (req, res) {
             },
             children: [
               new Paragraph({
-                text: "M",
+                children: [
+                  new docx.TextRun({
+                    text: "M",
+                    font: 'Calibri',
+                    size: 22,
+                  }),
+                ],
                 alignment: AlignmentType.CENTER,
               }),
             ],
@@ -392,7 +396,13 @@ app.get("/chart", async function (req, res) {
           new TableCell({
             children: [
               new Paragraph({
-                text: "Trung bình",
+                children: [
+                  new docx.TextRun({
+                    text: "Trung bình",
+                    font: 'Calibri',
+                    size: 22,
+                  }),
+                ],
                 alignment: AlignmentType.CENTER,
               }),
             ],
@@ -400,7 +410,13 @@ app.get("/chart", async function (req, res) {
           new TableCell({
             children: [
               new Paragraph({
-                text: medium_count.toString(),
+                children: [
+                  new docx.TextRun({
+                    text: medium_count.toString(),
+                    font: 'Calibri',
+                    size: 22,
+                  }),
+                ],
                 alignment: AlignmentType.CENTER,
               }),
             ],
@@ -417,7 +433,13 @@ app.get("/chart", async function (req, res) {
             },
             children: [
               new Paragraph({
-                text: "L",
+                children: [
+                  new docx.TextRun({
+                    text: "L",
+                    font: 'Calibri',
+                    size: 22,
+                  }),
+                ],
                 alignment: AlignmentType.CENTER,
               }),
             ],
@@ -425,7 +447,13 @@ app.get("/chart", async function (req, res) {
           new TableCell({
             children: [
               new Paragraph({
-                text: "Thấp",
+                children: [
+                  new docx.TextRun({
+                    text: "Thấp",
+                    font: 'Calibri',
+                    size: 22,
+                  }),
+                ],
                 alignment: AlignmentType.CENTER,
               }),
             ],
@@ -433,7 +461,13 @@ app.get("/chart", async function (req, res) {
           new TableCell({
             children: [
               new Paragraph({
-                text: low_count.toString(),
+                children: [
+                  new docx.TextRun({
+                    text: low_count.toString(),
+                    font: 'Calibri',
+                    size: 22,
+                  }),
+                ],
                 alignment: AlignmentType.CENTER,
               }),
             ],
@@ -480,7 +514,13 @@ app.get("/chart", async function (req, res) {
             verticalAlign: VerticalAlign.CENTER,
             children: [
               new Paragraph({
-                text: item.severity,
+                children: [
+                  new docx.TextRun({
+                    text: item.severity,
+                    font: 'Calibri',
+                    size: 22,
+                  }),
+                ],
                 alignment: AlignmentType.CENTER,
               }),
             ],
@@ -491,7 +531,17 @@ app.get("/chart", async function (req, res) {
               type: WidthType.DXA,
             },
             verticalAlign: VerticalAlign.CENTER,
-            children: [new Paragraph(item.message)],
+            children: [new Paragraph(
+              {
+                children: [
+                  new docx.TextRun({
+                    text: item.message,
+                    font: 'Calibri',
+                    size: 22,
+                  }),
+                ],
+                alignment: AlignmentType.CENTER,
+              })],
           }),
           new TableCell({
             width: {
@@ -499,7 +549,16 @@ app.get("/chart", async function (req, res) {
               type: WidthType.DXA,
             },
             verticalAlign: VerticalAlign.CENTER,
-            children: [new Paragraph(item.attack_chain)],
+            children: [new Paragraph({
+              children: [
+                new docx.TextRun({
+                  text: item.attack_chain,
+                  font: 'Calibri',
+                  size: 22,
+                }),
+              ],
+              alignment: AlignmentType.CENTER,
+            })],
           }),
           new TableCell({
             width: {
@@ -507,7 +566,16 @@ app.get("/chart", async function (req, res) {
               type: WidthType.DXA,
             },
             verticalAlign: VerticalAlign.CENTER,
-            children: [new Paragraph(item.source)],
+            children: [new Paragraph({
+              children: [
+                new docx.TextRun({
+                  text: item.source,
+                  font: 'Calibri',
+                  size: 22,
+                }),
+              ],
+              alignment: AlignmentType.CENTER,
+            })],
           }),
           new TableCell({
             width: {
@@ -515,7 +583,16 @@ app.get("/chart", async function (req, res) {
               type: WidthType.DXA,
             },
             verticalAlign: VerticalAlign.CENTER,
-            children: [new Paragraph(item.dest)],
+            children: [new Paragraph({
+              children: [
+                new docx.TextRun({
+                  text: item.dest,
+                  font: 'Calibri',
+                  size: 22,
+                }),
+              ],
+              alignment: AlignmentType.CENTER,
+            })],
           }),
         ],
       }),
@@ -537,7 +614,16 @@ app.get("/chart", async function (req, res) {
               val: ShadingType.SOLID,
               color: "blue",
             },
-            children: [new Paragraph("Thời gian")],
+            children: [new Paragraph({
+              children: [
+                new docx.TextRun({
+                  text: "Thời gian",
+                  font: 'Calibri',
+                  size: 22,
+                }),
+              ],
+              alignment: AlignmentType.CENTER,
+            })],
           }),
           new TableCell({
             width: {
@@ -550,7 +636,16 @@ app.get("/chart", async function (req, res) {
               val: ShadingType.SOLID,
               color: "blue",
             },
-            children: [new Paragraph("Mức độ")],
+            children: [new Paragraph({
+              children: [
+                new docx.TextRun({
+                  text: "Mức độ",
+                  font: 'Calibri',
+                  size: 22,
+                }),
+              ],
+              alignment: AlignmentType.CENTER,
+            })],
           }),
           new TableCell({
             width: {
@@ -563,7 +658,16 @@ app.get("/chart", async function (req, res) {
               val: ShadingType.SOLID,
               color: "blue",
             },
-            children: [new Paragraph("Cảnh báo")],
+            children: [new Paragraph({
+              children: [
+                new docx.TextRun({
+                  text: "Cảnh báo",
+                  font: 'Calibri',
+                  size: 22,
+                }),
+              ],
+              alignment: AlignmentType.CENTER,
+            })],
           }),
           new TableCell({
             width: {
@@ -576,7 +680,16 @@ app.get("/chart", async function (req, res) {
               val: ShadingType.SOLID,
               color: "blue",
             },
-            children: [new Paragraph("Attack chain")],
+            children: [new Paragraph({
+              children: [
+                new docx.TextRun({
+                  text: "Attach chain",
+                  font: 'Calibri',
+                  size: 22,
+                }),
+              ],
+              alignment: AlignmentType.CENTER,
+            })],
           }),
           new TableCell({
             width: {
@@ -589,7 +702,16 @@ app.get("/chart", async function (req, res) {
               val: ShadingType.SOLID,
               color: "blue",
             },
-            children: [new Paragraph("Nguồn")],
+            children: [new Paragraph({
+              children: [
+                new docx.TextRun({
+                  text: "Nguồn",
+                  font: 'Calibri',
+                  size: 22,
+                }),
+              ],
+              alignment: AlignmentType.CENTER,
+            })],
           }),
           new TableCell({
             width: {
@@ -602,7 +724,16 @@ app.get("/chart", async function (req, res) {
               val: ShadingType.SOLID,
               color: "blue",
             },
-            children: [new Paragraph("Đích")],
+            children: [new Paragraph({
+              children: [
+                new docx.TextRun({
+                  text: "Đích",
+                  font: 'Calibri',
+                  size: 22,
+                }),
+              ],
+              alignment: AlignmentType.CENTER,
+            })],
           }),
         ],
       }),
@@ -619,40 +750,72 @@ app.get("/chart", async function (req, res) {
       {
         children: [
           new Paragraph({
-              text: "1. NỘI DUNG TÓM TẮT",
-              heading: HeadingLevel.HEADING_1
+              children: [
+                new docx.TextRun({
+                  text: "1. NỘI DUNG TÓM TẮT",
+                  bold: true,
+                  font: 'Calibri',
+                  size: 26,
+                }),
+              ],
           }),
           new Paragraph(" "),
           new Paragraph({
-              text: "       1.1. aaa",
-              heading: HeadingLevel.HEADING_2
+            children: [
+              new docx.TextRun({
+                text: "       1.1. aaa",
+                bold: true,
+                font: 'Calibri',
+                size: 26,
+              }),
+            ],
           }),
           new Paragraph(" "),
           new Paragraph({
-              text: "       1.2. bbb",
-              heading: HeadingLevel.HEADING_2
-
-
+            children: [
+              new docx.TextRun({
+                text: "       1.2. bbb",
+                bold: true,
+                font: 'Calibri',
+                size: 26,
+              }),
+            ],
           }),
           new Paragraph(" "),
           new Paragraph({
-              text: "       1.3. ccc",
-              heading: HeadingLevel.HEADING_2
+            children: [
+              new docx.TextRun({
+                text: "       1.3. ccc",
+                bold: true,
+                font: 'Calibri',
+                size: 26,
+              }),
+            ],
+          }),
+          new Paragraph({
+            alignment: AlignmentType.CENTER,
+            children: [
+              new docx.TextRun({
+                text: "CẢNH BÁO ATTT THEO MỨC ĐỘ",
+                bold: true,
+                font: 'Calibri',
+                size: 22,
+              }),
+            ],
           }),
           new Paragraph({
               children: [image],
           }),
           new Paragraph(" "),
           new Paragraph({
-            text: "5. PHỤ LỤC: CÁC CẢNH BÁO AN TOÀN THÔNG TIN TRÊN HỆ THỐNG",
-            heading: HeadingLevel.HEADING_1
-          }),
-          new Paragraph(" "),
-          
-          new Paragraph({
-            text: "CẢNH BÁO ATTT THEO MỨC ĐỘ",
-            heading: HeadingLevel.HEADING_2,
-            alignment: AlignmentType.CENTER,
+            children: [
+              new docx.TextRun({
+                text: "5. PHỤ LỤC: CÁC CẢNH BÁO AN TOÀN THÔNG TIN TRÊN HỆ THỐNG",
+                bold: true,
+                font: 'Calibri',
+                size: 26,
+              }),
+            ],
           }),
           new Paragraph(" "),
           table,
