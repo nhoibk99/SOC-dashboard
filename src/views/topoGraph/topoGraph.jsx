@@ -1,6 +1,7 @@
 import React from 'react';
 import Graph from "react-graph-vis";
 import './topoGraph.styles.scss';
+import {AppBar, Toolbar, IconButton, Typography, Button} from '@material-ui/core';
 
 class TopoGraph extends React.Component{
     constructor(props) {
@@ -67,6 +68,7 @@ class TopoGraph extends React.Component{
         // let {nodes, edges} =  this.state.graph;
 
     }
+
     deleteNode = () =>{
         console.log('delete node');
         let currentNode = this.state.currentNode;
@@ -92,6 +94,7 @@ class TopoGraph extends React.Component{
             graph:{nodes:newNodes, edges: newEdges},
         })
     }
+
     render() {
     
     const options = {
@@ -123,7 +126,19 @@ class TopoGraph extends React.Component{
     };
     return (
         <div className='topoGraph'>
-            <h1 style={{color: 'yellow'}}>Topo Graph</h1>
+            <AppBar position="static">
+                <Toolbar>
+                <IconButton
+                    color="inherit"
+                >
+                </IconButton>
+                <Typography variant="h6" noWrap>
+                    Topo Graph
+                </Typography>
+                    <Button color="inherit">Login</Button>
+                </Toolbar>
+            </AppBar>
+            {/* <h1 style={{color: 'yellow'}}>Topo Graph</h1> */}
             <p style={{color: 'yellow'}}>currentNode:{this.state.currentNode}</p>
             <button className='addNode' onClick={this.createNode}> Add node</button>
             <button className='deleteNode' onClick={this.deleteNode}> Delete node</button>
