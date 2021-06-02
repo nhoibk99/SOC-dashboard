@@ -1,7 +1,8 @@
 import React from 'react';
 import Graph from "react-graph-vis";
 import './topoGraph.styles.scss';
-import {AppBar, Toolbar, IconButton, Typography, Button} from '@material-ui/core';
+import {AppBar, Toolbar, IconButton, Typography, Button, Menu, MenuItem  } from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu';
 
 class TopoGraph extends React.Component{
     constructor(props) {
@@ -34,6 +35,9 @@ class TopoGraph extends React.Component{
             },
             counter: 5,
             currentNode: 1,
+            auth: true,
+            anchorEl: null,
+            open: false,
         }
     }
     
@@ -95,63 +99,97 @@ class TopoGraph extends React.Component{
         })
     }
 
+    handleMenu = (event) => {
+        this.setState({
+            anchorEl: event.currentTarget,
+            open: true,
+        })
+    }
+
+    handleClose = () => {
+        this.setState({
+            anchorEl: null,
+            open: false,
+        })
+    }
+
     render() {
     
-    const options = {
-        layout: {
-            hierarchical: false
-        },
-        edges: {
-            color: "#FFFFFF"
-        },
-        height: "900px"
-    };
+        const options = {
+            layout: {
+                hierarchical: false
+            },
+            edges: {
+                color: "#000000"
+            },
+            height: "400px"
+        };
 
-    const events = {
-        select: ({ nodes, edges }) => {
-            // console.log("Selected nodes:",nodes);
-            // console.log("Selected edges:",edges);
-            this.setState({currentNode: nodes && nodes[0]})
-            alert("Selected node: " + nodes);
-        },
-        doubleClick: () => {
-            // console.log('double click');
-            this.createNode();
-        },
-        contextmenu:() =>{
-            alert("context menu");
-            return false;
-        }
+        const events = {
+            select: ({ nodes, edges }) => {
+                // console.log("Selected nodes:",nodes);
+                // console.log("Selected edges:",edges);
+                this.setState({currentNode: nodes && nodes[0]})
+                alert("Selected node: " + nodes);
+            },
+            doubleClick: () => {
+                // console.log('double click');
+                this.createNode();
+            },
+            contextmenu:() =>{
+                alert("context menu");
+                return false;
+            }
+            
+        };
         
-    };
-    return (
-        <div className='topoGraph'>
-            <AppBar position="static">
+        return (
+            <div>
+            <AppBar position="static" style={{ backgroundColor: "gray"}} >
                 <Toolbar>
-                <IconButton
-                    color="inherit"
-                >
-                </IconButton>
-                <Typography variant="h6" noWrap>
-                    Topo Graph
-                </Typography>
-                    <Button color="inherit">Login</Button>
+                    <IconButton  aria-label="menu"
+                    onClick={this.handleMenu}>
+                        <MenuIcon />
+                    </IconButton>
+                    <Menu
+                            id="menu-appbar"
+                            anchorEl={this.state.anchorEl}
+                            anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'right',
+                            }}
+                            keepMounted
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'left',
+                            }}
+                            open={this.state.open}
+                            onClose={this.handleClose}
+                        >
+                            <MenuItem onClick={this.createNode}>Create node</MenuItem>
+                            <MenuItem onClick={this.deleteNode}>Delete node</MenuItem>
+                            <MenuItem onClick={this.handleClose}>Change edge</MenuItem>
+                        </Menu>
+                    <Typography variant="h6" noWrap>
+                        Topo Graph
+                    </Typography>
                 </Toolbar>
             </AppBar>
-            {/* <h1 style={{color: 'yellow'}}>Topo Graph</h1> */}
-            <p style={{color: 'yellow'}}>currentNode:{this.state.currentNode}</p>
-            <button className='addNode' onClick={this.createNode}> Add node</button>
-            <button className='deleteNode' onClick={this.deleteNode}> Delete node</button>
-            <Graph
-                graph={this.state.graph}
-                options={options}
-                events={events}
-                // getNetwork={network => {
-                // //  if you want access to vis.js network api you can set the state in a parent component using this property
-                // }}
-                
-            />
-        </div>
+            <div className='topoGraph'>
+                {/* <p style={{color: 'yellow'}}>currentNode:{this.state.currentNode}</p>
+                <button className='addNode' onClick={this.createNode}> Add node</button>
+                <button className='deleteNode' onClick={this.deleteNode}> Delete node</button> */}
+                <Graph
+                    graph={this.state.graph}
+                    options={options}
+                    events={events}
+                    // getNetwork={network => {
+                    // //  if you want access to vis.js network api you can set the state in a parent component using this property
+                    // }}
+                    
+                />
+            </div>
+            </div>
         );
     }
 }
