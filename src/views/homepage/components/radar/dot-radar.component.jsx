@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
-import {Tooltip} from 'reactstrap';
-
+// import {Tooltip} from 'reactstrap';
+// import ReactTooltip from 'react-tooltip';
+import Tooltip from '../../../../Tooltip';
 function getTopLeft(x, y, r) {
   let top = r;
   let left = r;
@@ -24,19 +25,43 @@ const DotRadar = ({dotData, r}) => {
   const {x, y, label, id, color} = dotData;
   const [left, top] = getTopLeft(x, y, r);
   const nodeType = label.split('.')[1].split(' ')[0];
-  {console.log('nodeType',nodeType)}
+  const TooltipStyle = {
+    backgroundColor:'#FFF',
+    color: "black",
+    borderStyle: "solid",
+    borderWidth: "10px",
+    borderColor: "blue",
+  };
+  // {console.log('nodeType',nodeType)}
   return (
     <div className="dot-radar" style={{left, top, backgroundColor: color}} >
+        <Tooltip position="top" content= {label}>
+         
         <div className={nodeType == 'critical' ? "border-dot-critical" :"border-dot"} id={'Tooltip-' + id}>
-        <Tooltip
+        {/* <Tooltip
+          id="tooltipDot"  
+          className="tooltipDot"
+          // arrowClassName="arrowDot"
+          // style={{
+          //     "backgroundColor":'#FFF',
+          //     "color": "black",
+          //     "borderStyle": "solid",
+          //     "borderWidth": "10px",
+          //     "borderColor": "red",
+          //     // "top": "10px",
+          //     // ".arrowDot{ border-color": "#FFF}"
+          //     // "border-bottom": "5px solid red"
+          //   }}
+          style={TooltipStyle}
           placement="top"
           isOpen={tooltipOpen}
           target={'Tooltip-' + id}
           toggle={toggle}
           >
           {label}
-        </Tooltip>
+        </Tooltip> */}
       </div>
+        </Tooltip>
     </div>
   );
 };

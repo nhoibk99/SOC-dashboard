@@ -108,7 +108,64 @@
     height: 20px;
     position: absolute;
     padding: 5px;
+    right: -4px;
+    bottom: -4px;
+    // .tooltipDot .arrow {
+    //   background-color: #008ec3!important;
+    // }
+    // #tooltipDot .arrow:before {
+    //   border-top-color: #008ec3!important;
+    // }
   }
+
+  // $tt-text-color: lime;
+  // $tt-border-color: lime;
+  // $tt-bg-color: black;
+  // $arrow-border-color: lime;
+  // $arrow-bg-color: black;
+
+  // .tooltipDot {
+  //   .tooltip-inner {
+  //     background: $tt-bg-color;
+  //     color: $tt-text-color;
+  //     border: 2px solid $tt-border-color;
+  //   }
+  //   .arrow {
+  //     width: 11px;
+  //     height: 11px;
+  //     border: 2px solid $arrow-border-color;
+  //     bottom: 1px;
+  //     &:before {
+  //       width: 11px;
+  //       height: 11px;
+  //       background: $arrow-bg-color;
+  //       border: 0;
+  //     }
+  //   }
+  //   &.bs-tooltip-top {
+  //     .arrow {
+  //       transform: rotate(-135deg);
+  //     }
+  //   }
+  //   &.bs-tooltip-bottom {
+  //     .arrow {
+  //       transform: rotate(135deg);
+  //       top: 2px;
+  //     }
+  //   }
+  // }
+  // .tooltipDot  .tooltip-inner {
+  //   background-color: #fff!important;
+  //   color: #000!important;
+  //   border: 1px solid #062e56;
+  // }
+  
+  // .tooltipDot  .tooltip-arrow {
+  //   border-top: 5px solid #062e56;
+  // }
+  // .bs-tooltip-bottom .arrow::before, .bs-tooltip-auto[x-placement^="bottom"] .arrow::before {
+  //   border-bottom-color: aqua !important; // default is #000;
+  // }
   .border-dot-critical{
     background: linear-gradient(to right, #FFFFFF 1px, transparent 1px) 0 0,
       linear-gradient(to right, #FFFFFF 1px, transparent 1px) 0 100%,
@@ -139,6 +196,7 @@
   .circle-text {
     color: white;
   }
+  
   margin: auto;
 
 }

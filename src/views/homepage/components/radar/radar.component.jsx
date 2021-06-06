@@ -198,13 +198,77 @@ class Radar extends React.Component {
        
         //radar_data_temp.length=0;
        
-     
+        // console.log(radar_data_new);
         that.setState({
           radar_data : radar_data_new,
+          // radar_data : [
+          //   {
+          //     color: "#e00909",
+          //     id: "02bde1ea970c26bb48d0fd0abc7ffb7c",
+          //     label: "network.critical  10.0.11.11: Baseline-Linux - Connection Outbount via Port 443; Baseline-Linux - DNS: TXT record exceed legth",
+          //     x: 0.10368102660316368,
+          //     y: 0.8775529999810688,
+          //   },
+          //   {
+          //     color: "#e00909",
+          //     id: "5b533284b23b74757116a9daa7717437",
+          //     label: "network.critical  10.12.13.14:Baseline-Linux - DNS: TXT record exceed legth",
+          //     x: -0.7137414371267092,
+          //     y: 0.41197169897610847,
+          //   },
+          //   {
+          //     color: "#ebdea5",
+          //     id: "eac403c4227e8f2d7d742d5e242904dd",
+          //     label: "network.medium  172.26.17.188: Suspect DDoS - Bandwidth increase abnormally",
+          //     x: -0.5104008817026132,
+          //     y: 0.7016293771520374,
+          //   },
+          //   {
+          //     color: "#ebdea5",
+          //     id: "c951cf5e54fe9c0c5c8fa8202c228bd2",
+          //     label: "network.medium  10.10.10.11: Baseline-SSL - SSL Expried",
+          //     x: -0.12443163682104208,
+          //     y: -0.9098591761246595,
+          //   }
+          // ],
         });
 
       })
-      .catch(function(error) { that.setState({info:error});
+      .catch(function(error) { 
+        that.setState({info:error});
+        that.setState({
+          // radar_data : radar_data_new,
+          radar_data : [
+            {
+              color: "#e00909",
+              id: "02bde1ea970c26bb48d0fd0abc7ffb7c",
+              label: "network.critical  10.0.11.11: Baseline-Linux - Connection Outbount via Port 443; Baseline-Linux - DNS: TXT record exceed legth",
+              x: 0.10368102660316368,
+              y: 0.8775529999810688,
+            },
+            {
+              color: "#e00909",
+              id: "5b533284b23b74757116a9daa7717437",
+              label: "network.critical  10.12.13.14:Baseline-Linux - DNS: TXT record exceed legth",
+              x: -0.7137414371267092,
+              y: 0.41197169897610847,
+            },
+            {
+              color: "#ebdea5",
+              id: "eac403c4227e8f2d7d742d5e242904dd",
+              label: "network.medium  172.26.17.188: Suspect DDoS - Bandwidth increase abnormally",
+              x: -0.5104008817026132,
+              y: 0.7016293771520374,
+            },
+            {
+              color: "#ebdea5",
+              id: "c951cf5e54fe9c0c5c8fa8202c228bd2",
+              label: "network.medium  10.10.10.11: Baseline-SSL - SSL Expried",
+              x: -0.12443163682104208,
+              y: -0.9098591761246595,
+            }
+          ],
+        });
       });
   }
 
