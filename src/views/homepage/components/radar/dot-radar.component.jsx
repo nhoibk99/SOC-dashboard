@@ -35,7 +35,7 @@ const DotRadar = ({dotData, r}) => {
   // {console.log('nodeType',nodeType)}
   return (
     <div className="dot-radar" style={{left, top, backgroundColor: color}} >
-        <Tooltip position="top" content= {label}>
+        <Tooltip position="top" isOpen={true} content= {label} animationDuration={2000}>
          
         <div className={nodeType == 'critical' ? "border-dot-critical" :"border-dot"} id={'Tooltip-' + id}>
         {/* <Tooltip

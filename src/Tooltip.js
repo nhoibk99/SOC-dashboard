@@ -98,9 +98,9 @@ TooltipContent.propTypes = {
 }
 
 // Tooltip
-const Tooltip = ({ children, position, content, animationDuration = 200 }) => {
+const Tooltip = ({ children, position, content, isOpen, animationDuration = 200 }) => {
   const [elPosition, setElPosition] = useState({ top: 0, left: 0 });
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(isOpen);
   let tooltipClass = 'tooltip'; 
 
   const getPosition = (e) => {
@@ -145,7 +145,16 @@ const Tooltip = ({ children, position, content, animationDuration = 200 }) => {
 
     setShow(true);
   }
-
+  const hideTooltip = (e) => {
+    if(isOpen){
+      // setShow(true)
+      setTimeout(() =>{
+        setShow(false)
+      }, 1000)
+    }else{
+      setShow(false)
+    }
+  }
   if(position === 'top') {
     tooltipClass += ' tooltip--top';
   }
@@ -186,7 +195,7 @@ const Tooltip = ({ children, position, content, animationDuration = 200 }) => {
   return(
     <Fragment>
       {show && <TooltipContent tooltipClass={tooltipClass} position={elPosition} content={content} tooltipPosition={position} duration={animationDuration} />}
-      {cloneElement(children, {...children.props, onMouseOver: getPosition, onMouseLeave: () => setShow(false)})}
+      {cloneElement(children, {...children.props, onMouseOver: getPosition, onMouseLeave: hideTooltip})}
     </Fragment>
   );
 }
