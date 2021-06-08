@@ -3,6 +3,34 @@ import React, {useState} from 'react';
 // import ReactTooltip from 'react-tooltip';
 // import Tooltip from '../../../../Tooltip';
 import Tooltip from '@material-ui/core/Tooltip';
+import {
+  createMuiTheme,
+  MuiThemeProvider,
+  withStyles
+} from "@material-ui/core/styles";
+
+const defaultTheme = createMuiTheme();
+const theme = createMuiTheme({
+  overrides: {
+    MuiTooltip: {
+      tooltip: {
+        fontSize: "2em",
+        color: "yellow",
+        backgroundColor: "red"
+      }
+    }
+  }
+});
+const BlueOnGreenTooltip = withStyles({
+  tooltip: {
+    color: "black",
+    backgroundColor: "white"
+  },
+  arrow: {
+    color: "white"
+  }
+})(Tooltip);
+
 function getTopLeft(x, y, r) {
   let top = r;
   let left = r;
@@ -37,32 +65,39 @@ const DotRadar = ({dotData, r}) => {
   return (
     <div className="dot-radar" style={{left, top, backgroundColor: color}} >
         {/* <Tooltip position="top" isOpen={true} content= {label} animationDuration={2000}> */}
-        <Tooltip arrow  title={label} >
-        <div className={nodeType == 'critical' ? "border-dot-critical" :"border-dot"} id={'Tooltip-' + id}>
-        {/* <Tooltip
-          id="tooltipDot"  
-          className="tooltipDot"
-          // arrowClassName="arrowDot"
-          // style={{
-          //     "backgroundColor":'#FFF',
-          //     "color": "black",
-          //     "borderStyle": "solid",
-          //     "borderWidth": "10px",
-          //     "borderColor": "red",
-          //     // "top": "10px",
-          //     // ".arrowDot{ border-color": "#FFF}"
-          //     // "border-bottom": "5px solid red"
-          //   }}
-          style={TooltipStyle}
-          placement="top"
-          isOpen={tooltipOpen}
-          target={'Tooltip-' + id}
-          toggle={toggle}
-          >
-          {label}
+        <MuiThemeProvider theme={defaultTheme}>
+            <BlueOnGreenTooltip arrow  title={label}>
+            <div className={nodeType == 'critical' ? "border-dot-critical" :"border-dot"} id={'Tooltip-' + id}>
+                </div>
+            </BlueOnGreenTooltip>
+        </MuiThemeProvider>
+        {/* <Tooltip arrow  title={label} >
+          <div className={nodeType == 'critical' ? "border-dot-critical" :"border-dot"} id={'Tooltip-' + id}>
+           <Tooltip
+            id="tooltipDot"  
+            className="tooltipDot"
+            // arrowClassName="arrowDot"
+            // style={{
+            //     "backgroundColor":'#FFF',
+            //     "color": "black",
+            //     "borderStyle": "solid",
+            //     "borderWidth": "10px",
+            //     "borderColor": "red",
+            //     // "top": "10px",
+            //     // ".arrowDot{ border-color": "#FFF}"
+            //     // "border-bottom": "5px solid red"
+            //   }}
+            style={TooltipStyle}
+            placement="top"
+            isOpen={tooltipOpen}
+            target={'Tooltip-' + id}
+            toggle={toggle}
+            >
+            {label}
+          </Tooltip> 
+          </div>
         </Tooltip> */}
-      </div>
-        </Tooltip>
+
     </div>
   );
 };
