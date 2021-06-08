@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 // import {Tooltip} from 'reactstrap';
 // import ReactTooltip from 'react-tooltip';
-import Tooltip from '../../../../Tooltip';
+// import Tooltip from '../../../../Tooltip';
+import Tooltip from '@material-ui/core/Tooltip';
 function getTopLeft(x, y, r) {
   let top = r;
   let left = r;
@@ -35,8 +36,8 @@ const DotRadar = ({dotData, r}) => {
   // {console.log('nodeType',nodeType)}
   return (
     <div className="dot-radar" style={{left, top, backgroundColor: color}} >
-        <Tooltip position="top" isOpen={true} content= {label} animationDuration={2000}>
-         
+        {/* <Tooltip position="top" isOpen={true} content= {label} animationDuration={2000}> */}
+        <Tooltip arrow  title={label} >
         <div className={nodeType == 'critical' ? "border-dot-critical" :"border-dot"} id={'Tooltip-' + id}>
         {/* <Tooltip
           id="tooltipDot"  

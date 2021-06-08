@@ -145,50 +145,50 @@ class TopoGraph extends React.Component{
         
         return (
             <div>
-            <AppBar position="static" style={{ backgroundColor: "gray"}} >
-                <Toolbar>
-                    <IconButton  aria-label="menu"
-                    onClick={this.handleMenu}>
-                        <MenuIcon />
-                    </IconButton>
-                    <Menu
-                            id="menu-appbar"
-                            anchorEl={this.state.anchorEl}
-                            anchorOrigin={{
-                                vertical: 'bottom',
-                                horizontal: 'right',
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'left',
-                            }}
-                            open={this.state.open}
-                            onClose={this.handleClose}
-                        >
-                            <MenuItem onClick={this.createNode}>Create node</MenuItem>
-                            <MenuItem onClick={this.deleteNode}>Delete node</MenuItem>
-                            <MenuItem onClick={this.handleClose}>Change edge</MenuItem>
-                        </Menu>
-                    <Typography variant="h6" noWrap>
-                        Topo Graph
-                    </Typography>
-                </Toolbar>
-            </AppBar>
-            <div className='topoGraph'>
-                {/* <p style={{color: 'yellow'}}>currentNode:{this.state.currentNode}</p>
-                <button className='addNode' onClick={this.createNode}> Add node</button>
-                <button className='deleteNode' onClick={this.deleteNode}> Delete node</button> */}
-                <Graph
-                    graph={this.state.graph}
-                    options={options}
-                    events={events}
-                    // getNetwork={network => {
-                    // //  if you want access to vis.js network api you can set the state in a parent component using this property
-                    // }}
-                    
-                />
-            </div>
+                <AppBar position="static" style={{ backgroundColor: "gray"}} >
+                    <Toolbar>
+                        <IconButton  aria-label="menu"
+                        onClick={this.handleMenu}>
+                            <MenuIcon />
+                        </IconButton>
+                        <Menu
+                                id="menu-appbar"
+                                anchorEl={this.state.anchorEl}
+                                anchorOrigin={{
+                                    vertical: 'bottom',
+                                    horizontal: 'right',
+                                }}
+                                keepMounted
+                                transformOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'left',
+                                }}
+                                open={this.state.open}
+                                onClose={this.handleClose}
+                            >
+                                <MenuItem onClick={this.createNode}>Create node</MenuItem>
+                                <MenuItem onClick={this.deleteNode}>Delete node</MenuItem>
+                                <MenuItem onClick={this.handleClose}>Change edge</MenuItem>
+                            </Menu>
+                        <Typography variant="h6" noWrap>
+                            Topo Graph
+                        </Typography>
+                    </Toolbar>
+                </AppBar>
+                <div className='topoGraph'>
+                    {/* <p style={{color: 'yellow'}}>currentNode:{this.state.currentNode}</p>
+                    <button className='addNode' onClick={this.createNode}> Add node</button>
+                    <button className='deleteNode' onClick={this.deleteNode}> Delete node</button> */}
+                    <Graph
+                        graph={this.state.graph}
+                        options={options}
+                        events={events}
+                        // getNetwork={network => {
+                        // //  if you want access to vis.js network api you can set the state in a parent component using this property
+                        // }}
+                        
+                    />
+                </div>
             </div>
         );
     }
