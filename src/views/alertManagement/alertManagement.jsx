@@ -13,8 +13,8 @@ import {
     AlignmentType,
     Document,
     HeadingLevel,
-    Packer,
-    Paragraph, Table, TableCell, TableRow, WidthType, VerticalAlign, ShadingType, convertInchesToTwip
+    Packer,Header, Footer,
+    Paragraph, Table, TableCell, TableRow, WidthType, VerticalAlign, ShadingType, convertInchesToTwip, convertMillimetersToTwip
   } from "docx";
 
 class AlertManagement extends React.Component{
@@ -638,19 +638,37 @@ class AlertManagement extends React.Component{
             },
         });
         const document = new Document({
-            sections: [
-              {
+            sections: [{
+                properties: {
+                    page: {
+                        margin: {
+                            top: convertMillimetersToTwip(10),
+                            right: convertMillimetersToTwip(10),
+                            bottom: convertMillimetersToTwip(10),
+                            left: convertMillimetersToTwip(10),
+                        },
+                    },
+                },
+                headers: {
+                    default: new Header({
+                        children: [new Paragraph("Header")],
+                    }),
+                },
+                footers: {
+                    default: new Footer({
+                        children: [new Paragraph("Footer text")],
+                    }),
+                },
                 children: [
-                  new Paragraph({
+                new Paragraph({
                     text: "Số liệu cảnh báo từ 12.05.2021 đến 17.05.2021",
-                  }),
-                  new Paragraph(" "),
-                  table,
-                  new Paragraph(" "),
-                  tableData
+                }),
+                new Paragraph(" "),
+                table,
+                new Paragraph(" "),
+                tableData
                 ]
-              }
-            ]
+            }]
           });
     
         Packer.toBlob(document).then(blob => {
