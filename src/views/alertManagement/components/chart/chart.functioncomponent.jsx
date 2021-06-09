@@ -26,13 +26,13 @@ const ChartFunc = () => {
               let today = new Date(item.key);
               dataTemp = [...dataTemp,{ name: (today.getDate() + '/' + (today.getMonth() + 1)), count: item.doc_count, color: '#ffbe00'}]
             });
-            console.log('data fetch', dataTemp);
+            // console.log('data fetch', dataTemp);
             setData(dataTemp)
         })
         .catch(function(error) {
           console.log(error);
         });
-    console.log('da vao day data',data);
+    // console.log('da vao day data',data);
   });
  
 

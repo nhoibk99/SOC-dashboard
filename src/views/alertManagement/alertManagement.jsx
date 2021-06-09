@@ -13,7 +13,7 @@ import {
     AlignmentType,
     Document,
     HeadingLevel,
-    Packer,Header, Footer,
+    Packer,Header, Footer,LineRuleType,UnderlineType,
     Paragraph, Table, TableCell, TableRow, WidthType, VerticalAlign, ShadingType, convertInchesToTwip, convertMillimetersToTwip
   } from "docx";
 
@@ -638,6 +638,48 @@ class AlertManagement extends React.Component{
             },
         });
         const document = new Document({
+            styles: {
+                paragraphStyles: [
+                    {
+                        id: "myParagraph",
+                        name: "My Paragraph",
+                        basedOn: "Normal",
+                        next: "Normal",
+                        run: {
+                            color: "000000",
+                        },
+                        paragraph: {
+                            indent: {
+                                left: convertInchesToTwip(0.25),
+                                firstLine: convertInchesToTwip(0.5),
+                            },
+                            spacing: { 
+                                line: 276, 
+                                before: 20 * 6, 
+                                after: 20 * 6,
+                            },
+                        },
+                    },
+                    {
+                        id: "myLine",
+                        name: "My Line",
+                        basedOn: "Normal",
+                        next: "Normal",
+                        run: {
+                            color: "000000",
+                            italics: true,
+                        },
+                        paragraph: {
+                            indent: {
+                                left: convertInchesToTwip(0.25),
+                            },
+                            spacing: {
+                                line: 276,
+                            },
+                        },
+                    },
+                ],
+            },
             sections: [{
                 properties: {
                     page: {
@@ -661,6 +703,19 @@ class AlertManagement extends React.Component{
                 },
                 children: [
                 new Paragraph({
+                    style: "myParagraph",
+                    text: "First  line indent:: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed turpis ex, aliquet et faucibus quis, euismod in odio. Fusce gravida tempor nunc sed lacinia. Nulla sed dolor fringilla, fermentum libero ut, egestas ex. Donec pellentesque metus non orci lacinia bibendum. Cras porta ex et mollis hendrerit. Suspendisse id lectus suscipit, elementum lacus eu, convallis felis. Fusce sed bibendum dolor, id posuere ligula. Aliquam eu elit ut urna eleifend vestibulum. Praesent condimentum at turpis sed scelerisque. Suspendisse porttitor metus nec vestibulum egestas. Sed in eros sapien. Morbi efficitur placerat est a consequat. Nunc bibendum porttitor mi nec tempus. Morbi dictum augue porttitor nisi sodales sodales.",
+                }),
+                new Paragraph({
+                    style: "myLine",
+                    text: "Số liệu cảnh báo từ 12.05.2021 đến 17.05.2021",
+                }),
+                new Paragraph({
+                    style: "myParagraph",
+                    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed turpis ex, aliquet et faucibus quis, euismod in odio. Fusce gravida tempor nunc sed lacinia. Nulla sed dolor fringilla, fermentum libero ut, egestas ex. Donec pellentesque metus non orci lacinia bibendum. Cras porta ex et mollis hendrerit. Suspendisse id lectus suscipit, elementum lacus eu, convallis felis. Fusce sed bibendum dolor, id posuere ligula. Aliquam eu elit ut urna eleifend vestibulum. Praesent condimentum at turpis sed scelerisque. Suspendisse porttitor metus nec vestibulum egestas. Sed in eros sapien. Morbi efficitur placerat est a consequat. Nunc bibendum porttitor mi nec tempus. Morbi dictum augue porttitor nisi sodales sodales.",
+                }),
+                new Paragraph({
+                    style: "myParagraph",
                     text: "Số liệu cảnh báo từ 12.05.2021 đến 17.05.2021",
                 }),
                 new Paragraph(" "),
