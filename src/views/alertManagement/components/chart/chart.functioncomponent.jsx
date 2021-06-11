@@ -1,15 +1,15 @@
 
 import FileSaver from "file-saver";
 import React , {useState, useEffect} from "react";
-import { useMeasure } from "react-use";
+// import { useMeasure } from "react-use";
 import { ResponsiveContainer,  BarChart,  Bar,  XAxis,  YAxis, CartesianGrid, Tooltip, Cell } from 'recharts';
 import { useRechartToPng } from "recharts-to-png";
-import { Document, Packer,  Paragraph, ImageRun } from "docx";
+// import { Document, Packer,  Paragraph, ImageRun } from "docx";
 
 const ChartFunc = () => {
   let api = 'http://elastic.vninfosec.net/alert-khach_hanga/_search?pretty&filter_path=aggregations&source=%7b%22query%22:%20%7b%22range%22:%20%7b%22@timestamp%22:%20%7b%22gte%22:%20%22now-30d/d%22,%22lte%22:%20%22now/d%22%7d%7d%7d,%22aggs%22:%20%7b%22byday%22:%20%7b%22date_histogram%22:%20%7b%22field%22:%20%22@timestamp%22,%22interval%22:%20%22day%22%7d%7d%7d%7d&source_content_type=application/json';
 
-  const [containerRef, { width: containerWidth }] = useMeasure();
+  // const [containerRef, { width: containerWidth }] = useMeasure();
   // The chart ref that we want to download the PNG for.
   const [png, ref] = useRechartToPng();
   const [data, setData] = useState();
@@ -24,7 +24,7 @@ const ChartFunc = () => {
           jsonData.aggregations.byday.buckets.map((item,index) =>
             {
               let today = new Date(item.key);
-              dataTemp = [...dataTemp,{ name: (today.getDate() + '/' + (today.getMonth() + 1)), count: item.doc_count, color: '#ffbe00'}]
+              return dataTemp = [...dataTemp,{ name: (today.getDate() + '/' + (today.getMonth() + 1)), count: item.doc_count, color: '#ffbe00'}]
             });
             // console.log('data fetch', dataTemp);
             setData(dataTemp)

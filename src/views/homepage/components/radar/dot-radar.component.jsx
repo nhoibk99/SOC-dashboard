@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Tooltip from '@material-ui/core/Tooltip';
 import {
   createMuiTheme,
@@ -7,17 +7,7 @@ import {
 } from "@material-ui/core/styles";
 
 const defaultTheme = createMuiTheme();
-const theme = createMuiTheme({
-  overrides: {
-    MuiTooltip: {
-      tooltip: {
-        fontSize: "2em",
-        color: "yellow",
-        backgroundColor: "red"
-      }
-    }
-  }
-});
+
 const MyTooltip = withStyles({
   tooltip: {
     color: "black",
@@ -46,18 +36,18 @@ function getTopLeft(x, y, r) {
 }
 
 const DotRadar = ({dotData, r}) => {
-  const [tooltipOpen, setTooltipOpen] = useState(false);
-  const toggle = () => setTooltipOpen(!tooltipOpen);
+  // const [tooltipOpen, setTooltipOpen] = useState(false);
+  // const toggle = () => setTooltipOpen(!tooltipOpen);
   const {x, y, label, id, color} = dotData;
   const [left, top] = getTopLeft(x, y, r);
   const nodeType = label.split('.')[1].split(' ')[0];
-  const TooltipStyle = {
-    backgroundColor:'#FFF',
-    color: "black",
-    borderStyle: "solid",
-    borderWidth: "10px",
-    borderColor: "blue",
-  };
+  // const TooltipStyle = {
+  //   backgroundColor:'#FFF',
+  //   color: "black",
+  //   borderStyle: "solid",
+  //   borderWidth: "10px",
+  //   borderColor: "blue",
+  // };
   // {console.log('nodeType',nodeType)}
   return (
     <div className="dot-radar" style={{left, top, backgroundColor: color}} >
@@ -67,7 +57,7 @@ const DotRadar = ({dotData, r}) => {
               title={label} 
               // open={true}
             >
-              <div className={nodeType == 'critical' ? "border-dot-critical" :"border-dot"} id={'Tooltip-' + id}>
+              <div className={nodeType === 'critical' ? "border-dot-critical" :"border-dot"} id={'Tooltip-' + id}>
               </div>
             </MyTooltip>
         </MuiThemeProvider>

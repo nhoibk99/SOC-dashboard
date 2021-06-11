@@ -12,8 +12,7 @@ import { saveAs } from "file-saver";
 import {
     AlignmentType,
     Document,
-    HeadingLevel,
-    Packer,Header, Footer,LineRuleType,UnderlineType,
+    Packer,Header, Footer,
     Paragraph, Table, TableCell, TableRow, WidthType, VerticalAlign, ShadingType, convertInchesToTwip, convertMillimetersToTwip
   } from "docx";
 
@@ -476,7 +475,7 @@ class AlertManagement extends React.Component{
         console.log('dâta',this.state.data);
         let row = [];
         this.state.data.map(item => {
-            row = [...row, new TableRow({
+            return row = [...row, new TableRow({
                         children: [
                             new TableCell({
                                 width: {
@@ -581,7 +580,7 @@ class AlertManagement extends React.Component{
                         new TableCell({
                             width: {
                                 size: 7500,
-                                type: WidthType. b,
+                                type: WidthType.DXA,
                             },
                             verticalAlign: VerticalAlign.CENTER,
                             shading: {
