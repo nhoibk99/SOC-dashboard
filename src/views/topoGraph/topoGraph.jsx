@@ -58,7 +58,7 @@ class TopoGraph extends React.Component{
             open: false,
             openDialog: false,
             fullWidth: true,
-            maxWidth: 'sm',
+            maxWidth: 'xs',
         }
     }
     
@@ -84,6 +84,8 @@ class TopoGraph extends React.Component{
                 edges: [...edges,{ from, to: id }]
             },
             counter: id,
+            openDialog: false,
+            open: false,
         });
     }
 
@@ -131,29 +133,18 @@ class TopoGraph extends React.Component{
         this.setState({
             anchorEl: null,
             open: false,
+            openDialog: false,
         })
     }
-    handleClickOpen = () => {
+    openDialogCreate = () => {
         this.setState({
             openDialog: true,
         })
     }
     
-    handleClose = () => {
+    handleNodeFrom = (event) => {
         this.setState({
-            openDialog: false,
-        })
-    }
-    
-    handleMaxWidthChange = (event) => {
-        this.setState({
-            maxWidth: event.target.value,
-        })
-    }
-    
-    handleFullWidthChange = (event) => {
-        this.setState({
-            fullWidth: event.target.checked,
+            currentNode: event.target.value,
         })
     }
 
@@ -212,7 +203,7 @@ class TopoGraph extends React.Component{
                                 onClose={this.handleClose}
                             >
                                 {/* <MenuItem onClick={this.createNode}>Create node</MenuItem> */}
-                                <MenuItem onClick={this.handleClickOpen}>Create node</MenuItem>
+                                <MenuItem onClick={this.openDialogCreate}>Create node</MenuItem>
                                 <MenuItem onClick={this.deleteNode}>Delete node</MenuItem>
                                 <MenuItem onClick={this.handleClose}>Change edge</MenuItem>
                             </Menu>
@@ -228,51 +219,69 @@ class TopoGraph extends React.Component{
                         events={events}
                     />
                 </div>
+                <div className='infoNode'>
+                   <label type="text" value="asflhksjbajand"/>
+                   <label htmlFor="">info nodes</label>
+                </div>
                 <Dialog
                     fullWidth={this.state.fullWidth}
                     maxWidth={this.state.maxWidth}
+                    // currentNode={this.state.currentNode}
                     open={this.state.openDialog}
                     onClose={this.handleClose}
                     aria-labelledby="max-width-dialog-title"
                 >
-                    <DialogTitle id="max-width-dialog-title">Optional sizes</DialogTitle>
+                    <DialogTitle id="max-width-dialog-title">Create Node</DialogTitle>
                     <DialogContent>
-                    <DialogContentText>
-                        You can set my maximum width and whether to adapt or not.
-                    </DialogContentText>
-                    {/* <form className={classes.form} noValidate>
-                        <FormControl className={classes.formControl}> */}
-                    <form  noValidate>
-                        <FormControl>
-                        <InputLabel htmlFor="max-width">maxWidth</InputLabel>
-                        <Select
-                            autoFocus
-                            value={this.state.maxWidth}
-                            onChange={this.handleMaxWidthChange}
-                            inputProps={{
-                            name: 'max-width',
-                            id: 'max-width',
-                            }}
-                        >
-                            <MenuItem value={false}>false</MenuItem>
-                            <MenuItem value="xs">xs</MenuItem>
-                            <MenuItem value="sm">sm</MenuItem>
-                            <MenuItem value="md">md</MenuItem>
-                            <MenuItem value="lg">lg</MenuItem>
-                            <MenuItem value="xl">xl</MenuItem>
-                        </Select>
-                        </FormControl>
-                        <FormControlLabel
-                        // className={classes.formControlLabel}
-                        control={<Switch checked={this.state.fullWidth} onChange={this.handleFullWidthChange} />}
-                        label="Full width"
-                        />
-                    </form>
+                        <div className="row">
+                            <DialogContentText style={{margin: "10px"}}>
+                                Create from node: 
+                            </DialogContentText>
+                            <form  noValidate>
+                                <FormControl>
+                                <Select
+                                    autoFocus
+                                    value={this.state.currentNode}
+                                    onChange={this.handleNodeFrom}
+                                 >
+                                    <MenuItem value={false}>false</MenuItem>
+                                    <MenuItem value="xs">xs</MenuItem>
+                                    <MenuItem value="1">smáukgfhb</MenuItem>
+                                    <MenuItem value="md">md</MenuItem>
+                                    <MenuItem value="lg">lg</MenuItem>
+                                    <MenuItem value="xl">xl</MenuItem>
+                                </Select>
+                                </FormControl>
+                            </form>
+                        </div>
+                        <div className="row">
+                            <DialogContentText style={{margin: "10px"}}>
+                                Type of node: 
+                            </DialogContentText>
+                            <form  noValidate>
+                                <FormControl>
+                                    <Select
+                                        autoFocus
+                                        value={"Node "+ this.state.currentNode}
+                                        onChange={this.handleNodeFrom}
+                                    >
+                                        {/* <MenuItem value={false}>false</MenuItem> */}
+                                        <MenuItem value="Attacker-icons">Attacker-icons</MenuItem>
+                                        <MenuItem value="Botnet">Botnet</MenuItem>
+                                        <MenuItem value="Bugs">Bugs</MenuItem>
+                                        <MenuItem value="Computer">Computer</MenuItem>
+                                        <MenuItem value="DNS">DNS</MenuItem>
+                                        <MenuItem value="Firewall">Firewall</MenuItem>
+                                        <MenuItem value="Database">Database</MenuItem>
+                                        <MenuItem value="Trojan">Trojan</MenuItem>
+                                    </Select>
+                                </FormControl>
+                            </form>
+                        </div>
                     </DialogContent>
                     <DialogActions>
-                    <Button onClick={this.handleClose} color="primary">
-                        Close
-                    </Button>
+                        <Button onClick={this.createNode} color="primary">Create</Button>
+                        <Button onClick={this.handleClose} color="primary">Close</Button>
                     </DialogActions>
                 </Dialog>
             </div>

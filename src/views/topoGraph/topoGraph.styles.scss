@@ -2,7 +2,14 @@
     box-sizing: border-box;
 }
 .topoGraph{
-    padding: 10px ;
+    // padding: 10px ;
     // background-image: url('../../assets/images/bg.png');
-    min-height: 100vh;
+    // min-height: 50vh;
+    // max-height: 50vh;
+}
+.infoNode{
+    // padding: 10px ;
+    // background-image: url('../../assets/images/bg.png');
+    min-height: 39vh;
+    border: 5px solid red;
 }
