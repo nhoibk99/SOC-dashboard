@@ -57,8 +57,6 @@ class TopoGraph extends React.Component{
             anchorEl: null,
             open: false,
             openDialog: false,
-            fullWidth: true,
-            maxWidth: 'xs',
         }
     }
     
@@ -148,6 +146,12 @@ class TopoGraph extends React.Component{
         })
     }
 
+    handleTypeOfNode = (event) => {
+        this.setState({
+            typeOfNode: event.target.value,
+        })
+    }
+
     render() {
     
         const options = {
@@ -223,10 +227,7 @@ class TopoGraph extends React.Component{
                    <label type="text" value="asflhksjbajand"/>
                    <label htmlFor="">info nodes</label>
                 </div>
-                <Dialog
-                    fullWidth={this.state.fullWidth}
-                    maxWidth={this.state.maxWidth}
-                    // currentNode={this.state.currentNode}
+                <Dialog maxWidth='xs'
                     open={this.state.openDialog}
                     onClose={this.handleClose}
                     aria-labelledby="max-width-dialog-title"
@@ -239,18 +240,11 @@ class TopoGraph extends React.Component{
                             </DialogContentText>
                             <form  noValidate>
                                 <FormControl>
-                                <Select
-                                    autoFocus
-                                    value={this.state.currentNode}
-                                    onChange={this.handleNodeFrom}
-                                 >
-                                    <MenuItem value={false}>false</MenuItem>
-                                    <MenuItem value="xs">xs</MenuItem>
-                                    <MenuItem value="1">smáukgfhb</MenuItem>
-                                    <MenuItem value="md">md</MenuItem>
-                                    <MenuItem value="lg">lg</MenuItem>
-                                    <MenuItem value="xl">xl</MenuItem>
-                                </Select>
+                                    <Select autoFocus value={this.state.currentNode} onChange={this.handleNodeFrom}>
+                                        {this.state.graph.nodes.map((item) =>{
+                                            return <MenuItem value={item.id}>{item.label}</MenuItem>
+                                        })}
+                                    </Select>
                                 </FormControl>
                             </form>
                         </div>
@@ -260,11 +254,7 @@ class TopoGraph extends React.Component{
                             </DialogContentText>
                             <form  noValidate>
                                 <FormControl>
-                                    <Select
-                                        autoFocus
-                                        value={"Node "+ this.state.currentNode}
-                                        onChange={this.handleNodeFrom}
-                                    >
+                                <Select autoFocus value={this.state.currentNode} onChange={this.handleTypeOfNode}>
                                         {/* <MenuItem value={false}>false</MenuItem> */}
                                         <MenuItem value="Attacker-icons">Attacker-icons</MenuItem>
                                         <MenuItem value="Botnet">Botnet</MenuItem>
