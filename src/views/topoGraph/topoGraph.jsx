@@ -2,26 +2,11 @@ import React from 'react';
 import Graph from "react-graph-vis";
 import './topoGraph.styles.scss';
 import {AppBar, Toolbar, IconButton, Typography, Button, Menu, MenuItem  } from '@material-ui/core';
-import {makeStyles, 
+import {
      Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
-     FormControl, FormControlLabel, InputLabel, Select, Switch} from '@material-ui/core';
+     FormControl, Select} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 
-const useStyles = makeStyles((theme) => ({
-    form: {
-      display: 'flex',
-      flexDirection: 'column',
-      margin: 'auto',
-      width: 'fit-content',
-    },
-    formControl: {
-      marginTop: theme.spacing(2),
-      minWidth: 120,
-    },
-    formControlLabel: {
-      marginTop: theme.spacing(1),
-    },
-  }));
 class TopoGraph extends React.Component{
     constructor(props) {
         super(props);
@@ -30,13 +15,8 @@ class TopoGraph extends React.Component{
                 nodes: [
                   { id: 1, label: "Node 1", color: "#e04141" ,shape: 'image', 
                   image: 'https://i.pinimg.com/originals/3a/69/ae/3a69ae3942d4a9da6c3cbc93b1c8f051.jpg'},
-                  { id: 2, label: "Node 2", color: "#e09c41",shape: 'icon',
-                  icon: {
-                    face: '"FontAwesome"',
-                    code: '\uf0c0',
-                    size: 50,
-                    color: 'orange'
-                  }},
+                  { id: 2, label: "Node 2", color: "#e09c41",shape: 'image',
+                  image: './icon/Trojan.jpg'},
                   { id: 3, label: "Node 3", color: "#e0df41" ,shape: 'image', 
                   image: 'https://pdp.edu.vn/wp-content/uploads/2021/02/anh-icon-facebook-cute-dep.jpg'},
                   { id: 4, label: "Node 4", color: "#7be041" ,shape: 'image', 
@@ -51,12 +31,33 @@ class TopoGraph extends React.Component{
                   { from: 2, to: 5 }
                 ]
             },
+            type: [
+                "Attacker-icon",
+                "Botnet",
+                "Bugs",
+                "Computer",
+                "CyberSec icons",
+                "Database",
+                "DNS",
+                "Download File",
+                "ERP",
+                "Firewall",
+                "Icon malware file",
+                "MailServer",
+                "Oracle-DB",
+                "Phishing",
+                "Trojan",
+                "Webicons",
+                "WebServer",
+            ],
             counter: 5,
             currentNode: 1,
-            auth: true,
+            typeOfNode: "Attacker-icon",
             anchorEl: null,
             open: false,
-            openDialog: false,
+            openDialogCreate: false,
+            openDialogDelete: false,
+            openDialogEdge: false,
         }
     }
     
@@ -66,32 +67,67 @@ class TopoGraph extends React.Component{
           }
     }
 
+    handleMenu = (event) => {
+        this.setState({
+            anchorEl: event.currentTarget,
+            open: true,
+        })
+    }
+
+    handleClose = () => {
+        this.setState({
+            anchorEl: null,
+            open: false,
+            openDialogCreate: false,
+            openDialogDelete: false,
+            openDialogEdge: false,
+        })
+    }
+     
+    openDialogCreate = () => {
+        this.setState({
+            openDialogCreate: true,
+        })
+    }
+    
+    handleNodeFrom = (event) => {
+        this.setState({
+            currentNode: event.target.value,
+        })
+    }
+
+    handleTypeOfNode = (event) => {
+        this.setState({
+            typeOfNode: event.target.value,
+        })
+    }
+
     createNode = () => {
+        const id = this.state.counter + 1;
+        
         const red = Math.floor(Math.random() * 256).toString(16).padStart(2, '0');
         const green = Math.floor(Math.random() * 256).toString(16).padStart(2, '0');
         const blue = Math.floor(Math.random() * 256).toString(16).padStart(2, '0');
         const color = '#' + red + green + blue;
 
+        const imageNode = './icon/' + this.state.typeOfNode + '.jpg';
+        
         const from = this.state.currentNode;
-        let id = this.state.counter + 1,
-        {nodes, edges} = this.state.graph;
+        let {nodes, edges} = this.state.graph;
 
         this.setState({
             graph: {
-                nodes: [...nodes,{ id, label: `Node ${id}`, color }],
+                nodes: [...nodes,{ id, label: `Node ${id}`, color,shape: 'image', image: imageNode}],
                 edges: [...edges,{ from, to: id }]
             },
             counter: id,
-            openDialog: false,
-            open: false,
-        });
+        }, ()=> this.handleClose())
     }
-
-    addNode = () =>{
-        console.log('add node');
-        // let currentNode = this.state.currentNode;
-        // let {nodes, edges} =  this.state.graph;
-
+     
+    openDialogDelete = () => {
+        this.setState({
+            openDialogDelete: true,
+        })
     }
 
     deleteNode = () =>{
@@ -117,39 +153,7 @@ class TopoGraph extends React.Component{
 
         this.setState({
             graph:{nodes:newNodes, edges: newEdges},
-        })
-    }
-
-    handleMenu = (event) => {
-        this.setState({
-            anchorEl: event.currentTarget,
-            open: true,
-        })
-    }
-
-    handleClose = () => {
-        this.setState({
-            anchorEl: null,
-            open: false,
-            openDialog: false,
-        })
-    }
-    openDialogCreate = () => {
-        this.setState({
-            openDialog: true,
-        })
-    }
-    
-    handleNodeFrom = (event) => {
-        this.setState({
-            currentNode: event.target.value,
-        })
-    }
-
-    handleTypeOfNode = (event) => {
-        this.setState({
-            typeOfNode: event.target.value,
-        })
+        }, ()=> this.handleClose())
     }
 
     render() {
@@ -208,7 +212,7 @@ class TopoGraph extends React.Component{
                             >
                                 {/* <MenuItem onClick={this.createNode}>Create node</MenuItem> */}
                                 <MenuItem onClick={this.openDialogCreate}>Create node</MenuItem>
-                                <MenuItem onClick={this.deleteNode}>Delete node</MenuItem>
+                                <MenuItem onClick={this.openDialogDelete}>Delete node</MenuItem>
                                 <MenuItem onClick={this.handleClose}>Change edge</MenuItem>
                             </Menu>
                         <Typography variant="h6" noWrap>
@@ -224,15 +228,13 @@ class TopoGraph extends React.Component{
                     />
                 </div>
                 <div className='infoNode'>
-                   <label type="text" value="asflhksjbajand"/>
-                   <label htmlFor="">info nodes</label>
+                   <h4  className="text-center">DIV for nodes info </h4>
+                   <label className="text-center" htmlFor="">currentNode: Node {this.state.currentNode} </label>
                 </div>
-                <Dialog maxWidth='xs'
-                    open={this.state.openDialog}
-                    onClose={this.handleClose}
-                    aria-labelledby="max-width-dialog-title"
-                >
-                    <DialogTitle id="max-width-dialog-title">Create Node</DialogTitle>
+                <Dialog className="dialogCreate" maxWidth='xs' fullWidth={true} open={this.state.openDialogCreate}>
+                    <DialogTitle id="max-width-dialog-title">
+                        Create Node
+                    </DialogTitle>
                     <DialogContent>
                         <div className="row">
                             <DialogContentText style={{margin: "10px"}}>
@@ -254,16 +256,10 @@ class TopoGraph extends React.Component{
                             </DialogContentText>
                             <form  noValidate>
                                 <FormControl>
-                                <Select autoFocus value={this.state.currentNode} onChange={this.handleTypeOfNode}>
-                                        {/* <MenuItem value={false}>false</MenuItem> */}
-                                        <MenuItem value="Attacker-icons">Attacker-icons</MenuItem>
-                                        <MenuItem value="Botnet">Botnet</MenuItem>
-                                        <MenuItem value="Bugs">Bugs</MenuItem>
-                                        <MenuItem value="Computer">Computer</MenuItem>
-                                        <MenuItem value="DNS">DNS</MenuItem>
-                                        <MenuItem value="Firewall">Firewall</MenuItem>
-                                        <MenuItem value="Database">Database</MenuItem>
-                                        <MenuItem value="Trojan">Trojan</MenuItem>
+                                    <Select autoFocus value={this.state.typeOfNode} onChange={this.handleTypeOfNode}>
+                                        {this.state.type.map((item) =>{
+                                                return <MenuItem value={item}>{item}</MenuItem>
+                                            })}
                                     </Select>
                                 </FormControl>
                             </form>
@@ -271,6 +267,31 @@ class TopoGraph extends React.Component{
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={this.createNode} color="primary">Create</Button>
+                        <Button onClick={this.handleClose} color="primary">Close</Button>
+                    </DialogActions>
+                </Dialog>
+                <Dialog className="dialogDelete" maxWidth='xs' fullWidth={true} open={this.state.openDialogDelete}>
+                    <DialogTitle id="max-width-dialog-title">
+                        Delete Node
+                    </DialogTitle>
+                    <DialogContent>
+                        <div className="row">
+                            <DialogContentText style={{margin: "10px"}}>
+                               Are you want to delete Node {" "+ this.state.currentNode + " "}?
+                            </DialogContentText>
+                            {/* <form  noValidate>
+                                <FormControl>
+                                    <Select autoFocus value={this.state.currentNode} onChange={this.handleNodeFrom}>
+                                        {this.state.graph.nodes.map((item) =>{
+                                            return <MenuItem value={item.id}>{item.label}</MenuItem>
+                                        })}
+                                    </Select>
+                                </FormControl>
+                            </form> */}
+                        </div>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={this.deleteNode} color="primary">Delete</Button>
                         <Button onClick={this.handleClose} color="primary">Close</Button>
                     </DialogActions>
                 </Dialog>
