@@ -13,24 +13,24 @@ class TopoGraph extends React.Component{
         this.state = {
             graph: {
                 nodes: [
-                  { id: 1, label: "Node 1", color: "#e04141" ,shape: 'circularImage', 
+                  { id: 1, label: "Node 1", color: "#e04141" ,shape: 'circularImage',physics:false, value: 10,
                   image: {
-                      selected:'https://image.flaticon.com/icons/png/512/1204/1204102.png',
+                      selected:'https://dougleschan.com/wp-content/uploads/2020/11/Focus-icon.png',
                       unselected: 'https://i.pinimg.com/originals/3a/69/ae/3a69ae3942d4a9da6c3cbc93b1c8f051.jpg'
                     }},
-                  { id: 2, label: "Node 2", color: "#e09c41",shape: 'circularImage',
+                  { id: 2, label: "Node 2", color: "#e09c41",shape: 'circularImage', physics:false, value: 20,
                   image: {
-                      selected:'https://image.flaticon.com/icons/png/512/1204/1204102.png',
+                      selected:'https://dougleschan.com/wp-content/uploads/2020/11/Focus-icon.png',
                       unselected:'C:/Users/nhoib/OneDrive/Desktop/SOC/soc-dashboard/src/views/topoGraph/icon/Webserver.jpg',
                     }},
-                  { id: 3, label: "Node 3", color: "#e0df41" ,shape: 'circularImage', 
+                  { id: 3, label: "Node 3", color: "#e0df41" ,shape: 'circularImage',  physics:false, value: 3,
                   image: {
-                    selected:'https://image.flaticon.com/icons/png/512/1204/1204102.png',
+                    selected:'https://dougleschan.com/wp-content/uploads/2020/11/Focus-icon.png',
                     unselected: 'https://pdp.edu.vn/wp-content/uploads/2021/02/anh-icon-facebook-cute-dep.jpg',
                   }},
-                  { id: 4, label: "Node 4", color: "#7be041" ,shape: 'circularImage', 
+                  { id: 4, label: "Node 4", color: "#7be041" ,shape: 'circularImage', physics:false, value: 4,
                   image: 'https://pbs.twimg.com/profile_images/1211194693767163904/wsPZidB9_400x400.png'},
-                  { id: 5, label: "Node 5", color: "#41e0c9" ,shape: 'circularImage', 
+                  { id: 5, label: "Node 5", color: "#41e0c9" ,shape: 'circularImage', physics:false, value: 5,
                   image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpfZRk6RpaqB0p0T8BPFPtjxI0axBPL40h0GtGW1vRkRrfnimPpnCWr2QcXBs55Mzjs7k&usqp=CAU'}
                 ],
                 edges: [
