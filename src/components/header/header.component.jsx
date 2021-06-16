@@ -54,12 +54,7 @@ class Header extends React.Component{
                 <DropdownItem href="">HomePage</DropdownItem>
                 <DropdownItem href="/alert"  target="_blank" rel="noreferrer" onClick={() => localStorage.setItem('layer',[])}>Alert Managerment</DropdownItem>
                 <DropdownItem href="/topo"  target="_blank" rel="noreferrer" >Topo Graph</DropdownItem>
-                {/* <DropdownItem text>Dropdown Item Text</DropdownItem>
-                <DropdownItem disabled>Action (disabled)</DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem>Foo Action</DropdownItem>
-                <DropdownItem>Bar Action</DropdownItem>
-                <DropdownItem>Quo Action</DropdownItem> */}
+                <DropdownItem href="/chart3d"  target="_blank" rel="noreferrer" >Chart 3D</DropdownItem>
               </DropdownMenu>
             </Dropdown>
           </div>

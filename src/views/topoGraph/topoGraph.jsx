@@ -13,15 +13,15 @@ class TopoGraph extends React.Component{
         this.state = {
             graph: {
                 nodes: [
-                  { id: 1, label: "Node 1", color: "#e04141" ,shape: 'circularImage',physics:false, value: 10,
+                  { id: 1, label: "Node 1", color: "#e04141" ,shape: 'circularImage',physics:false, value: 8,
                   image: {
                       selected:'https://dougleschan.com/wp-content/uploads/2020/11/Focus-icon.png',
                       unselected: 'https://i.pinimg.com/originals/3a/69/ae/3a69ae3942d4a9da6c3cbc93b1c8f051.jpg'
                     }},
-                  { id: 2, label: "Node 2", color: "#e09c41",shape: 'circularImage', physics:false, value: 20,
+                  { id: 2, label: "Node 2", color: "#e09c41",shape: 'circularImage', physics:false, value: 8,
                   image: {
                       selected:'https://dougleschan.com/wp-content/uploads/2020/11/Focus-icon.png',
-                      unselected:'C:/Users/nhoib/OneDrive/Desktop/SOC/soc-dashboard/src/views/topoGraph/icon/Webserver.jpg',
+                      unselected:'./Trojan.jpg',
                     }},
                   { id: 3, label: "Node 3", color: "#e0df41" ,shape: 'circularImage',  physics:false, value: 3,
                   image: {
