@@ -6,6 +6,7 @@ import {
      Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
      FormControl, Select} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
+import { Alert } from 'reactstrap';
 
 class TopoGraph extends React.Component{
     constructor(props) {
@@ -19,10 +20,7 @@ class TopoGraph extends React.Component{
                       unselected: 'https://i.pinimg.com/originals/3a/69/ae/3a69ae3942d4a9da6c3cbc93b1c8f051.jpg'
                     }},
                   { id: 2, label: "Node 2", color: "#e09c41",shape: 'circularImage', physics:false, value: 8,
-                  image: {
-                      selected:'https://dougleschan.com/wp-content/uploads/2020/11/Focus-icon.png',
-                      unselected:'./Trojan.jpg',
-                    }},
+                  image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpfZRk6RpaqB0p0T8BPFPtjxI0axBPL40h0GtGW1vRkRrfnimPpnCWr2QcXBs55Mzjs7k&usqp=CAU' },
                   { id: 3, label: "Node 3", color: "#e0df41" ,shape: 'circularImage',  physics:false, value: 3,
                   image: {
                     selected:'https://dougleschan.com/wp-content/uploads/2020/11/Focus-icon.png',
@@ -34,10 +32,10 @@ class TopoGraph extends React.Component{
                   image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpfZRk6RpaqB0p0T8BPFPtjxI0axBPL40h0GtGW1vRkRrfnimPpnCWr2QcXBs55Mzjs7k&usqp=CAU'}
                 ],
                 edges: [
-                  { from: 1, to: 2 },
-                  { from: 1, to: 3 },
-                  { from: 2, to: 4 },
-                  { from: 2, to: 5 }
+                  { from: 1, to: 2 , id: 11},
+                  { from: 1, to: 3 , id: 12},
+                  { from: 2, to: 4 , id: 13},
+                  { from: 2, to: 5 , id: 14}
                 ]
             },
             type: [
@@ -61,6 +59,8 @@ class TopoGraph extends React.Component{
             ],
             counter: 5,
             currentNode: 1,
+            nodeFrom: 1,
+            nodeTo: 2,
             typeOfNode: "Attacker-icon",
             anchorEl: null,
             open: false,
@@ -168,6 +168,19 @@ class TopoGraph extends React.Component{
     render() {
     
         const options = {
+            manipulation: {
+                addEdge: function(edgeData,callback) {
+                  if (edgeData.from === edgeData.to) {
+                    var r = Alert("Do you want to connect the node to itself?");
+                    if (r === true) {
+                      callback(edgeData);
+                    }
+                  }
+                  else {
+                    callback(edgeData);
+                  }
+                }
+            },
             layout: {
                 hierarchical: false
             },
@@ -181,17 +194,39 @@ class TopoGraph extends React.Component{
             select: ({ nodes, edges }) => {
                 // console.log("Selected nodes:",nodes);
                 // console.log("Selected edges:",edges);
-                this.setState({currentNode: nodes && nodes[0]})
+                console.log(this.state.graph.edges.find((x) => x.id === 11));
+                if(edges.length === 1){
+                    this.setState({
+                        currentNode: nodes && nodes[0],
+                        nodeFrom: this.state.graph.edges.find((x) => x.id === edges).from,
+                        nodeTo: this.state.graph.edges.find((x) => x.id === edges).to,
+                    })
+                }
+                else{
+                    this.setState({
+                        currentNode: nodes && nodes[0],
+                        nodeFrom: null,
+                        nodeTo: null,
+                    })
+                }
                 alert("Selected node: " + nodes);
             },
-            doubleClick: () => {
-                // console.log('double click');
-                this.createNode();
-            },
-            contextmenu:() =>{
-                alert("context menu");
-                return false;
-            }
+            // selectEdge: (event) => {
+            //     var { nodes, edges } = event;
+            //     alert(" edges:",event);
+            //     // console.log("Selected nodes:",nodes);
+            //     // console.log("Selected edges:",edges);
+            //     console.log("Selected event:",event);
+
+            // },
+            // doubleClick: () => {
+            //     console.log('double click');
+            //     this.createNode();
+            // },
+            // contextmenu:() =>{
+            //     alert("context menu");
+            //     return false;
+            // }
             
         };
         // const classes = useStyles();
@@ -238,8 +273,20 @@ class TopoGraph extends React.Component{
                 </div>
                 <div className='infoNode'>
                    <h4  className="text-center">DIV for nodes info </h4>
-                   <label className="text-center" htmlFor="">currentNode: Node {this.state.currentNode} </label>
+                   <label className="text-center" htmlFor="">currentNode: </label>
+                   <label className="text-center" htmlFor=""><b>
+                    {this.state.graph.nodes.find((x) => x.id === this.state.currentNode).label} 
+                   </b></label><br></br>
+                   <label className="text-center" htmlFor="">select edge from: </label>
+                   <label className="text-center" htmlFor=""><b>
+                    {this.state.graph.nodes.find((x) => x.id === this.state.nodeFrom).label} 
+                   </b></label>
+                   <label className="text-center" htmlFor=""> to </label>
+                   <label className="text-center" htmlFor=""><b>
+                    {this.state.graph.nodes.find((x) => x.id === this.state.nodeTo).label} 
+                   </b></label>
                 </div>
+                
                 <Dialog className="dialogCreate" maxWidth='xs' fullWidth={true} open={this.state.openDialogCreate}>
                     <DialogTitle id="max-width-dialog-title">
                         Create Node
